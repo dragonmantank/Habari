@@ -1,4 +1,9 @@
-<?php include_once( 'system/init.php' ); ?>
+<?php
+
+define('HABARI_PATH', dirname(__FILE__));
+include_once( 'system/init.php' );
+
+?>
 <?php include_once('themes/k2/header.php'); ?>
 <div class="content">
 	<div id="primary">
