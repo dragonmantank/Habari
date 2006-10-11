@@ -1,4 +1,4 @@
-<?php include_once( 'init.php' ); ?>
+<?php include_once( 'system/init.php' ); ?>
 <?php include_once('themes/k2/header.php'); ?>
 <div class="content">
 	<div id="primary">

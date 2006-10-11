@@ -1,9 +1,8 @@
 <?php
 /**
  * Database connection samples
- * 1. Copy this file to init.mine.php
- * 2. Uncomment the section that applies to you
- * 3. Change the connection string, username, and password, if required. 
+ * 1. Uncomment the section that applies to you
+ * 2. Change the connection string, username, and password, if required. 
  * 3. ...
  * 4. Profit!  
  **/   
