@@ -1,4 +1,4 @@
-<?php include_once( "init.php" ); ?>
+<?php include_once( 'system/init.php' ); ?>
 <?php header('Content-type: text/xml; charset="utf-8"'); ?>
 <?php echo '<?xml version="1.0" encoding="utf-8" ?>'; ?>
 <!-- generator="habari" -->

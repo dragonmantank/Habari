@@ -12,15 +12,15 @@ include_once( 'system/init.php' );
 			<?php foreach ( $posts as $post ) { ?>
 				<div id="<?php echo $post->guid; ?>">
 					<div class="entry-head">
-						<h3 class="entry-title"><a href="/<?php echo $post->slug; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title; ?></a></h3>
+						<h3 id="entry-title" class="entry-title"><a href="/<?php echo $post->slug; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title; ?></a></h3>
 						<small class="entry-meta">
 							<span class="chronodata">
 								<abbr class="published"><?php echo $post->pubdate; ?></abbr>
 							</span>
 							<span class="commentslink">Closed</span>
 						</small>
-							<div id="desc" class="entry-content">
-							<?php echo $post->content; ?>
+							<div id="entry-content" class="entry-content">
+								<?php echo $post->content; ?>
 							</div>
 					</div>
 				</div>

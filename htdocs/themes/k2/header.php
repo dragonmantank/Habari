@@ -4,12 +4,39 @@
 	<title>Whitespace, powered by Habari</title>
 	<meta http-equiv="Content-Type" content="text/html;" />
 	<meta name="generator" content="Habari" />
+	
   	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/rss2.php" />
+  	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="/atom.php" />
+
 	<link rel="stylesheet" type="text/css" media="screen" href="themes/k2/style.css" />
-	
+
+	<?php /* if ( $user->is_author() ) { */?>
+	<style type="text/css">
+		.eip_editable { background-color: #ff9; }
+		.eip_savebutton { background-color: #36f; color: #fff; }
+		.eip_cancelbutton { background-color: #000; color: #fff; }
+		.eip_saving { background-color: #903; color: #fff; }
+	</style>
+
 	<script type="text/javascript" src="scripts/prototype.js"></script>
-	<script type="text/javascript" src="scripts/edit-tools.js"></script>
-	
+	<script type="text/javascript" src="scripts/EditInPlace.js"></script>
+
+	<script type="text/javascript">
+	Event.observe(window, 'load', init, false);
+	function init() {
+		EditInPlace.makeEditable( {
+			type: 'text',
+			id: 'entry-title',
+			save_url: ''
+		} );
+		EditInPlace.makeEditable( {
+			type: 'textarea',
+			id: 'entry-content',
+			save_url: ''
+		} );
+	}
+	</script>
+	<?php /* } */ ?>
 </head>
 <body class="home">
 <div id="page">
