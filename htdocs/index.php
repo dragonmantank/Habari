@@ -8,8 +8,7 @@ include_once( 'system/init.php' );
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
-			<?php $posts = posts::retrieve(); ?>
-			<?php foreach ( $posts as $post ) { ?>
+			<?php foreach ( posts::retrieve() as $post ) { ?>
 				<div id="<?php echo $post->guid; ?>">
 					<div class="entry-head">
 						<h3 id="entry-title" class="entry-title"><a href="/<?php echo $post->slug; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title; ?></a></h3>
