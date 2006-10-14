@@ -1,10 +1,10 @@
 <?php
 
 define('HABARI_PATH', dirname(__FILE__));
-include_once( 'system/init.php' );
+include_once( HABARI_PATH . '/system/init.php' );
 
 ?>
-<?php include_once('themes/k2/header.php'); ?>
+<?php include_once(HABARI_PATH . '/themes/k2/header.php'); ?>
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
@@ -36,7 +36,7 @@ include_once( 'system/init.php' );
 	</div>	
 	<div class="sb-about">
 		<h2>About</h2>
-				<p>This is a test install of Habari.</p>
+				<p><?php echo $options->about; ?></p>
 	</div>	
 </div>
 <div class="clear"></div>

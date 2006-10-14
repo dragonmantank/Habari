@@ -41,8 +41,8 @@
 <body class="home">
 <div id="page">
 	<div id="header">
-		<h1><a href="/">Whitespace, powered by Habari</a></h1>
-		<p class="description">Spread the news</p>
+		<h1><a href="<?php echo $options->base_url; ?>"><?php echo $options->blog_title; ?></a></h1>
+		<p class="description"><?php echo $options->tag_line; ?></p>
 		<ul class="menu">
 			<li><a href="http://code.google.com/p/habari/" title="Habari Project">Habari Project</a></li>
 		</ul>
