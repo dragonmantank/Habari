@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
-	<title>Whitespace, powered by Habari</title>
+	<title><?php echo $options->blog_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html;" />
 	<meta name="generator" content="Habari" />
 	
@@ -27,12 +27,12 @@
 		EditInPlace.makeEditable( {
 			type: 'text',
 			id: 'entry-title',
-			save_url: ''
+			save_url: '<?php echo $urlparser->get_url('ajax', 'action=edittitle'); ?>'
 		} );
 		EditInPlace.makeEditable( {
 			type: 'textarea',
 			id: 'entry-content',
-			save_url: ''
+			save_url: '<?php echo $urlparser->get_url('ajax', 'action=editcontent'); ?>'
 		} );
 	}
 	</script>
