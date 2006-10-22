@@ -19,7 +19,7 @@ function __autoload($class_name) {
 if(file_exists(HABARI_PATH . '/config.php')) {
 	require_once HABARI_PATH . '/config.php';
 } else {
-	die('There are no database connection details.  Please rename config-sample.php to config.php and edit the settings therein.');	
+	die('There are no database connection details.  Please rename one of the sample configuration files (config.mysql, config.sqlite, ...) to config.php and edit the settings therein.');	
 }
 
 // Connect to the database or fail informatively
