@@ -37,18 +37,9 @@ $options = new Options();
 // Install the database tables if they're not already installed
 Installer::install();
 
-// Figure out what the user requested
-$request = ( isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'] . ( isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '') . ( (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != '')) ? '?' . $_SERVER['QUERY_STRING'] : ''));
-$urlparser = new URLParser($request);
-
-// This next bit is a hack until we get a proper theme engine
-switch( $urlparser->pagetype ) {
-case 'home':
-	include( HABARI_PATH . '/themes/k2/index.php' );
-	break;
-default:
-	Utils::debug( $urlparser );
-	break;
-}
+// Figure out what the user requested and do something about it
+$url = ( isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'] . ( isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '') . ( (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != '')) ? '?' . $_SERVER['QUERY_STRING'] : ''));
+$urlparser = new URLParser( $url );
+$urlparser->handle_request();
 
 ?>
