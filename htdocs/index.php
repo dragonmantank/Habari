@@ -1,5 +1,5 @@
 <?php
-
+// set out constant
 define('HABARI_PATH', dirname(__FILE__));
 
 /**
