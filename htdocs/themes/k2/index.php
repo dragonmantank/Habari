@@ -31,6 +31,8 @@
 	<div class="sb-about">
 		<h2>About</h2>
 				<p><?php echo $options->about; ?></p>
+		<h2>User</h2>
+			<p><?php $theme->loginform(); ?></p>
 	</div>	
 </div>
 <div class="clear"></div>
