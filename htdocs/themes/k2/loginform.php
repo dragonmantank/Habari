@@ -1,5 +1,10 @@
 <?php
 $user = User::identify();
+if ( $urlparser->error ):
+?>
+<p>That login is incorrect.</p>
+<?php
+endif;
 if ( $user ) :
 ?>
 <p>You are logged in as <?php echo User::identify()->username; ?>.</p>
