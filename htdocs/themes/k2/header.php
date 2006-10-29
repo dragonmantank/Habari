@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
-	<title><?php echo $options->blog_title; ?></title>
+	<title><?php echo Options::o()->blog_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html;" />
 	<meta name="generator" content="Habari" />
 	
@@ -41,8 +41,8 @@
 <body class="home">
 <div id="page">
 	<div id="header">
-		<h1><a href="<?php echo $options->base_url; ?>"><?php echo $options->blog_title; ?></a></h1>
-		<p class="description"><?php echo $options->tag_line; ?></p>
+		<h1><a href="<?php echo Options::o()->base_url; ?>"><?php echo Options::o()->blog_title; ?></a></h1>
+		<p class="description"><?php echo Options::o()->tag_line; ?></p>
 		<ul class="menu">
 			<li><a href="http://code.google.com/p/habari/" title="Habari Project">Habari Project</a></li>
 		</ul>

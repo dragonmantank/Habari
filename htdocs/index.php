@@ -31,9 +31,6 @@ catch( Exception $e) {
 }
 unset($db_connection);
 
-// Create the global options instance
-$options = new Options();
-
 // Install the database tables if they're not already installed
 Installer::install();
 

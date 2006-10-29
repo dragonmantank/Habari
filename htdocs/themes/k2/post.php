@@ -29,7 +29,7 @@
 	</div>	
 	<div class="sb-about">
 		<h2>About</h2>
-				<p><?php echo $options->about; ?></p>
+				<p><?php echo Options::o()->about; ?></p>
 	</div>	
 </div>
 <div class="clear"></div>
