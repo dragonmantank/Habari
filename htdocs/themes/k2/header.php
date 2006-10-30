@@ -1,16 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
-	<title><?php echo Options::o()->blog_title; ?></title>
+	<title><?php Options::out('blog_title'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html;" />
 	<meta name="generator" content="Habari" />
 	
   	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/rss2.php" />
   	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="/atom.php" />
+	<link type="application/x.atom+xml" rel="service.post" href="<?php echo $urlparser->get_url('collection'); ?>" title="<?php Options::out('blog_title'); ?>"/>   	
 
 	<link rel="stylesheet" type="text/css" media="screen" href="themes/k2/style.css" />
 
-	<?php /* if ( $user->is_author() ) { */?>
+	<?php if ( User::identify() ) { // Still needs to check for edit permissions ?>
 	<style type="text/css">
 		.eip_editable { background-color: #ff9; }
 		.eip_savebutton { background-color: #36f; color: #fff; }
@@ -27,22 +28,22 @@
 		EditInPlace.makeEditable( {
 			type: 'text',
 			id: 'entry-title',
-			save_url: '<?php echo $urlparser->get_url('ajax', 'action=edittitle'); ?>'
+			save_url: '>'
 		} );
 		EditInPlace.makeEditable( {
 			type: 'textarea',
 			id: 'entry-content',
-			save_url: '<?php echo $urlparser->get_url('ajax', 'action=editcontent'); ?>'
+			save_url: ''
 		} );
 	}
 	</script>
-	<?php /* } */ ?>
+	<?php } ?>
 </head>
 <body class="home">
 <div id="page">
 	<div id="header">
-		<h1><a href="<?php echo Options::o()->base_url; ?>"><?php echo Options::o()->blog_title; ?></a></h1>
-		<p class="description"><?php echo Options::o()->tag_line; ?></p>
+		<h1><a href="<?php Options::out('base_url'); ?>"><?php Options::out('blog_title'); ?></a></h1>
+		<p class="description"><?php Options::out('tag_line'); ?></p>
 		<ul class="menu">
 			<li><a href="http://code.google.com/p/habari/" title="Habari Project">Habari Project</a></li>
 		</ul>
