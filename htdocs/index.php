@@ -1,5 +1,5 @@
 <?php
-// set out constant
+// set our constant
 define('HABARI_PATH', dirname(__FILE__));
 
 /**
@@ -29,10 +29,12 @@ try {
 catch( Exception $e) {
 	die( 'Could not connect to database using the supplied credentials.  Please check config.php for the correct values. Further information follows: ' .  $e->getMessage() );		
 }
-unset($db_connection);
 
 // Install the database tables if they're not already installed
 Installer::install();
+
+// unset the $db_connection variable, since we don't need it any more
+unset($db_connection);
 
 // Figure out what the user requested and do something about it
 $url = ( isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'] . ( isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '') . ( (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != '')) ? '?' . $_SERVER['QUERY_STRING'] : ''));
