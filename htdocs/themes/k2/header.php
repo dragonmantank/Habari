@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
-	<title><?php Options::out('blog_title'); ?></title>
+	<title><?php Options::out('title'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html;" />
 	<meta name="generator" content="Habari" />
   	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/rss2.php" />
   	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php Options::out('base_url'); ?>atom" />
-	<link type="application/x.atom+xml" rel="service.post" href="<?php echo $urlparser->get_url('collection'); ?>" title="<?php Options::out('blog_title'); ?>"/>   	
+	<link type="application/x.atom+xml" rel="service.post" href="<?php echo $url->get_url('collection'); ?>" title="<?php Options::out('blog_title'); ?>"/>   	
 
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('base_url'); ?>themes/k2/style.css" />
 

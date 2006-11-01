@@ -2,7 +2,7 @@
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
-			<?php foreach ( Post::get_posts() as $post ) { ?>
+			<?php foreach ( $posts = Posts::get() as $post ) { ?>
 				<div id="<?php echo $post->guid; ?>">
 					<div class="entry-head">
 						<h3 id="entry-title" class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title; ?></a></h3>
