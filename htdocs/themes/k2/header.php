@@ -5,13 +5,12 @@
 	<meta http-equiv="Content-Type" content="text/html;" />
 	<meta name="generator" content="Habari" />
   	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/rss2.php" />
-  	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php echo $options->base_url; ?>atom" />
+  	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php Options::out('base_url'); ?>atom" />
 	<link type="application/x.atom+xml" rel="service.post" href="<?php echo $urlparser->get_url('collection'); ?>" title="<?php Options::out('blog_title'); ?>"/>   	
 
-	<link rel="stylesheet" type="text/css" media="screen" href="themes/k2/style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('base_url'); ?>themes/k2/style.css" />
 
 	<?php if ( User::identify() ) { // Still needs to check for edit permissions ?>
-		
 	<style type="text/css">
 		.eip_editable { background-color: #ff9; }
 		.eip_savebutton { background-color: #36f; color: #fff; }
@@ -26,7 +25,7 @@
 	Event.observe(window, 'load', init, false);
 	function init() {
 		EditInPlace.makeEditable( {
-			type: 'text',
+			type: 'textarea',
 			id: 'entry-title',
 			save_url: '>'
 		} );
@@ -42,8 +41,8 @@
 <body class="home">
 <div id="page">
 	<div id="header">
-		<h1><a href="<?php Options::out('base_url'); ?>"><?php Options::out('blog_title'); ?></a></h1>
-		<p class="description"><?php Options::out('tag_line'); ?></p>
+		<h1><a href="<?php Options::out('base_url'); ?>"><?php Options::out('title'); ?></a></h1>
+		<p class="description"><?php Options::out('tagline'); ?></p>
 		<ul class="menu">
 			<li><a href="http://code.google.com/p/habari/" title="Habari Project">Habari Project</a></li>
 		</ul>
