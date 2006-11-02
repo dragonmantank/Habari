@@ -10,7 +10,7 @@
 							<span class="chronodata">
 								<abbr class="published"><?php echo $post->pubdate; ?></abbr>
 							</span>
-							<span class="commentslink">Closed</span>
+							<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comment_count; ?> Comments</a></span>
 							<span class="entry-tags"><?php echo implode( ' ' , $post->tags ); ?></span>
 						</small>
 							<div id="entry-content" class="entry-content">
