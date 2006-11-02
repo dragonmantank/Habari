@@ -22,6 +22,9 @@ if(file_exists(HABARI_PATH . '/config.php')) {
 	die('There are no database connection details.  Please rename one of the sample configuration files (config.mysql, config.sqlite, ...) to config.php and edit the settings therein.');	
 }
 
+// Set the locale
+Locale::set('en_US');  // This should come from the config
+
 // Connect to the database or fail informatively
 try {
 	$db = new habari_db( $db_connection['connection_string'], $db_connection['username'], $db_connection['password'] );
