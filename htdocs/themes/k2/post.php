@@ -17,6 +17,7 @@
 							</div>
 					</div>
 				</div>
+		<?php include_once( HABARI_PATH . '/themes/k2/comments.php' ); ?>
 		</div>
 	</div>
 	<hr />
