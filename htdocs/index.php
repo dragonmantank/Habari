@@ -15,6 +15,9 @@ function __autoload($class_name) {
 		die( 'Could not include class file ' . strtolower($class_name) . '.php' );
 }
 
+// Undo what magic_quotes_gpc might have wrought
+Utils::revert_magic_quotes_gpc();
+
 // Load the config
 if(file_exists(HABARI_PATH . '/config.php')) {
 	require_once HABARI_PATH . '/config.php';
