@@ -29,7 +29,7 @@
 	</ol>
 	<div class="comments">
 		<h4 id="respond" class="reply">Leave a Reply</h4>
-			<form action="<?php Options::out('base_url'); ?>admin/process/add_comment" method="post" id="commentform">
+			<form action="<?php URL::out( 'add_comment' ); ?>" method="post" id="commentform">
 			<input type="hidden" name="post_slug" value="<?php echo $post->slug; ?>" />
 				<div id="comment-personaldetails">
 					<p>
