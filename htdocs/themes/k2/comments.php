@@ -10,7 +10,7 @@
 		<span class="trackbacklink"><a href="<?php echo $post->slug; ?>/trackback">Trackback Address</a></span>
 	</div>
 	<ol id="commentlist">
-		<?php foreach ( $post->comments as $comment ) { ?>
+		<?php foreach ( $post->comments->approved as $comment ) { ?>
 			<li id="comment<?php echo $comment->id; ?>" class="comment">
 			<a href="#comment-<?php echo $comment->id; ?>" class="counter" title="Permanent Link to this Comment"><?php echo $comment->id; ?></a>
 			<span class="commentauthor">
