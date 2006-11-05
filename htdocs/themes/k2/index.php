@@ -1,4 +1,4 @@
-<?php include_once(HABARI_PATH . '/themes/k2/header.php'); ?>
+<?php $theme->header(); ?>
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
@@ -11,7 +11,7 @@
 								<abbr class="published"><?php echo $post->pubdate; ?></abbr>
 							</span>
 							<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comment_count; ?> Comments</a></span>
-							<span class="entry-tags"><?php echo implode( ' ' , $post->tags ); ?></span>
+							<span class="entry-tags"><?php echo $post->tags; ?></span>
 						</small>
 							<div id="entry-content" class="entry-content">
 								<?php echo $post->content; ?>
@@ -38,4 +38,4 @@
 </div>
 <div class="clear"></div>
 </div>
-<?php include_once('themes/k2/footer.php'); ?>
+<?php $theme->footer(); ?>
