@@ -11,10 +11,8 @@
 	</div>
 	<ol id="commentlist">
 		<?php 
-			if( $post->comments->approved == false ) {
-				echo 'There are currently no comments.';
-			} else {
-				foreach ( $post->comments->approved as $comment ) { 
+			if( $post->comments->approved->count ) :
+				foreach ( $post->comments->approved as $comment ) : 
 		?>
 			<li id="comment<?php echo $comment->id; ?>" class="comment">
 			<a href="#comment-<?php echo $comment->id; ?>" class="counter" title="Permanent Link to this Comment"><?php echo $comment->id; ?></a>
@@ -30,7 +28,11 @@
 				<?php echo $comment->content; ?>
 			</div>
 			</li>
-		<?php } } ?>
+		<?php 
+				endforeach;
+			else:
+				_e('There are currently no comments.');
+			endif; ?>
 	</ol>
 	<div class="comments">
 		<h4 id="respond" class="reply">Leave a Reply</h4>
