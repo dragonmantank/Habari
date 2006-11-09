@@ -1,6 +1,6 @@
 <?php
 $user = User::identify();
-if ( $url->settings['error'] ):
+if ( isset( $url->settings['error'] ) ):
 ?>
 <p>That login is incorrect.</p>
 <?php
