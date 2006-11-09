@@ -4,7 +4,7 @@
 	?>
 <hr />
 <div class="comments">
-	<h4><span id="comments"><?php echo $post->comment_count; ?> Responses to </span><?php echo $post->title; ?></h4>
+	<h4><span id="comments"><?php echo Comments::count_by_slug( $post->slug ); ?> Responses to </span><?php echo $post->title; ?></h4>
 	<div class="metalinks">
 		<span class="commentsrsslink"><a href="/<?php echo $post->slug; ?>/atom">Feed for this Entry</a></span>
 		<span class="trackbacklink"><a href="<?php echo $post->slug; ?>/trackback">Trackback Address</a></span>

@@ -10,7 +10,7 @@
 							<span class="chronodata">
 								<abbr class="published"><?php echo $post->pubdate; ?></abbr>
 							</span>
-							<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comment_count; ?> Comments</a></span>
+							<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo Comments::count_by_slug($post->slug); ?> Comments</a></span>
 							<span class="entry-tags"><?php echo Utils::tag_and_list($post->tags); ?></span>
 						</small>
 							<div id="entry-content" class="entry-content">
