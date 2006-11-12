@@ -4,9 +4,8 @@
 	<title><?php Options::out('title'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html;" />
 	<meta name="generator" content="Habari" />
-  	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/rss2.php" />
-  	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php Options::out('base_url'); ?>atom" />
-	<link type="application/x.atom+xml" rel="service.post" href="<?php echo $url->get_url('collection'); ?>" title="<?php Options::out('blog_title'); ?>"/>   	
+	<link type="application/atom+xml" rel="service.post" href="<?php URL::out('collection'); ?>" title="<?php Options::out('blog_title'); ?>"/>   	
+	<link rel="EditURI" type="application/rsd+xml" href="<?php URL::out('rsd'); ?>" title="RSD" />
 
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('base_url'); ?>themes/k2/style.css" />
 
