@@ -30,7 +30,7 @@ Locale::set('en_US');  // This should come from the config
 
 // Connect to the database or fail informatively
 try {
-	DB::create( $db_connection['connection_string'], $db_connection['username'], $db_connection['password'] );
+	DB::create( $db_connection['connection_string'], $db_connection['username'], $db_connection['password'], $db_connection['prefix'] );
 }
 catch( Exception $e) {
 	die( 'Could not connect to database using the supplied credentials.  Please check config.php for the correct values. Further information follows: ' .  $e->getMessage() );		

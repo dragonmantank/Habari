@@ -15,6 +15,7 @@ $db_connection = array(
 'connection_string' => 'mysql:host=localhost;dbname=habari',  // MySQL Connection string
 'username' => 'mysql_username',  // MySQL username
 'password' => 'mysql_password',  // MySQL password
+'prefix' => 'habari__', // the prefix to apply to all tables
 );
 
 ?>

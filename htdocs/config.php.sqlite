@@ -15,6 +15,7 @@ $db_connection = array(
 'connection_string' => 'sqlite:' . dirname(__FILE__) . '/habari.db',  // SQLite Connecton string
 'username' => null,  // SQLite username
 'password' => null,  // SQLite password
+'prefix' => 'habari__', // the prefix to apply to all tables
 );
 
 ?>
