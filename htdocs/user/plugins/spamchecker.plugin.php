@@ -6,10 +6,35 @@
  * This class is a demonstration of a Habari plugin.
  * It should probably not be distributed with the Habari source
  * unless it is significantly improved.
- **/     
+ * $LastChangedDate$
+ * $Rev$   
+ * $LastChangedBy$
+ * $HeadURL$
+ **/
 
 class SpamChecker extends Plugin
 {
+	/**
+	 * function info
+	 * Returns information about this plugin
+	 * @return array Plugin info array
+	 **/
+	function info()
+	{
+		return array (
+			'name' => 'Spam Checker',
+			'url' => 'http://habariblog.org',
+			'author' => 'Habari Developers',
+			'authorurl' => 'http://habariblog.org',
+			'version' => '1.0',
+			'description' => 'Provides minimal spam checking as a sample plugin',
+		);
+	}	 	 	 	
+
+	public function action_plugins_loaded()
+	{
+		Utils::debug('ok');
+	}
 
 	/**
 	 * function filter_add_comment
@@ -22,7 +47,7 @@ class SpamChecker extends Plugin
 	 * is that you shouldn't return null from this function.	 	 
 	 * @param Comment The comment that will be processed before storing it in the database.
 	 * @return Comment The comment result to store.
-	 **/	 	 	 	 	 	 	 	
+	 **/	 	 	 	 	
 	function filter_add_comment($comment)
 	{
 		// This plugin ignores non-comments
@@ -38,7 +63,7 @@ class SpamChecker extends Plugin
 		}
 		return $comment;
 	}
-
+	
 }
 
 ?>
