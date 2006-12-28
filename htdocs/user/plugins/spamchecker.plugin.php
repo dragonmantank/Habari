@@ -31,9 +31,13 @@ class SpamChecker extends Plugin
 		);
 	}	 	 	 	
 
+	/**
+	 * function actions_plugins_loaded
+	 * Executes after all plugins are loaded
+	 **/	 	 	
 	public function action_plugins_loaded()
 	{
-		Utils::debug('ok');
+		//Utils::debug('ok');
 	}
 
 	/**
@@ -63,7 +67,19 @@ class SpamChecker extends Plugin
 		}
 		return $comment;
 	}
-	
+
+	/**
+	 * function filter_url_rules
+	 * Alters the rules used by the rewriter to attach URLs to specific output.
+	 * @param array A Rules array - see the URL class for the required structure
+	 * @return array The filtered Rules array
+	 **/	 
+	public function filter_url_rules($rules)
+	{
+		//$rules[] = array('year/month/day/id/slug', 'ThemeHandler', 'post');
+		return $rules;
+	}
+
 }
 
 ?>

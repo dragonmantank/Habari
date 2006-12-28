@@ -43,9 +43,17 @@ Installer::install();
 // unset the $db_connection variable, since we don't need it any more
 unset($db_connection);
 
-// Load plugins - need real code for this
-include_once(HABARI_PATH . '/user/plugins/spamchecker.php');
-new SpamChecker();
+// Activate all plugins - remove this when we have a plugin admin UI
+foreach(Plugins::list_all() as $plugin) {
+	Plugins::activate_plugin($plugin);
+}
+
+// Load plugins
+foreach( Plugins::list_active() as $file ) {
+	include_once($file);  // Include these files in the global namespace
+}
+Plugins::load();
+Plugins::act('plugins_loaded');
 
 // Figure out what the user requested and do something about it
 $url = ( isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'] . ( isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '') . ( (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != '')) ? '?' . $_SERVER['QUERY_STRING'] : ''));
