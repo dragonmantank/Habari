@@ -10,8 +10,8 @@
 							<span class="chronodata">
 								<abbr class="published"><?php echo $post->pubdate; ?></abbr>
 							</span>
-							<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo Comments::count_by_slug($post->slug); ?> Comments</a></span>
-							<span class="entry-tags"><?php echo Utils::tag_and_list($post->tags); ?></span>
+							<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comments->approved->count; ?> Comments</a></span>
+							<span class="entry-tags"><?php echo Format::tag_and_list($post->tags); ?></span>
 						</small>
 							<div id="entry-content" class="entry-content">
 								<?php echo $post->content; ?>
@@ -24,10 +24,10 @@
 	<hr />
 <div class="secondary">
 	<div id="search"><h2>Search</h2>
-<form method="get" id="searchform" action="/index.php">
-	<input type="text" id="s" name="s" value="search blog archives" />
-	<input type="submit" id="searchsubmit" value="go" />
-</form>
+		<form id="search" action="<?php URL::out('search'); ?>">
+			<input type="text" name="criteria" />
+			<input id="searchsubmit" type="submit" name="search" value="Search" />
+		</form>
 	</div>	
 	<div class="sb-about">
 		<h2>About</h2>
