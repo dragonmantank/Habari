@@ -12,7 +12,7 @@ if ( $user ) :
 <?php
 else :
 ?>
-<form method="post" action="<?php URL::out('login'); ?>">
+<form method="post" action="<?php URL::out('login', false); ?>">
 Name: <input type="text" size="25" name="name" /><br />
 Pass: <input type="password" size="25" name="pass" /><br />
 <input type="submit" value="GO!" /><input type="hidden" name="action" value="login" />
