@@ -3,16 +3,11 @@
 /**
  * SpamChecker Class
  * 
- * This class is a demonstration of a Habari plugin.
- * It should probably not be distributed with the Habari source
- * unless it is significantly improved.
- * $LastChangedDate$
- * $Rev$   
- * $LastChangedBy$
- * $HeadURL$
+ * This class implements first round spam checking.
+ *
  **/
 
-class SpamChecker extends Plugin
+class SDMSpamCheck extends Plugin
 {
 	/**
 	 * function info
@@ -22,15 +17,15 @@ class SpamChecker extends Plugin
 	function info()
 	{
 		return array (
-			'name' => 'Spam Checker',
-			'url' => 'http://habariblog.org',
-			'author' => 'Habari Developers',
-			'authorurl' => 'http://habariblog.org',
+			'name' => 'SDM Spam Check',
+			'url' => 'http://skippy.net',
+			'author' => 'Scott Merill',
+			'authorurl' => 'http://skippy.net',
 			'version' => '1.0',
-			'description' => 'Provides minimal spam checking as a sample plugin',
+			'description' => 'Silently discards obvious comment spam.',
 		);
-	}	 	 	 	
-
+	}
+	
 	/**
 	 * function actions_plugins_loaded
 	 * Executes after all plugins are loaded
@@ -39,7 +34,7 @@ class SpamChecker extends Plugin
 	{
 		//Utils::debug('ok');
 	}
-
+	
 	/**
 	 * function filter_add_comment
 	 * This function is executed when the filter "add_comment" is applied to a Comment object.
@@ -52,34 +47,50 @@ class SpamChecker extends Plugin
 	 * @param Comment The comment that will be processed before storing it in the database.
 	 * @return Comment The comment result to store.
 	 **/	 	 	 	 	
-	function filter_add_comment($comment)
+	function filter_add_comment( $comment )
 	{
 		// This plugin ignores non-comments
 		if($comment->type != Comment::COMMENT) {
 			return $comment;
 		}
-		
-		// Comments with more than one link are spam
-		// When we implement real spam protection, this will look even more like a joke. 
-		preg_match_all('/<\s*a\s.*?<\s*\/\s*a\s*>/', $comment->content, $matches);
-		if(count($matches[0]) > 1) {
+
+	    // first, check the commenter's name
+	    // if it's only digits, then we can discard this comment
+	    if ( preg_match( "/^\d+$/", $comment->name ) ) {
 			$comment->status = Comment::STATUS_SPAM;
-		}
-		return $comment;
-	}
+	    }
 
-	/**
-	 * function filter_url_rules
-	 * Alters the rules used by the rewriter to attach URLs to specific output.
-	 * @param array A Rules array - see the URL class for the required structure
-	 * @return array The filtered Rules array
-	 **/	 
-	public function filter_url_rules($rules)
-	{
-		//$rules[] = array('year/month/day/id/slug', 'ThemeHandler', 'post');
-		return $rules;
-	}
+	    // now look at the comment text
+	    // if it's digits only, discard it
+	    $textonly = strip_tags( $comment->content );
+	
+	    if ( preg_match( "/^\d+$/", $textonly ) ) {
+			$comment->status = Comment::STATUS_SPAM;
+	    }
 
+	    // is the content the single word "array"?
+	    if ( 'array' == strtolower( $textonly ) ) {
+			$comment->status = Comment::STATUS_SPAM;
+	    }
+
+	    // is the conent the same as the name?
+	    if ( strtolower( $textonly ) == strtolower( $comment->name ) ) {
+			$comment->status = Comment::STATUS_SPAM;
+	    }
+
+	    // a lot of spam starts with "<strong>some text...</strong>"
+	    if ( preg_match( "#^<strong>[^.]+\.\.\.</strong>#", $comment->content ) )
+	    {
+			$comment->status = Comment::STATUS_SPAM;
+	    }
+
+	    // are there more than 8 URLs posted?  If so, it's almost certainly spam
+	    if ( 3 <= preg_match_all( "/a href=/", strtolower( $comment->content ), $matches ) ) 
+		{
+			$comment->status = Comment::STATUS_SPAM;
+	   	}
+
+	    // otherwise everything looks good, so continue processing the comment
+	    return $comment;
+	}
 }
-
-?>
