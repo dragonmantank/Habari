@@ -16,8 +16,11 @@
 	<div class="sb-about">
 		<h2>About</h2>
 				<p><?php Options::out('about'); ?></p>
+		<?php if ( User::identify() )
+		{ ?>
 		<h2>User</h2>
 			<p><?php echo User::identify()->username; ?></p>
+		<?php } ?>
 	</div>	
 </div>
 <div class="clear"></div>
