@@ -4,7 +4,10 @@
 	<title><?php Options::out('title'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html;" />
 	<meta name="generator" content="Habari" />
-	<link type="application/atom+xml" rel="service.post" href="<?php URL::out('collection'); ?>" title="<?php Options::out('blog_title'); ?>"/>   	
+	<link type="application/atom+xml" rel="service.post" href="<?php URL::out('collection'); ?>" title="<?php Options::out('blog_title'); ?>"/>
+	
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="<?php URL::out('collection'); ?>" />
+	
 	<link rel="EditURI" type="application/rsd+xml" href="<?php URL::out('rsd'); ?>" title="RSD" />
 
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('base_url'); ?>themes/k2/style.css" />
