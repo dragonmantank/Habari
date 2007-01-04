@@ -1,0 +1,19 @@
+# This file didn't have a dot because we didn't want to overwrite
+# your actual .htaccess file.  You should rename this file to .htaccess if you
+# didn't already do so.
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . /index.php [PT]
+</IfModule>
+
+## Use this instead if your installation is in a "habari" subdirectory.
+
+#<IfModule mod_rewrite.c>
+#RewriteEngine On
+#RewriteBase /habari/
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule . /habari/index.php [PT]
+#</IfModule>
