@@ -1,8 +1,10 @@
 <?php
 $display = array(
 	'status'=>Post::STATUS_PUBLISHED, 
+	'tag'=>URL::o()->settings['tag'],
 	'page'=> isset(URL::o()->settings['index']) ? URL::o()->settings['index'] : 1,
 );
+
 ?>
 <?php $theme->header(); ?>
 <div class="content">
@@ -26,7 +28,7 @@ $display = array(
 				</div>
 			<?php } ?>
 		</div>
-		<div id="page-selector"><strong>Page:</strong><?php echo Utils::page_selector(isset(URL::o()->settings['index']) ? URL::o()->settings['index'] : 1, Utils::archive_pages(Posts::count_last()), 'home' ); ?></div>
+		<div id="page-selector"><strong>Page:</strong><?php echo Utils::page_selector($display['page'], Utils::archive_pages(Posts::count_last()), 'tag', array( 'tag'=>$display['tag'] ) ); ?></div>
 	</div>
 	<hr />
 <div class="secondary">

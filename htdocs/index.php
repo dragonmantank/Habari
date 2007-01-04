@@ -26,7 +26,7 @@ if(file_exists(HABARI_PATH . '/config.php')) {
 }
 
 // Set the locale
-Locale::set('en_US');  // This should come from the config
+Locale::set($locale);  // This should come from the config
 
 // Connect to the database or fail informatively
 try {
@@ -35,7 +35,6 @@ try {
 catch( Exception $e) {
 	die( 'Could not connect to database using the supplied credentials.  Please check config.php for the correct values. Further information follows: ' .  $e->getMessage() );		
 }
-Locale::set('en');
 
 // Install the database tables if they're not already installed
 Installer::install();
@@ -59,5 +58,6 @@ Plugins::act('plugins_loaded');
 $url = ( isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'] . ( isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '') . ( (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != '')) ? '?' . $_SERVER['QUERY_STRING'] : ''));
 $url = new URL( $url );
 $url->handle_request();
+//Update::check('foo', 5);
 
 ?>

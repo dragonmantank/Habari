@@ -18,4 +18,6 @@ $db_connection = array(
 'prefix' => 'habari__', // the prefix to apply to all tables
 );
 
+$locale = 'en';
+
 ?>

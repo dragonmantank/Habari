@@ -5,15 +5,15 @@
 			<?php $post = Post::get(); ?>
 				<div id="<?php echo $post->guid; ?>">
 					<div class="entry-head">
-						<h3 id="entry-title" class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title; ?></a></h3>
+						<h3 id="entry-title" class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->out_title; ?></a></h3>
 						<small class="entry-meta">
 							<span class="chronodata">
-								<abbr class="published"><?php echo $post->pubdate; ?></abbr>
+								<abbr class="published"><?php echo $post->out_pubdate; ?></abbr>
 							</span>
 							<span class="commentslink">Closed</span>
 						</small>
 							<div id="entry-content" class="entry-content">
-								<?php echo $post->content; ?>
+								<?php echo $post->out_content; ?>
 							</div>
 					</div>
 				</div>

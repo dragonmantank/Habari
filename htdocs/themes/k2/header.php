@@ -10,7 +10,7 @@
 	
 	<link rel="EditURI" type="application/rsd+xml" href="<?php URL::out('rsd'); ?>" title="RSD" />
 
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('base_url'); ?>themes/k2/style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('base_url'); ?>themes/<?php Options::out('theme_dir'); ?>/style.css" />
 
 	<?php if ( User::identify() ) { // Still needs to check for edit permissions ?>
 	<style type="text/css">
@@ -20,10 +20,11 @@
 		.eip_saving { background-color: #903; color: #fff; }
 	</style>
 
-	<script type="text/javascript" src="scripts/prototype.js"></script>
-	<script type="text/javascript" src="scripts/EditInPlace.js"></script>
+	<script type="text/javascript" src="scripts/jquery.js"></script>
+	<!-- <script type="text/javascript" src="scripts/EditInPlace.js"></script> -->
 
 	<script type="text/javascript">
+	/*  // disabled... for now...
 	Event.observe(window, 'load', init, false);
 	function init() {
 		EditInPlace.makeEditable( {
@@ -37,6 +38,7 @@
 			save_url: ''
 		} );
 	}
+	*/
 	</script>
 	<?php } ?>
 </head>

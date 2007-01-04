@@ -1,24 +1,29 @@
+<?php
+$page = isset(URL::o()->settings['index']) ? URL::o()->settings['index'] : 1;
+$criteria = URL::o()->settings['criteria']
+?>
 <?php $theme->header(); ?>
 <div class="content">
 	<div id="primary">
 	<div id="primarycontent" class="hfeed">
 		<h2>Search results for <?php echo $_REQUEST['criteria']; ?></h2>
-	<?php foreach ( $posts = Posts::search($_REQUEST['criteria']) as $post ) { ?>
+	<?php foreach ( $posts = Posts::search($criteria, $page) as $post ) { ?>
 		<div class="entry-head">
-			<h3 id="entry-title" class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title; ?></a></h3>
+			<h3 id="entry-title" class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->out_title; ?></a></h3>
 			<small class="entry-meta">
 				<span class="chronodata">
-					<abbr class="published"><?php echo $post->pubdate; ?></abbr>
+					<abbr class="published"><?php echo $post->out_pubdate; ?></abbr>
 				</span>
 				<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comments->approved->count; ?> Comments</a></span>
-				<span class="entry-tags"><?php echo Format::tag_and_list($post->tags); ?></span>
+				<span class="entry-tags"><?php echo $post->out_tags; ?></span>
 			</small>
 		</div>
 			<div class="entry-content">
-				<?php echo $post->content; ?>
+				<?php echo $post->out_content; ?>
 			</div>
 		<?php } ?>
-	</div>	
+	</div>
+	<div id="page-selector"><strong>Page:</strong><?php echo Utils::page_selector($page, Utils::archive_pages(Posts::count_last()), 'search', array('criteria'=>$criteria) ); ?></div>
 	</div>	
 		<hr />
 			<div class="secondary">
