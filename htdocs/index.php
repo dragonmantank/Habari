@@ -1,4 +1,12 @@
 <?php
+/**
+ * Habari index.php
+ * 
+ * Handles all incoming requests, connects to the database, sets the locale, etc.
+ *     
+ * @package Habari
+ */
+ 
 // set our constant
 define('HABARI_PATH', dirname(__FILE__));
 
@@ -26,7 +34,7 @@ if(file_exists(HABARI_PATH . '/config.php')) {
 }
 
 // Set the locale
-Locale::set($locale);  // This should come from the config
+Locale::set($locale);
 
 // Connect to the database or fail informatively
 try {
