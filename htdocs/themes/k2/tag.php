@@ -2,6 +2,7 @@
 $display = array(
 	'status'=>Post::STATUS_PUBLISHED, 
 	'tag'=>URL::o()->settings['tag'],
+	'content_type'=>Post::TYPE_ENTRY,
 	'page'=> isset(URL::o()->settings['index']) ? URL::o()->settings['index'] : 1,
 );
 

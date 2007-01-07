@@ -1,6 +1,7 @@
 <?php
 $display = array(
-	'status'=>Post::STATUS_PUBLISHED, 
+	'status'=>Post::STATUS_PUBLISHED,
+	'content_type'=>Post::TYPE_ENTRY,
 	'page'=> isset(URL::o()->settings['index']) ? URL::o()->settings['index'] : 1,
 );
 ?>
