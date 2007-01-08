@@ -6,7 +6,14 @@
  *     
  * @package Habari
  */
- 
+
+ // version check and die if below requirement
+ $version_array = explode( '.', phpversion());
+
+ if ( $version_array[0] < 5 ) {
+	die ( 'Habari is designed to run on PHP5 or higher. You are currently running PHP ' . PHP_VERSION);
+}
+
 // set our constant
 define('HABARI_PATH', dirname(__FILE__));
 
@@ -65,5 +72,6 @@ $url = ( isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['SC
 $url = new URL( $url );
 $url->handle_request();
 //Update::check('foo', 5);
+
 
 ?>
