@@ -1,8 +1,7 @@
-<?php include_once(HABARI_PATH . '/themes/k2/header.php'); ?>
+<?php include_once('header.php'); ?>
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
-			<?php $post = Post::get(); ?>
 				<div id="<?php echo $post->guid; ?>">
 					<div class="entry-head">
 						<h3 id="entry-title" class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->out_title; ?></a></h3>
@@ -17,7 +16,7 @@
 							</div>
 					</div>
 				</div>
-		<?php include_once( HABARI_PATH . '/themes/k2/comments.php' ); ?>
+		<?php include_once( 'comments.php' ); ?>
 		</div>
 	</div>
 	<hr />
@@ -35,4 +34,4 @@
 </div>
 <div class="clear"></div>
 </div>
-<?php include_once('themes/k2/footer.php'); ?>
+<?php include_once('footer.php'); ?>

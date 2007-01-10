@@ -6,14 +6,7 @@
  *     
  * @package Habari
  */
-
- // version check and die if below requirement
- $version_array = explode( '.', phpversion());
-
- if ( $version_array[0] < 5 ) {
-	die ( 'Habari is designed to run on PHP5 or higher. You are currently running PHP ' . PHP_VERSION);
-}
-
+ 
 // set our constant
 define('HABARI_PATH', dirname(__FILE__));
 
@@ -30,9 +23,6 @@ function __autoload($class_name) {
 		die( 'Could not include class file ' . strtolower($class_name) . '.php' );
 }
 
-// Register the error handler
-Error::handle_errors(); 
-
 // Undo what magic_quotes_gpc might have wrought
 Utils::revert_magic_quotes_gpc();
 
@@ -46,8 +36,13 @@ if(file_exists(HABARI_PATH . '/config.php')) {
 // Set the locale
 Locale::set($locale);
 
-// Connect to the database
-DB::create( $db_connection['connection_string'], $db_connection['username'], $db_connection['password'], $db_connection['prefix'] );
+// Connect to the database or fail informatively
+try {
+	DB::create( $db_connection['connection_string'], $db_connection['username'], $db_connection['password'], $db_connection['prefix'] );
+}
+catch( Exception $e) {
+	die( 'Could not connect to database using the supplied credentials.  Please check config.php for the correct values. Further information follows: ' .  $e->getMessage() );		
+}
 
 // Install the database tables if they're not already installed
 Installer::install();
@@ -67,11 +62,19 @@ foreach( Plugins::list_active() as $file ) {
 Plugins::load();
 Plugins::act('plugins_loaded');
 
-// Figure out what the user requested and do something about it
-$url = ( isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'] . ( isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '') . ( (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != '')) ? '?' . $_SERVER['QUERY_STRING'] : ''));
-$url = new URL( $url );
-$url->handle_request();
-//Update::check('foo', 5);
+$start_url= ( isset($_SERVER['REQUEST_URI']) 
+      ? $_SERVER['REQUEST_URI'] 
+      : $_SERVER['SCRIPT_NAME'] . 
+        ( isset($_SERVER['PATH_INFO']) 
+        ? $_SERVER['PATH_INFO'] 
+        : '') . 
+        ( (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != '')) 
+          ? '?' . $_SERVER['QUERY_STRING'] 
+          : ''));
 
+$url= new URL($start_url);
 
+// Create a new RewriteController to translate the incoming slug
+$controller= new RewriteController();
+$controller->dispatch_request();
 ?>
