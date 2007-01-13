@@ -5,11 +5,12 @@
 RewriteEngine On
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . /index.php [PT]
+RewriteRule . index.php [PT]
 
 ## Use this instead if your installation is in a "habari" subdirectory.
+## Only the RewriteBase line changes to include your subdirectory.
 
 #RewriteEngine On
 #RewriteBase /habari/
 #RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteRule . /habari/index.php [PT]
+#RewriteRule . index.php [PT]
