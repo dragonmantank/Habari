@@ -20,7 +20,9 @@
 		.eip_saving { background-color: #903; color: #fff; }
 	</style>
 
-	<script type="text/javascript" src="scripts/jquery.js"></script>
+	<script type="text/javascript" src="<?php Options::out('host_url'); ?>scripts/jquery.js"></script>
+	<?php echo Plugins::filter('theme_head', ''); ?>
+
 	<!-- <script type="text/javascript" src="scripts/EditInPlace.js"></script> -->
 
 	<script type="text/javascript">
