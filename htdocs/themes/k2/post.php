@@ -10,7 +10,7 @@
 							<span class="chronodata">
 								<abbr class="published"><?php echo $post->out_pubdate; ?></abbr>
 							</span>
-							<span class="commentslink">Closed</span>
+							<span class="commentslink"><?php echo Comments::count_by_slug( $post->slug ); ?> <?php echo _n( 'Comment', 'Comments', Comments::count_by_slug( $post->slug ) ); ?></span>
 						</small>
 							<div id="entry-content" class="entry-content">
 								<?php echo $post->out_content; ?>
