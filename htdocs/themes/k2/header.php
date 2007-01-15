@@ -51,7 +51,7 @@
 		<p class="description"><?php Options::out('tagline'); ?></p>
 		<ul class="menu">
 			<li><a href="http://code.google.com/p/habari/" title="Habari Project">Habari Project</a></li>
-			<?php if ( user::identify() ) { ?><li class="admintab"><a href="<?php URL::out('admin'); ?>" title="Admin area">Admin</a></li><?php } ?>
+			<?php if ( user::identify() ) { ?><li class="admintab"><a href="<?php URL::out('admin', false ); ?>" title="Admin area">Admin</a></li><?php } ?>
 		</ul>
 	</div>
 		<hr />
