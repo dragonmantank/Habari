@@ -51,14 +51,12 @@ class SDMCommentFilter extends Plugin
 	function filter_add_comment( $comment )
 	{
 		// This plugin ignores non-comments
-		if($comment->type != Comment::COMMENT) {
+		if ( $comment->type != Comment::COMMENT ) {
 			return $comment;
 		}
+		
 		// for now, let's just remove any <script> tags that might exist
-		if ( FALSE !== strpos( $comment->content, '<script>' ) )
-		{
-			preg_replace( '#<script>[^<]+</script>#', '', $comment->content );
-		}
+		preg_replace( '#<script[^>]*>.*?</script>#si', '', $comment->content );
 
 	    return $comment;
 	}
