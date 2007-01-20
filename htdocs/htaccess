@@ -3,14 +3,11 @@
 # didn't already do so.
 
 RewriteEngine On
+
+# RewriteBase should be the relative path by which your install is reachable
+# on the server, e.g. if your Habari blog were at http://example.com/habari/,
+# RewriteBase would be /habari/.
 RewriteBase /
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [PT]
-
-## Use this instead if your installation is in a "habari" subdirectory.
-## Only the RewriteBase line changes to include your subdirectory.
-
-#RewriteEngine On
-#RewriteBase /habari/
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteRule . index.php [PT]
