@@ -4,13 +4,13 @@
 	<title><?php Options::out('title'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html;" />
 	<meta name="generator" content="Habari" />
-	<link type="application/atom+xml" rel="service.post" href="<?php URL::out('collection'); ?>" title="<?php Options::out('blog_title'); ?>"/>
+	<link type="application/atom+xml" rel="service.post" href="<?php URL::out('collection', array('action'=>'index')); ?>" title="<?php Options::out('blog_title'); ?>"/>
 	
-	<link rel="alternate" type="application/atom+xml" title="Atom" href="<?php URL::out('collection'); ?>" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="<?php URL::out('collection', array('action'=>'index')); ?>" />
 	
 	<link rel="EditURI" type="application/rsd+xml" href="<?php URL::out('rsd'); ?>" title="RSD" />
 
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('host_url'); ?>themes/<?php Options::out('theme_dir'); ?>/style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('base_url'); ?>user/themes/<?php Options::out('theme_dir'); ?>/style.css" />
 
 	<?php if ( User::identify() ) { // Still needs to check for edit permissions ?>
 	<style type="text/css">
@@ -20,9 +20,7 @@
 		.eip_saving { background-color: #903; color: #fff; }
 	</style>
 
-	<script type="text/javascript" src="<?php Options::out('host_url'); ?>scripts/jquery.js"></script>
-	<?php echo Plugins::filter('theme_head', ''); ?>
-
+	<script type="text/javascript" src="scripts/jquery.js"></script>
 	<!-- <script type="text/javascript" src="scripts/EditInPlace.js"></script> -->
 
 	<script type="text/javascript">
@@ -47,11 +45,11 @@
 <body class="home">
 <div id="page">
 	<div id="header">
-		<h1><a href="<?php Options::out('host_url'); ?>"><?php Options::out('title'); ?></a></h1>
+		<h1><a href="<?php Options::out('base_url'); ?>"><?php Options::out('title'); ?></a></h1>
 		<p class="description"><?php Options::out('tagline'); ?></p>
 		<ul class="menu">
 			<li><a href="http://code.google.com/p/habari/" title="Habari Project">Habari Project</a></li>
-			<?php if ( user::identify() ) { ?><li class="admintab"><a href="<?php URL::out('admin', false ); ?>" title="Admin area">Admin</a></li><?php } ?>
+			<?php if ( user::identify() ) { ?><li class="admintab"><a href="<?php Options::out('base_url'); ?>admin" title="Admin area">Admin</a></li><?php } ?>
 		</ul>
 	</div>
 		<hr />

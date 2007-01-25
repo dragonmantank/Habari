@@ -1,10 +1,10 @@
 <?php // Do not delete these lines
-	if ( 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) )
-		die ( __( 'Please do not load this page directly. Thanks!' ) );
+	if ('comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
+		die (__('Please do not load this page directly. Thanks!'));
 	?>
 <hr />
 <div class="comments">
-	<h4><span id="comments"><?php echo Comments::count_by_slug( $post->slug ); ?> <?php echo _n('Response', 'Responses', Comments::count_by_slug( $post->slug )) ?> to </span><?php echo $post->title; ?></h4>
+	<h4><span id="comments"><?php echo $post->comments->approved->count; ?> Responses to </span><?php echo $post->title; ?></h4>
 	<div class="metalinks">
 		<span class="commentsrsslink"><a href="/<?php echo $post->slug; ?>/atom">Feed for this Entry</a></span>
 		<span class="trackbacklink"><a href="<?php echo $post->slug; ?>/trackback">Trackback Address</a></span>
@@ -31,28 +31,31 @@
 		<?php 
 				endforeach;
 			else:
-				_e( 'There are currently no comments.' );
+				_e('There are currently no comments.');
 			endif; ?>
 	</ol>
 	<div class="comments">
 		<h4 id="respond" class="reply">Leave a Reply</h4>
 		<?php
-			$cookie= 'comment_' . Options::get( 'GUID' );
-			if ( User::identify() ) {
-				$commenter_name= User::identify()->username;
-				$commenter_email= User::identify()->email;
-				$commenter_url= Options::get( 'siteurl' );
+			$cookie = 'comment_' . Options::get('GUID');
+			if ( User::identify() )
+			{
+				$commenter_name = User::identify()->username;
+				$commenter_email = User::identify()->email;
+				$commenter_url = Options::get('siteurl');
 			}
-			elseif ( isset( $_COOKIE[$cookie] ) ) {
-				list($commenter_name, $commenter_email, $commenter_url)= explode( '#', $_COOKIE[$cookie] );
+			elseif ( isset($_COOKIE[$cookie]) )
+			{
+				list($commenter_name, $commenter_email, $commenter_url) = explode('#', $_COOKIE[$cookie]);
 			}
-			else {
-				$commenter_name= '';
-				$commenter_email= '';
-				$commenter_url= '';
+			else
+			{
+				$commenter_name = '';
+				$commenter_email = '';
+				$commenter_url = '';
 			}
 			?>
-			<form action="<?php URL::out( 'add_comment' ); ?>" method="post" id="commentform">
+			<form action="<?php URL::out('user', array('page'=>'add_comment', 'post_id'=>$post->id, 'post_slug'=>$post->slug)); ?>" method="post" id="commentform">
 			<input type="hidden" name="post_slug" value="<?php echo $post->slug; ?>" />
 				<div id="comment-personaldetails">
 					<p>

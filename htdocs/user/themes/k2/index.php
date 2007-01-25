@@ -17,10 +17,7 @@ $display = array(
 							<span class="chronodata">
 								<abbr class="published"><?php echo $post->out_pubdate; ?></abbr>
 							</span>
-							<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comments->approved->count; ?> <?php echo _n('Comment', 'Comments', $post->comments->approved->count); ?></a></span>
-      <?php if ( user::identify() ) { ?><a href="<?php
-      URL::out('admin', false ); ?>/publish?slug=<?php 
-      echo $post->slug; ?>" title="Edit post">Edit</a><?php } ?>
+							<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comments->approved->count; ?> Comments</a></span>
 							<span class="entry-tags"><?php echo $post->out_tags; ?></span>
 						</small>
 							<div id="entry-content" class="entry-content">
