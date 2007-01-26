@@ -2,10 +2,11 @@
 </div> <!-- Close Page -->
 <hr />
 <p id="footer"><small>
-<?php Options::out('title'); ?> is... powered by <a href="http://code.google.com/p/habari/" title="Habari">Habari</a>, and currently <a href="http://apachecon.com" title="ApacheCon">ApacheCon US 2006</a>
+<?php Options::out('title'); ?>
+is powered by <a href="http://www.habariproject.org/" title="Habari">Habari</a>
+and <a href="http://en.wikipedia.org/wiki/Earl_Grey_tea" title="Earl Grey tea" rel="nofollow">Earl Grey tea</a>. 
 </small></p>
 
-<?php /* Try. to understand */ ?>
 <?php include (HABARI_PATH . '/system/admin/db_profiling.php');?>
 </body>
 </html> 
