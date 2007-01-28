@@ -2,7 +2,7 @@
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
-				<div id="<?php echo $post->guid; ?>">
+				<div id="<?php echo $post->id; ?>">
 					<div class="entry-head">
 						<h3 id="entry-title" class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->out_title; ?></a></h3>
 						<small class="entry-meta">
