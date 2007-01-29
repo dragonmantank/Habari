@@ -48,7 +48,7 @@
 		<h1><a href="<?php Options::out('base_url'); ?>"><?php Options::out('title'); ?></a></h1>
 		<p class="description"><?php Options::out('tagline'); ?></p>
 		<ul class="menu">
-			<li><a href="http://code.google.com/p/habari/" title="Habari Project">Habari Project</a></li>
+			<li><a href="http://habariproject.org/" title="Habari Project">Habari Project</a></li>
 			<?php if ( user::identify() ) { ?><li class="admintab"><a href="<?php Options::out('base_url'); ?>admin" title="Admin area">Admin</a></li><?php } ?>
 		</ul>
 	</div>

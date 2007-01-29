@@ -17,7 +17,7 @@
                   <?php echo $post->comments->approved->count; ?> Comments
                 </a>
               </span>
-							<span class="entry-tags"><?php echo $post->out_tags; ?></span>
+							<span class="entry-tags"><?php echo Format::tag_and_list($post->tags); /* This should be an in "out" filter, but there is currently no way to load a theme.php for a theme to register such a thing.  */ ?></span>
 						</small>
 							<div id="entry-content" class="entry-content">
 								<?php echo $post->out_content; ?>
@@ -27,7 +27,7 @@
 			<?php } ?>
 		</div>
 		<div id="page-selector"><strong>Page:</strong>
-      <?php echo Utils::page_selector(isset($index) ? $index : 1, Utils::archive_pages(Posts::count_last()), 'index_page' ); ?>
+      <?php echo Utils::page_selector(isset($index) ? $index : 1, Utils::archive_pages(Posts::count_last()), 'display_posts_at_page' ); ?>
     </div>
 	</div>
 	<hr />

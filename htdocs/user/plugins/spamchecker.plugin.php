@@ -94,4 +94,49 @@ class SDMSpamCheck extends Plugin
 	    // otherwise everything looks good, so continue processing the comment
 	    return $comment;
 	}
+	
+	/**
+	 * These code functions will be used as soon as 
+	 * you can hook rewrite rules to modify the output for
+	 * a specific rule.
+	 * 
+	 * You would be able to use this for the comment form action:
+	 * 	  URL::get( 'add_comment', array('id'=>$post->id, 'code'=>Plugins::filter('get_code', 0) );
+	 * 
+	 * And then verify that the URL used to submit the form 
+	 * was valid before execution ever hit the comment filtering. 	 	 	 
+	 **/	 	 	 	
+	
+	/**
+	 * Get a 10-digit hex code that identifies the user submitting the comment
+	 * @param A post id to which the comment will be submitted
+	 * @param The IP address of the commenter
+	 * @return A 10-digit hex code
+	 **/	 	 	 	 
+	public static function get_code($post_id, $ip = '')
+	{
+		if( $ip == '' ) {
+			$ip = ip2long($_SERVER['REMOTE_ADDR']);
+		}
+		$code = substr(md5( $post_id . Options::get('GUID') . 'more salt' . $ip ), 0, 10);
+		$code = Plugins::filter('comment_code', $code, $post_id, $ip);
+		return $code;
+	}
+	
+	/**
+	 * Verify a 10-digit hex code that identifies the user submitting the comment
+	 * @param A post id to which the comment has been submitted
+	 * @param The IP address of the commenter
+	 * @return True if the code is valid, false if not
+	 **/	 	 	 	 
+	public static function verify_code($suspect_code, $post_id, $ip = '')
+	{
+		if( $ip == '' ) {
+			$ip = ip2long($_SERVER['REMOTE_ADDR']);
+		}
+		$code = substr(md5( $post_id . Options::get('GUID') . 'more salt' . $ip ), 0, 10);
+		$code = Plugins::filter('comment_code', $code, $post_id, $ip);
+		return ($suspect_code == $code);
+	}
+
 }

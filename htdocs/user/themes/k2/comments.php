@@ -55,7 +55,7 @@
 				$commenter_url = '';
 			}
 			?>
-			<form action="<?php URL::out('user', array('page'=>'add_comment', 'post_id'=>$post->id, 'post_slug'=>$post->slug)); ?>" method="post" id="commentform">
+			<form action="<?php URL::out('comment', array('id'=>$post->id) ); ?>" method="post" id="commentform">
 			<input type="hidden" name="post_slug" value="<?php echo $post->slug; ?>" />
 				<div id="comment-personaldetails">
 					<p>
