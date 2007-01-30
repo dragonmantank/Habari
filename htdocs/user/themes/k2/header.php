@@ -4,9 +4,9 @@
 	<title><?php Options::out('title'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html;" />
 	<meta name="generator" content="Habari" />
-	<link type="application/atom+xml" rel="service.post" href="<?php URL::out('collection', array('action'=>'index')); ?>" title="<?php Options::out('blog_title'); ?>"/>
+	<link type="application/atom+xml" rel="service.post" href="<?php URL::out('collection', array('index'=>'1')); ?>" title="<?php Options::out('blog_title'); ?>"/>
 	
-	<link rel="alternate" type="application/atom+xml" title="Atom" href="<?php URL::out('collection', array('action'=>'index')); ?>" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="<?php URL::out('collection', array('index'=>'1')); ?>" />
 	
 	<link rel="EditURI" type="application/rsd+xml" href="<?php URL::out('rsd'); ?>" title="RSD" />
 
@@ -20,7 +20,7 @@
 		.eip_saving { background-color: #903; color: #fff; }
 	</style>
 
-	<script type="text/javascript" src="scripts/jquery.js"></script>
+	<script type="text/javascript" src="<?php Options::out('base_url'); ?>scripts/jquery.js"></script>
 	<!-- <script type="text/javascript" src="scripts/EditInPlace.js"></script> -->
 
 	<script type="text/javascript">
