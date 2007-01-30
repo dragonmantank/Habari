@@ -6,7 +6,12 @@
  *     
  * @package Habari
  */
- 
+
+// version check and die if below requirement
+if ( ! version_compare( PHP_VERSION, '5.1.0', '>=' ) ) {
+	die ( 'Habari needs PHP 5.1.x or higher to run. You are currently running PHP ' . PHP_VERSION . '.' );
+}
+
 // set our constant
 define('HABARI_PATH', dirname(__FILE__));
 
