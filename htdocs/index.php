@@ -78,7 +78,7 @@ else
 }
 
 // Set the locale
-Locale::set();
+Locale::set( 'en-us' );
 
 // Activate all plugins - remove this when we have a plugin admin UI
 foreach(Plugins::list_all() as $plugin) {

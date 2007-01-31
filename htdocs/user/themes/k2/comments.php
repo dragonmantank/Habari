@@ -1,6 +1,6 @@
 <?php // Do not delete these lines
 	if ('comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
-		die (__('Please do not load this page directly. Thanks!'));
+		die (_t('Please do not load this page directly. Thanks!'));
 	?>
 <hr />
 <div class="comments">
