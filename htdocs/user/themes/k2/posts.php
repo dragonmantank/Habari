@@ -33,16 +33,16 @@
 	<hr />
 <div class="secondary">
 	<div id="search"><h2>Search</h2>
-		<form id="search" action="<?php URL::out('search'); ?>">
+		<form id="searchform" action="<?php URL::out('search'); ?>">
 			<input type="text" name="criteria" />
 			<input id="searchsubmit" type="submit" name="search" value="Search" />
 		</form>
 	</div>	
 	<div class="sb-about">
 		<h2>About</h2>
-				<p><?php Options::out('about'); ?></p>
+		<p><?php Options::out('about'); ?></p>
 		<h2>User</h2>
-			<p><?php include 'loginform.php'; ?></p>
+		<?php include 'loginform.php'; ?>
 	</div>	
 </div>
 <div class="clear"></div>
