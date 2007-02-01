@@ -28,7 +28,7 @@ $criteria = URL::o()->settings['criteria']
 		<hr />
 			<div class="secondary">
 				<div id="search"><h2>Search</h2>
-					<form id="search" action="<?php URL::out('search'); ?>">
+					<form id="searchform" action="<?php URL::out('search'); ?>">
 						<input type="text" name="criteria" />
 						<input id="searchsubmit" type="submit" name="search" value="Search" />
 					</form>

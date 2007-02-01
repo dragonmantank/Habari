@@ -3,10 +3,10 @@
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
 			<?php foreach ( $posts as $post ) { ?>
-				<div id="<?php echo $post->id; ?>">
+				<div id="post-<?php echo $post->id; ?>">
 					<div class="entry-head">
 						<h3 id="entry-title" class="entry-title">
-              <a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->out_title; ?></a>
+              <a href="<?php echo $post->permalink; ?>" rel="bookmark" title="<?php echo $post->title; ?>"><?php echo $post->out_title; ?></a>
             </h3>
 						<small class="entry-meta">
 							<span class="chronodata">
