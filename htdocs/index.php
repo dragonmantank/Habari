@@ -77,6 +77,9 @@ else
 	$installer->begin_install();
 }
 
+// XXX this is probably not the best place to put this
+header( 'Content-Type: text/html;charset=utf-8' );
+
 // Set the locale
 Locale::set( 'en-us' );
 

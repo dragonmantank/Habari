@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
 	<title><?php Options::out('title'); ?></title>
-	<meta http-equiv="Content-Type" content="text/html;" />
+	<meta http-equiv="Content-Type" content="text/html" />
 	<meta name="generator" content="Habari" />
 	<link type="application/atom+xml" rel="service.post" href="<?php URL::out('collection', array('index'=>'1')); ?>" title="<?php Options::out('blog_title'); ?>"/>
 	
@@ -13,33 +13,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('base_url'); ?>user/themes/<?php Options::out('theme_dir'); ?>/style.css" />
 
 	<?php if ( User::identify() ) { // Still needs to check for edit permissions ?>
-	<style type="text/css">
-		.eip_editable { background-color: #ff9; }
-		.eip_savebutton { background-color: #36f; color: #fff; }
-		.eip_cancelbutton { background-color: #000; color: #fff; }
-		.eip_saving { background-color: #903; color: #fff; }
-	</style>
-
 	<script type="text/javascript" src="<?php Options::out('base_url'); ?>scripts/jquery.js"></script>
-	<!-- <script type="text/javascript" src="scripts/EditInPlace.js"></script> -->
-
-	<script type="text/javascript">
-	/*  // disabled... for now...
-	Event.observe(window, 'load', init, false);
-	function init() {
-		EditInPlace.makeEditable( {
-			type: 'textarea',
-			id: 'entry-title',
-			save_url: '>'
-		} );
-		EditInPlace.makeEditable( {
-			type: 'textarea',
-			id: 'entry-content',
-			save_url: ''
-		} );
-	}
-	*/
-	</script>
 	<?php } ?>
 </head>
 <body class="home">
@@ -52,4 +26,4 @@
 			<?php if ( user::identify() ) { ?><li class="admintab"><a href="<?php Options::out('base_url'); ?>admin" title="Admin area">Admin</a></li><?php } ?>
 		</ul>
 	</div>
-		<hr />
+	<hr />
