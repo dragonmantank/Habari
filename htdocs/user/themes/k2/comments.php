@@ -56,7 +56,6 @@
 			}
 			?>
 			<form action="<?php URL::out('comment', array('id'=>$post->id) ); ?>" method="post" id="commentform">
-			<input type="hidden" name="post_slug" value="<?php echo $post->slug; ?>" />
 				<div id="comment-personaldetails">
 					<p>
 						<input type="text" name="name" id="name" value="<?php echo $commenter_name; ?>" size="22" tabindex="1" />

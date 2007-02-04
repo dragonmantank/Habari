@@ -1,24 +1,24 @@
 <?php
 $page= isset($index) ? $index : 1;
 ?>
-<?php $theme->header(); ?>
+<?php include 'header.php'; ?>
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
 			<h2>Search results for <?php echo $criteria; ?></h2>
 			<?php foreach ( $posts = Posts::search($criteria, $page) as $post ) { ?>
 			<div class="entry-head">
-				<h3 class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->out_title; ?></a></h3>
+				<h3 class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title_out; ?></a></h3>
 				<small class="entry-meta">
 					<span class="chronodata">
-						<abbr class="published"><?php echo $post->out_pubdate; ?></abbr>
+						<abbr class="published"><?php echo $post->pubdate_out; ?></abbr>
 					</span>
 					<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comments->approved->count; ?> Comments</a></span>
-					<span class="entry-tags"><?php echo $post->out_tags; ?></span>
+					<span class="entry-tags"><?php echo $post->tags_out; ?></span>
 				</small>
 			</div>
 			<div class="entry-content">
-				<?php echo $post->out_content; ?>
+				<?php echo $post->content_out; ?>
 			</div>
 			<?php } ?>
 		</div>
@@ -36,9 +36,9 @@ $page= isset($index) ? $index : 1;
 			<h2>About</h2>
 			<p><?php Options::out('about'); ?></p>
 			<h2>User</h2>
-			<p><?php $theme->loginform(); ?></p>
+			<p><?php include 'loginform.php'; ?></p>
 		</div>	
 	</div>
 	<div class="clear"></div>
 </div>
-<?php $theme->footer(); ?>
+<?php include 'footer.php'; ?>
