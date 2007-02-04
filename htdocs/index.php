@@ -28,8 +28,14 @@ ob_start();
  **/  
 function __autoload($class_name) {
 	$class_file = strtolower($class_name) . '.php';
-	if(file_exists(HABARI_PATH . '/user/classes/' . $class_file))
-		require_once HABARI_PATH . '/user/classes/' . $class_file;
+	if(class_exists('Site')) {
+		$userpath = Site::get_user_dir();
+	}
+	else {
+		$userpath = HABARI_PATH;
+	}
+	if(file_exists($userpath . '/classes/' . $class_file))
+		require_once $userpath . '/classes/' . $class_file;
 	else if(file_exists(HABARI_PATH . '/system/classes/' . $class_file))
 		require_once HABARI_PATH . '/system/classes/' . $class_file;
 	else
@@ -40,7 +46,7 @@ error_reporting(E_ALL);
 Utils::revert_magic_quotes_gpc();
 
 // find and load the config.php file
-$config = Utils::get_config_dir() . '/config.php';
+$config = Site::get_config_path() . '/config.php';
 
 // Load the config
 if ( file_exists($config) ) {

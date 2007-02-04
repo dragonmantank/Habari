@@ -10,7 +10,7 @@
 	
 	<link rel="EditURI" type="application/rsd+xml" href="<?php URL::out('rsd'); ?>" title="RSD" />
 
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('base_url'); ?>user/themes/<?php Options::out('theme_dir'); ?>/style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('theme_url'); ?>/style.css" />
 
 	<?php if ( User::identify() ) { // Still needs to check for edit permissions ?>
 	<script type="text/javascript" src="<?php Options::out('base_url'); ?>scripts/jquery.js"></script>
