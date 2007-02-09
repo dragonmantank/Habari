@@ -6,7 +6,7 @@ $page= isset($index) ? $index : 1;
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
 			<h2>Search results for <?php echo $criteria; ?></h2>
-			<?php foreach ( $posts = Posts::search($criteria, $page) as $post ) { ?>
+			<?php foreach ( $posts as $post ) { ?>
 			<div class="entry-head">
 				<h3 class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title_out; ?></a></h3>
 				<small class="entry-meta">
