@@ -62,6 +62,14 @@ if ( file_exists($config) ) {
 	 * 
 	 * @todo  make an decent solution to this... involves an upgrade plan.
 	 */
+	
+	// first, a safety check for SQLite
+	list($type, $file) = explode(':', $db_connection['connection_string']);
+	if ( ! file_exists( $file ) )
+	{
+		$installer= new InstallHandler();
+		$installer->begin_install();
+	}
 	if (DB::connect())
 	{
 		$sql= "SELECT COUNT(*) FROM " . $db_connection['prefix'] . "posts";
