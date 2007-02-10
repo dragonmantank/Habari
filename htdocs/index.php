@@ -65,7 +65,7 @@ if ( file_exists($config) ) {
 	
 	// first, a safety check for SQLite
 	list($type, $file) = explode(':', $db_connection['connection_string']);
-	if ( ! file_exists( $file ) )
+	if ( ('sqlite' == $type) && ! file_exists( $file ) )
 	{
 		$installer= new InstallHandler();
 		$installer->begin_install();
