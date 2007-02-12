@@ -17,7 +17,13 @@
 				                  <?php echo $post->comments->approved->count; ?> Comments
 				                </a>
               				</span>
-							<span class="entry-tags"><?php echo $post->tags_out; ?></span>
+                            <?php
+                            if ( User::identify() ) { ?><a href="<?php
+                                 URL::out('admin', 'page=publish&slug=' . $post->slug);
+                                ?>" title="Edit post">Edit</a><?php
+                            }
+                            ?>
+						<span class="entry-tags"><?php echo $post->tags_out; ?></span>
 						</small>
 						<div class="entry-content">
 							<?php echo $post->content_out; ?>
