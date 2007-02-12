@@ -9,6 +9,9 @@
 							<span class="chronodata">
 								<abbr class="published"><?php echo $post->pubdate_out; ?></abbr>
 							</span>
+        <span class="commentslink"><?php echo $post->comments->approved->count; ?>
+        <?php echo _n( 'Comment', 'Comments', $post->comments->approved->count );
+        ?></span>
                             <?php
                             if ( User::identify() ) { ?><a href="<?php
                                  URL::out('admin', 'page=publish&slug=' . $post->slug);
