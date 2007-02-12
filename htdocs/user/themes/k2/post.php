@@ -9,7 +9,6 @@
 							<span class="chronodata">
 								<abbr class="published"><?php echo $post->pubdate_out; ?></abbr>
 							</span>
-							<span class="commentslink">Closed</span>
                             <?php
                             if ( User::identify() ) { ?><a href="<?php
                                  URL::out('admin', 'page=publish&slug=' . $post->slug);
