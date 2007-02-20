@@ -25,7 +25,7 @@
 			</small>
 
 			<div class="comment-content">
-				<?php echo $comment->content; ?>
+				<?php echo Format::autop($comment->content); ?>
 			</div>
 			</li>
 		<?php 
@@ -59,7 +59,7 @@
 				<div id="comment-personaldetails">
 					<p>
 						<input type="text" name="name" id="name" value="<?php echo $commenter_name; ?>" size="22" tabindex="1" />
-						<label for="author"><small><strong>Name</strong></small></label>
+						<label for="name"><small><strong>Name</strong></small></label>
 					</p>
 					<p>
 						<input type="text" name="email" id="email" value="<?php echo $commenter_email; ?>" size="22" tabindex="2" />

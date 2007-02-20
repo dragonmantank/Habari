@@ -36,7 +36,7 @@ $page= isset($index) ? $index : 1;
 			<h2>About</h2>
 			<p><?php Options::out('about'); ?></p>
 			<h2>User</h2>
-			<p><?php include 'loginform.php'; ?></p>
+			<?php include 'loginform.php'; ?>
 		</div>	
 	</div>
 	<div class="clear"></div>
