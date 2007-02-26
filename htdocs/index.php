@@ -29,7 +29,7 @@ ob_start();
 function __autoload($class_name) {
 	$class_file = strtolower($class_name) . '.php';
 	if(class_exists('Site')) {
-		$userpath = Site::get_user_dir();
+		$userpath = Site::get_dir('config');
 	}
 	else {
 		$userpath = HABARI_PATH;
@@ -46,7 +46,7 @@ error_reporting(E_ALL);
 Utils::revert_magic_quotes_gpc();
 
 // find and load the config.php file
-$config = Site::get_config_path() . '/config.php';
+$config = Site::get_dir('config_file');
 
 // Load the config
 if ( file_exists($config) ) {

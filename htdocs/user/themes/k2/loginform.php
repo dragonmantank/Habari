@@ -8,7 +8,7 @@ endif;
 if ($user) :
 ?>
 <p>You are logged in as <?php echo $user->username; ?>.</p>
-<p>Want to <a href="<?php URL::out('user', array('page'=>'logout')); ?>">log out</a>?</p>
+<p>Want to <a href="<?php Site::out_url('habari'); ?>/user/logout">log out</a>?</p>
 <?php
 else :
 ?>

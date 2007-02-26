@@ -10,10 +10,10 @@
 	
 	<link rel="EditURI" type="application/rsd+xml" href="<?php URL::out('rsd'); ?>" title="RSD" />
 
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php Options::out('theme_url'); ?>/style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php Site::out_url('theme'); ?>/style.css" />
 
 	<?php if ( User::identify() ) { // Still needs to check for edit permissions ?>
-	<script type="text/javascript" src="<?php Options::out('base_url'); ?>scripts/jquery.js"></script>
+	<script type="text/javascript" src="<?php Site::out_url('habari'); ?>/scripts/jquery.js"></script>
 	<?php } ?>
 </head>
 <body class="home">

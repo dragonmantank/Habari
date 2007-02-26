@@ -42,7 +42,7 @@
 			{
 				$commenter_name = User::identify()->username;
 				$commenter_email = User::identify()->email;
-				$commenter_url = Options::get('siteurl');
+				$commenter_url = Site::get_url('habari');
 			}
 			elseif ( isset($_COOKIE[$cookie]) )
 			{
