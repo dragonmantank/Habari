@@ -19,11 +19,11 @@
 <body class="home">
 <div id="page">
 	<div id="header">
-		<h1><a href="<?php Options::out('base_url'); ?>"><?php Options::out('title'); ?></a></h1>
+		<h1><a href="<?php Site::out_url('habari'); ?>"><?php Options::out('title'); ?></a></h1>
 		<p class="description"><?php Options::out('tagline'); ?></p>
 		<ul class="menu">
 			<li><a href="http://habariproject.org/" title="Habari Project">Habari Project</a></li>
-			<?php if ( user::identify() ) { ?><li class="admintab"><a href="<?php Options::out('base_url'); ?>admin" title="Admin area">Admin</a></li><?php } ?>
+			<?php if ( user::identify() ) { ?><li class="admintab"><a href="<?php Site::out_url('admin'); ?>" title="Admin area">Admin</a></li><?php } ?>
 		</ul>
 	</div>
 	<hr />
