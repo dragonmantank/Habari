@@ -31,7 +31,7 @@
 		<?php 
 				endforeach;
 			else:
-				_e('There are currently no comments.');
+				_e('<li>There are currently no comments.</li>');
 			endif; ?>
 	</ol>
 	<div class="comments">
