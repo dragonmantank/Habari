@@ -27,19 +27,36 @@ ob_start();
  * Autoloads class files for undeclared classes.
  **/  
 function __autoload($class_name) {
+	$success= false;
 	$class_file = strtolower($class_name) . '.php';
-	if(class_exists('Site')) {
-		$userpath = Site::get_dir('config');
+
+	$dirs= array(  HABARI_PATH . '/user', HABARI_PATH . '/system' );
+
+	if(class_exists('Site'))
+	{
+		if ( Site::is('multi') )
+		{
+			// this is a site defined in /user/sites/x.y.z
+			// so prepend that directory to the list of
+			// directories to check for class files
+			array_unshift( $dirs, Site::get_dir('user') );
+		}
 	}
-	else {
-		$userpath = HABARI_PATH;
+
+	// iterate over the array of possible directories
+	foreach ($dirs as $dir)
+	{
+		if(file_exists($dir . '/classes/' . $class_file))
+		{
+			require_once $dir . '/classes/' . $class_file;
+			$success= true;
+			break;
+		}
 	}
-	if(file_exists($userpath . '/classes/' . $class_file))
-		require_once $userpath . '/classes/' . $class_file;
-	else if(file_exists(HABARI_PATH . '/system/classes/' . $class_file))
-		require_once HABARI_PATH . '/system/classes/' . $class_file;
-	else
+	if ( ! $success )
+	{
 		die( 'Could not include class file ' . $class_file );
+	}
 }
 error_reporting(E_ALL);
 // Undo what magic_quotes_gpc might have wrought
