@@ -13,8 +13,8 @@ if ($user) :
 else :
 ?>
 <form method="post" action="<?php URL::out('user', array('page'=>'login')); ?>">
-Name: <input type="text" size="25" name="name" /><br />
-Pass: <input type="password" size="25" name="pass" /><br />
+Name: <input type="text" size="25" name="habari_username" /><br />
+Pass: <input type="password" size="25" name="habari_password" /><br />
 <input type="submit" value="GO!" />
 </form>
 <?php
