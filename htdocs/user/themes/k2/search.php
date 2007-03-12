@@ -1,6 +1,3 @@
-<?php
-$page= isset($index) ? $index : 1;
-?>
 <?php include 'header.php'; ?>
 <div class="content">
 	<div id="primary">
