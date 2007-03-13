@@ -18,9 +18,9 @@
 				                </a>
               				</span>
                             <?php
-                            if ( User::identify() ) { ?><a href="<?php
+                            if ( User::identify() ) { ?><span class="entry-edit"><a href="<?php
                                  URL::out('admin', 'page=publish&slug=' . $post->slug);
-                                ?>" title="Edit post">Edit</a><?php
+                                ?>" title="Edit post">Edit</a></span><?php
                             }
                             ?>
 						<span class="entry-tags"><?php echo $post->tags_out; ?></span>
