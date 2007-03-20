@@ -1,8 +1,8 @@
 <?php
 $display= array(
-	'status' => Post::STATUS_PUBLISHED, 
+	'status' => Post::status('published'), 
 	'tag' => $tag,
-	'content_type' => Post::TYPE_ENTRY,
+	'content_type' => Post::type('entry'),
 	'page' => isset(index) ? $index : 1,
 );
 ?>
