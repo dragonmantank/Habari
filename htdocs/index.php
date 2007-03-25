@@ -1,9 +1,9 @@
 <?php
 /**
  * Habari index.php
- * 
+ *
  * Handles all incoming requests, connects to the database, sets the locale, etc.
- *     
+ *
  * @package Habari
  */
 
@@ -17,7 +17,7 @@ define('HABARI_PATH', dirname(__FILE__));
 
 /**
  * We start up output buffering in order to take advantage
- * of output compression, as well as the ability to 
+ * of output compression, as well as the ability to
  * dynamically change HTTP headers after output has started.
  */
 ob_start();
@@ -25,7 +25,7 @@ ob_start();
 /**
  * function __autoload
  * Autoloads class files for undeclared classes.
- **/  
+ **/
 function __autoload($class_name) {
 	$success= false;
 	$class_file = strtolower($class_name) . '.php';
@@ -76,10 +76,10 @@ if ( file_exists($config) ) {
 	/*
 	 * This is a quick hack to load the DB tables if someone
 	 * already has a config.php set up, but no tables...
-	 * 
+	 *
 	 * @todo  make an decent solution to this... involves an upgrade plan.
 	 */
-	
+
 	// first, a safety check for SQLite
 	list($type, $file) = explode(':', $db_connection['connection_string'], 2);
 	if ( ('sqlite' == $type) && ! file_exists( $file ) )
@@ -96,11 +96,11 @@ if ( file_exists($config) ) {
 			$installer->begin_install();
 		}
 	}
-} 
+}
 else
 {
-	/* 
-	 * Fire up the InstallHandler to create the 
+	/*
+	 * Fire up the InstallHandler to create the
 	 * configuration file in the proper directory
 	 * and install the base database
 	 */
@@ -121,7 +121,7 @@ foreach(Plugins::list_all() as $plugin) {
 
 // Load plugins
 foreach( Plugins::list_active() as $file ) {
-	//include_once($file);  // Include these files in the global namespace
+	include_once($file);  // Include these files in the global namespace
 }
 Plugins::load();
 Plugins::act('plugins_loaded');
