@@ -7,7 +7,7 @@
  *
  **/
 
-class SDMSpamCheck extends Plugin
+class SpamChecker extends Plugin
 {
 	/**
 	 * function info

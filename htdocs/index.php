@@ -114,16 +114,13 @@ header( 'Content-Type: text/html;charset=utf-8' );
 // Set the locale
 Locale::set( 'en-us' );
 
-// Activate all plugins - remove this when we have a plugin admin UI
-foreach(Plugins::list_all() as $plugin) {
-	Plugins::activate_plugin($plugin);
+// include all plugins here, so that they have global scope
+foreach ( Plugins::list_active() as $file )
+{
+	include_once( $file );
+	// execute this plugin's load() method
+	Plugins::load( $file );
 }
-
-// Load plugins
-foreach( Plugins::list_active() as $file ) {
-	include_once($file);  // Include these files in the global namespace
-}
-Plugins::load();
 Plugins::act('plugins_loaded');
 
 // parse and handle the request

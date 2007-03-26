@@ -7,7 +7,7 @@
  *
  **/
 
-class SDMCommentFilter extends Plugin
+class CommentFilter extends Plugin
 {
 	/**
 	 * function info

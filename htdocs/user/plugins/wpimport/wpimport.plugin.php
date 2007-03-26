@@ -8,7 +8,7 @@ define('IMPORT_BATCH', 100);
  *
  * @package Habari
  */
-class WPImporter extends Plugin implements Importer
+class WPImport extends Plugin implements Importer
 {
 	private $supported_importers = array();
 
@@ -29,7 +29,7 @@ class WPImporter extends Plugin implements Importer
 			'name'=>'WordPress Importer',
 			'license'=>'Apache License 2.0',
 			'author'=>'Habari Group',
-			
+			'version'=>'1.0',
 		);
 	}
 
