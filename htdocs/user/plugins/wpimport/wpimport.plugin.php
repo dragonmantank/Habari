@@ -24,7 +24,13 @@ class WPImporter extends Plugin implements Importer
 	*/
 	public function info()
 	{
-		return array();
+		return array(
+			'link'=>'http://habariproject.org',
+			'name'=>'WordPress Importer',
+			'license'=>'Apache License 2.0',
+			'author'=>'Habari Group',
+			
+		);
 	}
 
 	/**
