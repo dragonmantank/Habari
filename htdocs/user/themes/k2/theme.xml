@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<theme>
+        <name>k2</name>
+        <version>1.0</version>
+        <template_engine>rawphpengine</template_engine>
+</theme>
