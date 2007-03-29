@@ -108,10 +108,21 @@ class CustomTheme extends Theme
 	public function act_display_posts()
 	{
 		// Was the slug for this post not requested specifically? 
-		if(!isset(Controller::get_handler()->handler_vars['slug'])) {
+		if (!isset(Controller::get_handler()->handler_vars['slug'])) {
 			// Apply MyFormats::summarize() to the post content on output...
 			Format::apply('summarize', 'post_content_out'); 
+			// Add a filter to display only entries
+			Controller::get_handler()->handler_vars['content_type']= 'entry';
 		}
+		
+		// build tabs for pages
+		$pages_list= Posts::get( array( 'content_type' => 'page' ) );
+		$menu= array();
+		foreach ( $pages_list as $page ) {
+			$menu[]= '<li><a href="'. $page->permalink .'" title="'. $page->title .'">'. $page->title .'</a></li>';
+		}
+		Controller::get_handler()->handler_vars['menu']= implode("\n", $menu);
+			
 		parent::act_display_posts();
 	}
 
