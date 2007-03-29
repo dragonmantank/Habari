@@ -3,7 +3,7 @@
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
 			<h2>Search results for <?php echo $criteria; ?></h2>
-			<?php foreach ( $posts as $post ) { ?>
+		<?php foreach ( $posts as $post ) { ?>
 			<div class="entry-head">
 				<h3 class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title_out; ?></a></h3>
 				<small class="entry-meta">
@@ -11,9 +11,12 @@
 						<abbr class="published"><?php echo $post->pubdate_out; ?></abbr>
 					</span>
 					<span class="commentslink">
+					<?php
 					if ( $post->info->comments_disabled ) {
 						echo "Comments Closed";
-					} else { ?>
+					}
+					else {
+					?>
 					<a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comments->approved->count; ?> Comments</a>
 					<?php } ?>
 					</span>
