@@ -13,7 +13,11 @@
 								<abbr class="published"><?php echo $post->pubdate_out; ?></abbr>
 							</span>
 							<span class="commentslink">
+							<?php if ( $post->info->comments_disabled ) {
+								echo "Comments Closed"; ?>
+							} else { ?>
 				                <a href="<?php echo $post->permalink; ?>" title="Comments on this post">
+							}
 				                  <?php echo $post->comments->approved->count; ?> Comments
 				                </a>
               				</span>

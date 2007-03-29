@@ -34,39 +34,23 @@
 				_e('<li>There are currently no comments.</li>');
 			endif; ?>
 	</ol>
+	<?php
+	if ( ! $post->info->comments_disabled ) :
+	$commenter= User::commenter(); ?>
 	<div class="comments">
 		<h4 id="respond" class="reply">Leave a Reply</h4>
-		<?php
-			$cookie = 'comment_' . Options::get('GUID');
-			if ( User::identify() )
-			{
-				$commenter_name = User::identify()->username;
-				$commenter_email = User::identify()->email;
-				$commenter_url = Site::get_url('habari');
-			}
-			elseif ( isset($_COOKIE[$cookie]) )
-			{
-				list($commenter_name, $commenter_email, $commenter_url) = explode('#', $_COOKIE[$cookie]);
-			}
-			else
-			{
-				$commenter_name = '';
-				$commenter_email = '';
-				$commenter_url = '';
-			}
-			?>
 			<form action="<?php URL::out('comment', array('id'=>$post->id) ); ?>" method="post" id="commentform">
 				<div id="comment-personaldetails">
 					<p>
-						<input type="text" name="name" id="name" value="<?php echo $commenter_name; ?>" size="22" tabindex="1" />
+						<input type="text" name="name" id="name" value="<?php echo $commenter['name']; ?>" size="22" tabindex="1" />
 						<label for="name"><small><strong>Name</strong></small></label>
 					</p>
 					<p>
-						<input type="text" name="email" id="email" value="<?php echo $commenter_email; ?>" size="22" tabindex="2" />
+						<input type="text" name="email" id="email" value="<?php echo $commenter['email']; ?>" size="22" tabindex="2" />
 						<label for="email"><small><strong>Mail</strong> (will not be published) </small></label>
 					</p>
 					<p>
-						<input type="text" name="url" id="url" value="<?php echo $commenter_url; ?>" size="22" tabindex="3" />
+						<input type="text" name="url" id="url" value="<?php echo $commenter['url']; ?>" size="22" tabindex="3" />
 						<label for="url"><small><strong>Website</strong></small></label>
 					</p>
 				</div>
@@ -77,5 +61,6 @@
 				<div class="clear"></div>
 			</form>
 	</div>
+	<?php endif; ?>
 	<hr />
 </div>

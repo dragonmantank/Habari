@@ -10,7 +10,13 @@
 					<span class="chronodata">
 						<abbr class="published"><?php echo $post->pubdate_out; ?></abbr>
 					</span>
-					<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comments->approved->count; ?> Comments</a></span>
+					<span class="commentslink">
+					if ( $post->info->comments_disabled ) {
+						echo "Comments Closed";
+					} else { ?>
+					<a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comments->approved->count; ?> Comments</a>
+					<?php } ?>
+					</span>
 					<span class="entry-tags"><?php echo $post->tags_out; ?></span>
 				</small>
 			</div>
