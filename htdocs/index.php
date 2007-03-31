@@ -28,8 +28,8 @@ ob_start();
  **/
 function __autoload($class_name) {
 	$success= false;
-	$class_file = strtolower($class_name) . '.php';
-
+	$class_file = strtolower($class_name) . '.php';	
+	
 	$dirs= array(  HABARI_PATH . '/user', HABARI_PATH . '/system' );
 
 	if(class_exists('Site'))
@@ -53,8 +53,19 @@ function __autoload($class_name) {
 			break;
 		}
 	}
-	if ( ! $success )
+	
+	// still no luck? maybe we want a database driver
+	if ( ! $success)
 	{
+		preg_match( '/(\w+):?connection/i', strtolower($class_name), $captures );		
+		if ( isset( $captures[0]) ) {			
+			require_once(HABARI_PATH . "/system/schema/$captures[1]/connection.php" );
+			$success= true;
+		}
+	}
+
+	if ( ! $success )
+	{		
 		die( 'Could not include class file ' . $class_file );
 	}
 }
