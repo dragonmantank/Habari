@@ -28,22 +28,31 @@
 }
 </style>
 <div class="prof_container">
-<h1 class="prof_header">DB Profiling</h1>
-<?php
-$profiles= DB::get_profiles();
-$total_time_querying= 0;
-foreach ($profiles as $profile) {
-?>
-<div>
-<code class="prof_sql"><?php echo $profile->query_text;?></code>
-<div class="prof_time">Time to Execute: <strong><?php echo $profile->total_time;?></strong></div>
-<?php if (! empty($profile->backtrace)) {?>
-<pre style="text-align: left;"><strong>BACKTRACE:</strong><br/><?php print_r($profile->backtrace);?></pre>
-<?php }?>
-</div>
-<?php  
-  $total_time_querying+= $profile->total_time;
-}
-?>
-<div class="prof_time_total">Total Time Executing Queries: <?php echo $total_time_querying;?></div>
+	<h1 class="prof_header">DB Profiling</h1>
+	<?php
+	$profiles= DB::get_profiles();
+	$total_time_querying= 0;
+	foreach ( $profiles as $profile ) {
+	?>
+	<div>
+		<code class="prof_sql">
+			<?php echo $profile->query_text; ?>
+		</code>
+		<div class="prof_time">
+			<p>Time to Execute: <strong><?php echo $profile->total_time; ?></strong></p>
+		</div>
+		<?php if ( !empty( $profile->backtrace ) ) { ?>
+		<pre style="text-align: left;">
+			<strong>BACKTRACE:</strong><br/>
+			<?php print_r($profile->backtrace); ?>
+		</pre>
+		<?php } ?>
+	</div>
+	<?php  
+			$total_time_querying+= $profile->total_time;
+	}
+	?>
+	<div class="prof_time_total">
+		<p>Total Time Executing Queries: <?php echo $total_time_querying; ?></p>
+	</div>
 </div>

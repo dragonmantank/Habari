@@ -1,94 +1,98 @@
 <?php 
-
 /**
  * A new Format class extends the possible formatting capabilities
  **/ 
 class MyFormats extends Format
 {
+
 	/**
 	 * Returns a shortened version of whatever is passed in.
 	 * @param string $value A string to shorten
 	 * @return string The string, shortened
 	 **/	 	 	 	
-	function summarize($text) {
-		$count = 100;  // The number of words to display
-		$maxparagraphs = 1;  // The maximum number of paragraphs to display
+	function summarize( $text )
+	{
+		$count= 100;  // The number of words to display
+		$maxparagraphs= 1;  // The maximum number of paragraphs to display
 	
-		preg_match_all('/<script.*?<\/script.*?>/', $text, $scripts);
-		preg_replace('/<script.*?<\/script.*?>/', '', $text);
+		preg_match_all( '/<script.*?<\/script.*?>/', $text, $scripts );
+		preg_replace( '/<script.*?<\/script.*?>/', '', $text );
 	
-		$words = preg_split('/(<(?:\\s|".*?"|[^>])+>|\\s+)/', $text, $count + 1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		$words = preg_split( '/(<(?:\\s|".*?"|[^>])+>|\\s+)/', $text, $count + 1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
 	
-		$ellipsis = '';
-		if(count($words) > $count * 2) {
-			array_pop($words);
-			$ellipsis = '...';
+		$ellipsis= '';
+		if( count( $words ) > $count * 2 ) {
+			array_pop( $words );
+			$ellipsis= '...';
 		}
-		$output = '';
+		$output= '';
 		
-		$paragraphs = 0;
+		$paragraphs= 0;
 		
-		$stack = array();
-		foreach($words as $word) {
-			if(preg_match('/<.*\/\\s*>$/', $word)) {
+		$stack= array();
+		foreach( $words as $word ) {
+			if ( preg_match( '/<.*\/\\s*>$/', $word ) ) {
 				// If the tag self-closes, do nothing.
-				$output .= $word;
+				$output.= $word;
 			}
-			elseif( preg_match('/<[\\s\/]+/', $word)) {
+			elseif( preg_match( '/<[\\s\/]+/', $word )) {
 				// If the tag ends, pop one off the stack (cheatingly assuming well-formed!)
-				array_pop($stack);
-				preg_match('/<\s*\/\s*(\\w+)/', $word, $tagn);
-				switch($tagn[1]) {
+				array_pop( $stack );
+				preg_match( '/<\s*\/\s*(\\w+)/', $word, $tagn );
+				switch( $tagn[1] ) {
 				case 'br':
 				case 'p':
 				case 'div':
 				case 'ol':
 				case 'ul':
 					$paragraphs++;
-					if($paragraphs >= $maxparagraphs) {
-						$output .= '...' . $word;
-						$ellipsis = '';
+					if( $paragraphs >= $maxparagraphs ) {
+						$output.= '...' . $word;
+						$ellipsis= '';
 						break 2;
 					}
 				}
-				$output .= $word;
+				$output.= $word;
 			}
-			elseif( $word{0} == '<' ) {
+			elseif( $word[0] == '<' ) {
 				// If the tag begins, push it on the stack
-				$stack[] = $word;
-				$output .= $word;
+				$stack[]= $word;
+				$output.= $word;
 			}
 			else {
-				$output .= $word;
+				$output.= $word;
 			}
 		}
-		$output .= $ellipsis;
+		$output.= $ellipsis;
 	
-		if(count($stack) > 0) {
-			preg_match('/<(\\w+)/', $stack[0], $tagn);
-			$stack = array_reverse($stack);
-			foreach($stack as $tag) {
-				preg_match('/<(\\w+)/', $tag, $tagn);
-				$output .= '</' . $tagn[1] . '>';
+		if ( count( $stack ) > 0 ) {
+			preg_match( '/<(\\w+)/', $stack[0], $tagn );
+			$stack= array_reverse( $stack );
+			foreach ( $stack as $tag ) {
+				preg_match( '/<(\\w+)/', $tag, $tagn );
+				$output.= '</' . $tagn[1] . '>';
 			}
 		}
-		foreach($scripts[0] as $script) {
-			$output .= $script;
+		foreach( $scripts[0] as $script ) {
+			$output.= $script;
 		}
 
 		return $output;
 	}
+	
 }
 
 // Apply Format::autop() to post content... 
-Format::apply('autop', 'post_content_out');
+Format::apply( 'autop', 'post_content_out' );
+// Apply Format::autop() to comment content...
+Format::apply( 'autop', 'comment_content_out' );
 // Apply Format::tag_and_list() to post tags... 
-Format::apply('tag_and_list', 'post_tags_out');
+Format::apply( 'tag_and_list', 'post_tags_out' );
 // Apply Format::nice_date() to post date...
-Format::apply('nice_date', 'post_pubdate_out', 'F j, Y g:ia');
+Format::apply( 'nice_date', 'post_pubdate_out', 'F j, Y g:ia' );
 
 // Set a custom theme to use for all public page (UserThemeHandler) theme output
-define('THEME_CLASS', 'CustomTheme');
+define( 'THEME_CLASS', 'CustomTheme' );
 
 /**
  * A custom theme class for the K2 theme.
@@ -108,20 +112,10 @@ class CustomTheme extends Theme
 	public function act_display_posts()
 	{
 		// Was the slug for this post not requested specifically? 
-		if (!isset(Controller::get_handler()->handler_vars['slug'])) {
-			// Apply MyFormats::summarize() to the post content on output...
-			Format::apply('summarize', 'post_content_out'); 
+		if ( !isset( Controller::get_handler()->handler_vars['slug'] ) ) {
 			// Add a filter to display only entries
 			Controller::get_handler()->handler_vars['content_type']= 'entry';
 		}
-		
-		// build tabs for pages
-		$pages_list= Posts::get( array( 'content_type' => 'page' ) );
-		$menu= array();
-		foreach ( $pages_list as $page ) {
-			$menu[]= '<li><a href="'. $page->permalink .'" title="'. $page->title .'">'. $page->title .'</a></li>';
-		}
-		Controller::get_handler()->handler_vars['menu']= implode("\n", $menu);
 			
 		parent::act_display_posts();
 	}

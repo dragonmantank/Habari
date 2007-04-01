@@ -1,25 +1,20 @@
-<?php
-$display= array(
-	'status' => Post::status('published'), 
-	'tag' => $tag,
-	'content_type' => Post::type('entry'),
-	'page' => isset(index) ? $index : 1,
-);
-?>
-<?php $theme->header(); ?>
+<?php include 'header.php'; ?>
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
-			<?php foreach ( $posts = Posts::get($display) as $post ) { ?>
+			<?php foreach ( $posts as $post ) { ?>
 				<div id="post-<?php echo $post->id; ?>">
 					<div class="entry-head">
 						<h3 class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title_out; ?></a></h3>
 						<small class="entry-meta">
-							<span class="chronodata">
-								<abbr class="published"><?php echo $post->pubdate_out; ?></abbr>
-							</span>
-							<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comments->approved->count; ?> Comments</a></span>
+							<span class="chronodata"><abbr class="published"><?php echo $post->pubdate_out; ?></abbr></span>
+							<span class="commentslink"><a href="<?php echo $post->permalink; ?>" title="Comments on this post"><?php echo $post->comments->approved->count; ?> <?php echo _n( 'Comment', 'Comments', $post->comments->approved->count ); ?></a></span>
+							<?php if ( $user ) { ?>
+							<span class="entry-edit"><a href="<?php URL::out( 'admin', 'page=publish&slug=' . $post->slug); ?>" title="Edit post">Edit</a></span>
+							<?php } ?>
+							<?php if ( is_array( $post->tags ) ) { ?>
 							<span class="entry-tags"><?php echo $post->tags_out; ?></span>
+							<?php } ?>
 						</small>
 					</div>
 					<div class="entry-content">
@@ -28,23 +23,23 @@ $display= array(
 				</div>
 			<?php } ?>
 		</div>
-		<div id="page-selector"><strong>Page:</strong><?php echo Utils::page_selector($display['page'], Utils::archive_pages(Posts::count_last()), 'tag', array( 'tag'=>$display['tag'] ) ); ?></div>
+		<div id="page-selector">
+			<strong>Page:</strong> <?php echo Utils::page_selector( isset( $page ) ? $page : 1, Utils::archive_pages( Posts::count_last() ), 'tag', array( 'tag' => $tag ) ); ?>
+		</div>
 	</div>
-	<hr />
+	<hr>
 	<div class="secondary">
-		<div id="search"><h2>Search</h2>
-			<form id="search" action="<?php URL::out('search'); ?>">
-				<input type="text" name="criteria" />
-				<input id="searchsubmit" type="submit" name="search" value="Search" />
-			</form>
+		<div id="search">
+			<h2>Search</h2>
+			<?php include 'searchform.php'; ?>
 		</div>	
 		<div class="sb-about">
 			<h2>About</h2>
 			<p><?php Options::out('about'); ?></p>
 			<h2>User</h2>
-			<p><?php $theme->loginform(); ?></p>
+			<?php include 'loginform.php'; ?>
 		</div>	
 	</div>
 	<div class="clear"></div>
 </div>
-<?php $theme->footer(); ?>
+<?php include 'footer.php'; ?>
