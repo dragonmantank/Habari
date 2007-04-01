@@ -203,7 +203,7 @@ WP_IMPORT_STAGE2;
 		$wpdb = $this->wp_connect($db_host, $db_name, $db_user, $db_pass, $db_prefix);
 		if($wpdb) {
 			$postcount = $wpdb->get_value("SELECT count(id) FROM {$db_prefix}posts;");
-			$min = $postindex * IMPORT_BATCH + 1;
+			 $min = $postindex * IMPORT_BATCH + ($postindex == 0 ? 0 : 1);
 			$max = min(($postindex + 1) * IMPORT_BATCH, $postcount);
 
 			echo "<p>Importing posts {$min}-{$max} of {$postcount}.</p>";
@@ -263,6 +263,8 @@ WP_IMPORT_STAGE2;
 				$p->slug= $post->slug;
 				$p->guid= $p->guid; // Looks fishy, but actually causes the guid to be set.
 				$p->tags= $tags;
+				
+				$p->info->wp_id = $post_array['id'];  // Store the WP post id in the post_info table for later
 
 				try {
 					$p->insert();
@@ -270,7 +272,6 @@ WP_IMPORT_STAGE2;
 				catch( Exception $e ) {
 					Utils::debug($p);
 				}
-				$p->info->wp_id = $post_array['id'];  // Store the WP post id in the post_info table for later
 			}
 			if($max < $postcount) {
 				$ajax_url= URL::get('auth_ajax', array('context'=>'wp_import_posts'));
