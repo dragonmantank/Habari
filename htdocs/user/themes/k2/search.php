@@ -2,7 +2,7 @@
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
-			<h2>Search results for <?php echo $criteria; ?></h2>
+			<h2>Search results for <?php echo htmlspecialchars( $criteria ); ?></h2>
 			<?php foreach ( $posts as $post ) { ?>
 				<div id="post-<?php echo $post->id; ?>">
 					<div class="entry-head">
@@ -25,7 +25,7 @@
 			<?php } ?>
 		</div>
 		<div id="page-selector">
-			<strong>Page:</strong><?php echo Utils::page_selector( isset( $page ) ? $page : 1, Utils::archive_pages( Posts::count_last() ), 'search', array( 'criteria' => $criteria ) ); ?>
+			<strong>Page:</strong> <?php echo Utils::page_selector( isset( $page ) ? $page : 1, Utils::archive_pages( $posts->count_all() ), 'search', array( 'criteria' => $criteria ) ); ?>
 		</div>
 	</div>	
 	<hr>
