@@ -66,7 +66,7 @@ class WPImport extends Plugin implements Importer
 		switch($stage) {
 		case 1:
 			if( isset($_POST)) {
-				$valid_fields= array('db_name','db_host','db_user','db_pass','db_prefix');
+				$valid_fields= array('db_name','db_host','db_user','db_pass','db_prefix', 'utw_import');
 				$inputs= array_intersect_key($_POST, array_flip($valid_fields));
 				if($this->wp_connect($inputs['db_host'], $inputs['db_name'], $inputs['db_user'], $inputs['db_pass'], $inputs['db_prefix'])) {
 					$stage = 2;
@@ -106,6 +106,7 @@ class WPImport extends Plugin implements Importer
 			'db_pass' => '',
 			'db_prefix' => 'wp_',
 			'warning' => '',
+			'utw_import' => '0',
 		);
 		$inputs = array_merge($default_values, $inputs);
 		extract($inputs);
@@ -124,6 +125,14 @@ class WPImport extends Plugin implements Importer
 				<tr><td>Table Prefix</td><td><input type="text" name="db_prefix" value="{$db_prefix}"></td></tr>
 			</table>
 			<input type="hidden" name="stage" value="1">
+			<p class="extras" style="border: solid 1px #ccc; padding: 5px;">
+				Extras - additional data from WordPress plugins
+				<table>
+				<tr><td>Import tags from Ultimate Tag Warrior</td>
+				<td><input type="checkbox" name="utw_import" value="1"></td>
+				</tr>
+				</table>
+			</p>
 			<p class="submit"><input type="submit" name="import" value="Import" /></p>
 
 WP_IMPORT_STAGE1;
@@ -140,7 +149,10 @@ WP_IMPORT_STAGE1;
 	private function stage2($inputs)
 	{
 		extract($inputs);
-
+		
+		if (! isset($utw_import)) {
+			$utw_import = 0;
+		}
 		$ajax_url = URL::get('auth_ajax', array('context'=>'wp_import_posts'));
 
 		$output = <<< WP_IMPORT_STAGE2
@@ -157,6 +169,7 @@ WP_IMPORT_STAGE1;
 						db_user: "{$db_user}",
 						db_pass: "{$db_pass}",
 						db_prefix: "{$db_prefix}",
+						utw_import: "{$utw_import}",
 						postindex: 0
 					}
 				);
@@ -197,9 +210,13 @@ WP_IMPORT_STAGE2;
 	 */
 	public function action_auth_ajax_wp_import_posts($handler)
 	{
-		$valid_fields= array('db_name','db_host','db_user','db_pass','db_prefix','postindex');
+		$valid_fields= array('db_name','db_host','db_user','db_pass','db_prefix','postindex', 'utw_import');
 		$inputs= array_intersect_key($_POST, array_flip($valid_fields));
 		extract($inputs);
+		if (! isset($inputs['utw_import'])) {
+			$inputs['utw_import'] = 0;
+		}
+
 		$wpdb = $this->wp_connect($db_host, $db_name, $db_user, $db_pass, $db_prefix);
 		if($wpdb) {
 			$postcount = $wpdb->get_value("SELECT count(id) FROM {$db_prefix}posts;");
@@ -234,6 +251,22 @@ WP_IMPORT_STAGE2;
 					ON ({$db_prefix}categories.cat_ID= {$db_prefix}post2cat.category_id)
 					WHERE post_id= {$post->id}"
 				);
+				
+				// we want to include the Ultimate Tag Warrior in that list of tags
+				if ($utw_import == 1) {
+					$utw_tags = $wpdb->get_column(
+					"SELECT tag
+					FROM {$db_prefix}post2tag
+					INNER JOIN {$db_prefix}tags
+					ON ({$db_prefix}tags.tag_ID= {$db_prefix}post2tag.tag_id)
+					WHERE post_id= {$post->id}"
+					);
+					// UTW substitutes underscores and hyphens for spaces, so let's do the same
+					$utw_tag_formatter = create_function('$a', 'return preg_replace("/_|-/", " ", $a);');
+					
+					// can this be done in just two calls instead of three? I think so.
+					$tags = array_unique( array_merge( $tags, array_map( $utw_tag_formatter, &$utw_tags ) ) );
+				}
 
 				$post_array= $post->to_array();
 				switch($post_array['post_status']) {
@@ -287,6 +320,7 @@ WP_IMPORT_STAGE2;
 							db_user: "{$db_user}",
 							db_pass: "{$db_pass}",
 							db_prefix: "{$db_prefix}",
+							utw_import: "{$utw_import}",
 							postindex: {$postindex}
 						}
 					);
@@ -307,6 +341,7 @@ WP_IMPORT_AJAX1;
 							db_user: "{$db_user}",
 							db_pass: "{$db_pass}",
 							db_prefix: "{$db_prefix}",
+							utw_import: "{$utw_import}",
 							commentindex: 0
 						}
 					);
@@ -329,7 +364,7 @@ WP_IMPORT_AJAX2;
 	 */
 	public function action_auth_ajax_wp_import_comments($handler)
 	{
-		$valid_fields= array('db_name','db_host','db_user','db_pass','db_prefix','commentindex');
+		$valid_fields= array('db_name','db_host','db_user','db_pass','db_prefix','commentindex', 'utw_import');
 		$inputs= array_intersect_key($_POST, array_flip($valid_fields));
 		extract($inputs);
 		$wpdb = $this->wp_connect($db_host, $db_name, $db_user, $db_pass, $db_prefix);
@@ -412,6 +447,7 @@ WP_IMPORT_AJAX2;
 							db_user: "{$db_user}",
 							db_pass: "{$db_pass}",
 							db_prefix: "{$db_prefix}",
+							utw_import: "{$utw_import}",
 							commentindex: {$commentindex}
 						}
 					);
