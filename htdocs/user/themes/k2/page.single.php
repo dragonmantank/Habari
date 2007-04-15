@@ -1,4 +1,5 @@
 <?php include 'header.php'; ?>
+<!-- page -->
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">

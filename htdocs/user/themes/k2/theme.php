@@ -1,86 +1,14 @@
 <?php 
+
 /**
- * A new Format class extends the possible formatting capabilities
- **/ 
-class MyFormats extends Format
-{
+ * MyTheme is a custom Theme class for the K2 theme.
+ * 
+ * @package Habari
+ */ 
 
-	/**
-	 * Returns a shortened version of whatever is passed in.
-	 * @param string $value A string to shorten
-	 * @return string The string, shortened
-	 **/	 	 	 	
-	function summarize( $text )
-	{
-		$count= 100;  // The number of words to display
-		$maxparagraphs= 1;  // The maximum number of paragraphs to display
-	
-		preg_match_all( '/<script.*?<\/script.*?>/', $text, $scripts );
-		preg_replace( '/<script.*?<\/script.*?>/', '', $text );
-	
-		$words = preg_split( '/(<(?:\\s|".*?"|[^>])+>|\\s+)/', $text, $count + 1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
-	
-		$ellipsis= '';
-		if( count( $words ) > $count * 2 ) {
-			array_pop( $words );
-			$ellipsis= '...';
-		}
-		$output= '';
-		
-		$paragraphs= 0;
-		
-		$stack= array();
-		foreach( $words as $word ) {
-			if ( preg_match( '/<.*\/\\s*>$/', $word ) ) {
-				// If the tag self-closes, do nothing.
-				$output.= $word;
-			}
-			elseif( preg_match( '/<[\\s\/]+/', $word )) {
-				// If the tag ends, pop one off the stack (cheatingly assuming well-formed!)
-				array_pop( $stack );
-				preg_match( '/<\s*\/\s*(\\w+)/', $word, $tagn );
-				switch( $tagn[1] ) {
-				case 'br':
-				case 'p':
-				case 'div':
-				case 'ol':
-				case 'ul':
-					$paragraphs++;
-					if( $paragraphs >= $maxparagraphs ) {
-						$output.= '...' . $word;
-						$ellipsis= '';
-						break 2;
-					}
-				}
-				$output.= $word;
-			}
-			elseif( $word[0] == '<' ) {
-				// If the tag begins, push it on the stack
-				$stack[]= $word;
-				$output.= $word;
-			}
-			else {
-				$output.= $word;
-			}
-		}
-		$output.= $ellipsis;
-	
-		if ( count( $stack ) > 0 ) {
-			preg_match( '/<(\\w+)/', $stack[0], $tagn );
-			$stack= array_reverse( $stack );
-			foreach ( $stack as $tag ) {
-				preg_match( '/<(\\w+)/', $tag, $tagn );
-				$output.= '</' . $tagn[1] . '>';
-			}
-		}
-		foreach( $scripts[0] as $script ) {
-			$output.= $script;
-		}
-
-		return $output;
-	}
-	
-}
+/**
+ * @todo This stuff needs to move into the custom theme class:
+ */ 
 
 // Apply Format::autop() to post content... 
 Format::apply( 'autop', 'post_content_out' );
@@ -91,34 +19,44 @@ Format::apply( 'tag_and_list', 'post_tags_out' );
 // Apply Format::nice_date() to post date...
 Format::apply( 'nice_date', 'post_pubdate_out', 'F j, Y g:ia' );
 
-// Set a custom theme to use for all public page (UserThemeHandler) theme output
-define( 'THEME_CLASS', 'CustomTheme' );
+
+// We must tell Habari to use MyTheme as the custom theme class: 
+define( 'THEME_CLASS', 'MyTheme' );
 
 /**
- * A custom theme class for the K2 theme.
- * Custom themes are not required for themes, but they are handy in letting you 
- * define your own output data and possibly even additional, non-standard templates.
- **/   
-class CustomTheme extends Theme
+ * A custom theme for K2 output
+ */ 
+class MyTheme extends Theme
 {
 
 	/**
-	 * Get post data and forward it for display	
-	 * Overrides Theme::display_posts() to summarize the content of a post when
-	 * it is not being displayed by itself.
-	 * 
-	 * Note that the search results do not summarize because they call act_search()	 	 
-	 **/	 	 	
-	public function act_display_posts()
+	 * Add additional template variables to the template output.
+	 * 	 
+	 *  You can assign additional output values in the template here, instead of 
+	 *  having the PHP execute directly in the template.  The advantage is that 
+	 *  you would easily be able to switch between template types (RawPHP/Smarty)
+	 *  without having to port code from one to the other.
+	 *  
+	 *  You could use this area to provide "recent comments" data to the template,
+	 *  for instance.	  	 	 
+	 *  
+	 *  Note that the variables added here should possibly *always* be added, 
+	 *  especially 'user'.
+	 * 	 
+	 *  Also, this function gets executed *after* regular data is assigned to the
+	 *  template.  So the values here, unless checked, will overwrite any existing 
+	 *  values.	 	 	 
+	 */	 	 	 	 	
+	public function add_template_vars() 
 	{
-		// Was the slug for this post not requested specifically? 
-		if ( !isset( Controller::get_handler()->handler_vars['slug'] ) ) {
-			// Add a filter to display only entries
-			Controller::get_handler()->handler_vars['content_type']= 'entry';
+		if( !$this->template_engine->assigned( 'pages' ) ) {
+			$this->assign('pages', Posts::get( array( 'content_type' => 'page', 'status' => Post::status('published') ) ) );
 		}
-			
-		parent::act_display_posts();
+		if( !$this->template_engine->assigned( 'user' ) ) {
+			$this->assign('user', User::identify() );
+		}
+		parent::add_template_vars();
 	}
-
 }
+
 ?>

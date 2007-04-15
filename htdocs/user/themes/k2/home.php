@@ -1,5 +1,5 @@
 <?php include 'header.php'; ?>
-<!-- tag -->
+<!-- home -->
 <div class="content">
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
@@ -25,7 +25,7 @@
 			<?php } ?>
 		</div>
 		<div id="page-selector">
-			<strong>Page:</strong> <?php echo Utils::page_selector( isset( $page ) ? $page : 1, Utils::archive_pages( $posts->count_all() ), 'display_posts_by_tag', array( 'tag' => $tag ) ); ?>
+			<strong>Page:</strong> <?php echo Utils::page_selector( isset( $page ) ? $page : 1, Utils::archive_pages( $posts->count_all() ), 'display_posts_at_page' ); ?>
 		</div>
 	</div>
 	<hr>
