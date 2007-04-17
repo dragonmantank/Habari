@@ -12,9 +12,9 @@
 							<span class="entry-edit"><a href="<?php URL::out( 'admin', 'page=publish&slug=' . $post->slug ); ?>" title="Edit post">Edit</a></span>
 							<?php } ?>
 						</small>
-						<div class="entry-content">
-							<?php echo $post->content_out; ?>
-						</div>
+					</div>
+					<div class="entry-content">
+						<?php echo $post->content_out; ?>
 					</div>
 				</div>
 		<?php include 'comments.php'; ?>

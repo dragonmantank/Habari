@@ -37,6 +37,8 @@
 		<div class="sb-about">
 			<h2>About</h2>
 			<p><?php Options::out('about'); ?></p>
+		</div>
+		<div class="sb-user">
 			<h2>User</h2>
 			<?php include 'loginform.php'; ?>
 		</div>	
