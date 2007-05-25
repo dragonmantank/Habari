@@ -133,6 +133,7 @@ foreach ( Plugins::list_active() as $file )
 	Plugins::load( $file );
 }
 Plugins::act('plugins_loaded');
+Plugins::act('init');
 
 // parse and handle the request
 Controller::parse_request();
