@@ -11,7 +11,11 @@ class WPImport extends Plugin implements Importer
 {
 	private $supported_importers= array();
 
-	public function __construct()
+	/**
+	 * Initialize plugin.
+	 * Set the supported importers.
+	 **/	 	 	
+	public function action_init()
 	{
 		$this->supported_importers= array( _t( 'WordPress Database' ) );
 	}
