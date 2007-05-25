@@ -79,8 +79,7 @@ $config = Site::get_dir('config_file');
 // Load the config
 if ( file_exists($config) ) {
 	require_once $config;
-	if ( ! isset($db_connection) )
-	{
+	if ( ! isset($db_connection) ) {
 		$installer= new InstallHandler();
 		$installer->begin_install();
 	}
@@ -91,21 +90,16 @@ if ( file_exists($config) ) {
 	 * @todo  make an decent solution to this... involves an upgrade plan.
 	 */
 
-	// first, a safety check for SQLite
-	list($type, $file) = explode(':', $db_connection['connection_string'], 2);
-	if ( ('sqlite' == $type) && ! file_exists( $file ) )
-	{
-		$installer= new InstallHandler();
-		$installer->begin_install();
-	}
-	if (DB::connect())
-	{
+	if (DB::connect()) {
 		$sql= "SELECT COUNT(*) FROM " . $db_connection['prefix'] . "posts";
-		if (! @ DB::query($sql))
-		{
+		if (! @ DB::query($sql)) {
 			$installer= new InstallHandler();
 			$installer->begin_install();
 		}
+	}
+	else {
+		$installer= new InstallHandler();
+		$installer->begin_install();
 	}
 }
 else
@@ -117,6 +111,12 @@ else
 	 */
 	$installer= new InstallHandler();
 	$installer->begin_install();
+}
+
+// We have a database connection.  Check the version and upgrade if needed.
+if ( Version::requires_upgrade() ) {
+	$installer= new InstallHandler();
+	$installer->upgrade_db();
 }
 
 // XXX this is probably not the best place to put this

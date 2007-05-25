@@ -25,7 +25,7 @@
 			<?php } ?>
 		</div>
 		<div id="page-selector">
-			<strong>Page:</strong> <?php echo Utils::page_selector( isset( $page ) ? $page : 1, Utils::archive_pages( $posts->count_all() ), 'search', array( 'criteria' => $criteria ) ); ?>
+			<strong>Page:</strong> <?php echo Utils::page_selector( $page, Utils::archive_pages( $posts->count_all() ), 'search', array( 'criteria' => $criteria ) ); ?>
 		</div>
 	</div>	
 	<hr>

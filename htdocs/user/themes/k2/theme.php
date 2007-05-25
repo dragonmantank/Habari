@@ -19,6 +19,7 @@ Format::apply( 'tag_and_list', 'post_tags_out' );
 // Apply Format::nice_date() to post date...
 Format::apply( 'nice_date', 'post_pubdate_out', 'F j, Y g:ia' );
 
+Format::apply_with_hook_params( 'more', 'post_content_out', 'more', 100, 1 );
 
 // We must tell Habari to use MyTheme as the custom theme class: 
 define( 'THEME_CLASS', 'MyTheme' );
@@ -55,8 +56,12 @@ class MyTheme extends Theme
 		if( !$this->template_engine->assigned( 'user' ) ) {
 			$this->assign('user', User::identify() );
 		}
+		if( !$this->template_engine->assigned( 'page' ) ) {
+			$this->assign('page', isset( $page ) ? $page : 1 );
+		}
 		parent::add_template_vars();
 	}
+	
 }
 
 ?>

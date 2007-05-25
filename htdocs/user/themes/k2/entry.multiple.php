@@ -24,7 +24,7 @@
 			<?php } ?>
 		</div>
 		<div id="page-selector">
-			<strong>Page:</strong> <?php echo Utils::page_selector( isset( $page ) ? $page : 1, Utils::archive_pages( $posts->count_all() ), 'display_posts_at_page' ); ?>
+			<strong>Page:</strong> <?php echo Utils::page_selector( $page, Utils::archive_pages( $posts->count_all() ), 'index_page' ); ?>
 		</div>
 	</div>
 	<hr>
