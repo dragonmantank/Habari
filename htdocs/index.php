@@ -42,16 +42,16 @@ function __autoload($class_name) {
 			array_unshift( $dirs, Site::get_dir('user') );
 		}
 	}
-
-	// iterate over the array of possible directories
-	foreach ($dirs as $dir)
-	{
+	
+		// iterate over the array of possible directories
+		foreach ($dirs as $dir)
+		{
 		if(file_exists($dir . '/classes/' . $class_file))
 		{
 			require_once $dir . '/classes/' . $class_file;
 			$success= true;
 			break;
-		}
+	}
 	}
 	
 	// still no luck? maybe we want a database driver
@@ -137,6 +137,7 @@ Plugins::act('init');
 
 // parse and handle the request
 Controller::parse_request();
+CronTab::run_cron();
 Controller::dispatch_request();
 
 // flush the contents of output buffering
