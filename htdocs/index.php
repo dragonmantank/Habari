@@ -13,7 +13,7 @@ if ( ! version_compare( PHP_VERSION, '5.1.0', '>=' ) ) {
 }
 
 // set our constant
-define('HABARI_PATH', dirname(__FILE__));
+define( 'HABARI_PATH', dirname( __FILE__ ) );
 
 /**
  * We start up output buffering in order to take advantage
@@ -69,9 +69,12 @@ function __autoload($class_name) {
 		die( 'Could not include class file ' . $class_file );
 	}
 }
+// Up the error reporting
 error_reporting(E_ALL);
 // Undo what magic_quotes_gpc might have wrought
 Utils::revert_magic_quotes_gpc();
+// Install our own error handler
+Error::handle_errors();
 
 // find and load the config.php file
 $config = Site::get_dir('config_file');
