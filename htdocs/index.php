@@ -94,7 +94,7 @@ if ( file_exists($config) ) {
 	 */
 
 	if (DB::connect()) {
-		if (! @ Options::get('db_version')) {
+		if (! @ Options::get('installed')) {
 			$installer= new InstallHandler();
 			$installer->begin_install();
 		}
