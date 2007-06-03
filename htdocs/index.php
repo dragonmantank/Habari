@@ -94,8 +94,7 @@ if ( file_exists($config) ) {
 	 */
 
 	if (DB::connect()) {
-		$sql= "SELECT COUNT(*) FROM " . $db_connection['prefix'] . "posts";
-		if (! @ DB::query($sql)) {
+		if (! @ Options::get('db_version')) {
 			$installer= new InstallHandler();
 			$installer->begin_install();
 		}
