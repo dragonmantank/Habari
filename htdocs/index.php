@@ -32,10 +32,8 @@ function __autoload($class_name) {
 	
 	$dirs= array(  HABARI_PATH . '/user', HABARI_PATH . '/system' );
 
-	if(class_exists('Site'))
-	{
-		if ( Site::is('multi') )
-		{
+	if(class_exists('Site')) {
+		if ( Site::is('multi') ) {
 			// this is a site defined in /user/sites/x.y.z
 			// so prepend that directory to the list of
 			// directories to check for class files
@@ -43,27 +41,15 @@ function __autoload($class_name) {
 		}
 	}
 	
-		// iterate over the array of possible directories
-		foreach ($dirs as $dir)
-		{
-		if(file_exists($dir . '/classes/' . $class_file))
-		{
+	// iterate over the array of possible directories
+	foreach ($dirs as $dir) {
+		if(file_exists($dir . '/classes/' . $class_file)) {
 			require_once $dir . '/classes/' . $class_file;
 			$success= true;
 			break;
-	}
-	}
-	
-	// still no luck? maybe we want a database driver
-	if ( ! $success)
-	{
-		preg_match( '/(\w+):?connection/i', strtolower($class_name), $captures );		
-		if ( isset( $captures[0]) ) {			
-			require_once(HABARI_PATH . "/system/schema/$captures[1]/connection.php" );
-			$success= true;
 		}
 	}
-
+	
 	if ( ! $success )
 	{		
 		die( 'Could not include class file ' . $class_file );
