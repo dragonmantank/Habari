@@ -27,34 +27,50 @@ ob_start();
  * Autoloads class files for undeclared classes.
  **/
 function __autoload($class_name) {
+	static $files= null;
+
 	$success= false;
 	$class_file = strtolower($class_name) . '.php';	
-	
-	$dirs= array(  HABARI_PATH . '/user', HABARI_PATH . '/system' );
 
-	if(class_exists('Site')) {
-		if ( Site::is('multi') ) {
+	// Are the files in the directory loaded?
+	if( empty($files) ) { 
+		$files = array();
+		$dirs= array( HABARI_PATH . '/system', HABARI_PATH . '/user' );
+	
+		// iterate over the array of possible directories
+		foreach ($dirs as $dir) {
+			$glob = glob( $dir . '/classes/*.php' );
+			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
+			$files = array_merge($files, array_combine($fnames, $glob));
+		}
+		// Proload the Site class to get the classes from the site directory
+		if(isset($files['site.php'])) {
+			require_once $files['site.php'];
+		}
+		if ( ($site_user_dir = Site::get_dir('user')) != HABARI_PATH . '/user' ) {
 			// this is a site defined in /user/sites/x.y.z
 			// so prepend that directory to the list of
 			// directories to check for class files
-			array_unshift( $dirs, Site::get_dir('user') );
+			$glob = glob( $site_user_dir . '/classes/*.php' );
+			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
+			$files = array_merge($files, array_combine($fnames, $glob));
 		}
 	}
-	
-	// iterate over the array of possible directories
-	foreach ($dirs as $dir) {
-		if(file_exists($dir . '/classes/' . $class_file)) {
-			require_once $dir . '/classes/' . $class_file;
-			$success= true;
-			break;
+
+	if(isset($files[$class_file])) {
+		require_once $files[$class_file];
+		// If the class has a static member named __static(), execute it now, on initial load.
+		if(class_exists($class_name, false) && method_exists($class_name, '__static') ) {
+			call_user_func(array($class_name, '__static'));
 		}
+		$success= true;
 	}
-	
-	if ( ! $success )
-	{		
+
+	if ( ! $success ) {
 		die( 'Could not include class file ' . $class_file );
 	}
 }
+
 // Up the error reporting
 error_reporting(E_ALL);
 // Install our own error handler
