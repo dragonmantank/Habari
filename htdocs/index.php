@@ -40,6 +40,7 @@ function __autoload($class_name) {
 		// iterate over the array of possible directories
 		foreach ($dirs as $dir) {
 			$glob = glob( $dir . '/classes/*.php' );
+			if(count($glob)==0) continue;
 			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
 			$files = array_merge($files, array_combine($fnames, $glob));
 		}
