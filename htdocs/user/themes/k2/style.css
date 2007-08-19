@@ -1,10 +1,12 @@
 /*
 Theme Name: K2 for Habari
 Theme URI: http://getk2.com
-Description: Configure from the <a href="themes.php?page=functions.php">K2 Options Panel</a>. Visit the <a href="http://getk2.com/forum">support forums</a>, <a href="http://k2.stikipad.com/docs/show/">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>.</p><p><small>Developed by <a href="http://binarybonsai.com">Michael</a>, <a href="http://chrisjdavis.org">Chris</a>, <a href="http://zeo.unic.net.my">Zeo</a>, <a href="http://stevelam.org">Steve</a> and <a href="http://nybblelabs.org.uk">Ben Sherratt</a>. Protected by <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.</small>
 Version: 0.9.1
 Author: Various Artists
 Author URI: http://binarybonsai.com
+
+License: Apache Software License
+	http://groups.google.com/group/habari-dev/msg/9b98a01189093e7e
 
 CSS Documentation: http://k2.stikipad.com/docs/show/CSS+Overview
 */
@@ -377,6 +379,9 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 /*- Primary Contents */
+
+#primarycontent .draft { background-color: #ffc; }
+#primarycontent .deleted { background-color: #933; text-decoration: line-through; }
 
 .hentry {
 	margin: 0;

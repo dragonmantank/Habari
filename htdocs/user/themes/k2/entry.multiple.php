@@ -3,7 +3,7 @@
 	<div id="primary">
 		<div id="primarycontent" class="hfeed">
 			<?php foreach ( $posts as $post ) { ?>
-				<div id="post-<?php echo $post->id; ?>">
+				<div id="post-<?php echo $post->id; ?>" class="<?php echo Post::status_name($post->status); ?>">
 					<div class="entry-head">
 						<h3 class="entry-title"><a href="<?php echo $post->permalink; ?>" title="<?php echo $post->title; ?>"><?php echo $post->title_out; ?></a></h3>
 						<small class="entry-meta">
