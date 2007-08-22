@@ -380,9 +380,6 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 
 /*- Primary Contents */
 
-#primarycontent .draft { background-color: #ffc; }
-#primarycontent .deleted { background-color: #933; text-decoration: line-through; }
-
 .hentry {
 	margin: 0;
 	padding: 5px 0 15px;
