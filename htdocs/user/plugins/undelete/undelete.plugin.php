@@ -72,6 +72,24 @@ class Undelete extends Plugin
 		return false;
 	}
 
+	/** 
+	 * function filter_admin_publish_list_post_statuses
+	 * This filter modifies the array of all post statuses to
+	 * ensure that the logged-in user can't select "deleted" as
+	 * a post status when composing or editing a post
+	**/
+	public function filter_admin_publish_list_post_statuses( $statuses )
+	{
+		$new_statuses= array();
+		foreach ( $statuses as $name => $value ) {
+			if ( 'deleted' == $name ) {
+				continue;
+			}
+			$new_statuses[$name]= $value;
+		}
+		return $new_statuses;
+	}
+
 	/**
 	 * function undelete_post
 	 * This function reverts a post's status from 'deleted' to whatever
