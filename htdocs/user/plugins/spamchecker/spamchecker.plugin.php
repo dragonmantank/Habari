@@ -55,44 +55,47 @@ class SpamChecker extends Plugin
 			return $comment;
 		}
 
-	    // first, check the commenter's name
-	    // if it's only digits, then we can discard this comment
-	    if ( preg_match( "/^\d+$/", $comment->name ) ) {
-			$comment->status = Comment::STATUS_SPAM;
-	    }
+		// <script> is bad, mmmkay?
+		 preg_replace( '#<script[^>]*>.*?</script>#si', '', $comment->content );
 
-	    // now look at the comment text
-	    // if it's digits only, discard it
-	    $textonly = strip_tags( $comment->content );
-	
-	    if ( preg_match( "/^\d+$/", $textonly ) ) {
+		// first, check the commenter's name
+		// if it's only digits, then we can discard this comment
+		if ( preg_match( "/^\d+$/", $comment->name ) ) {
 			$comment->status = Comment::STATUS_SPAM;
-	    }
+		}
 
-	    // is the content the single word "array"?
-	    if ( 'array' == strtolower( $textonly ) ) {
+		// now look at the comment text
+		// if it's digits only, discard it
+		$textonly = strip_tags( $comment->content );
+
+		if ( preg_match( "/^\d+$/", $textonly ) ) {
 			$comment->status = Comment::STATUS_SPAM;
-	    }
+		}
 
-	    // is the conent the same as the name?
-	    if ( strtolower( $textonly ) == strtolower( $comment->name ) ) {
+		// is the content the single word "array"?
+		if ( 'array' == strtolower( $textonly ) ) {
 			$comment->status = Comment::STATUS_SPAM;
-	    }
+		}
 
-	    // a lot of spam starts with "<strong>some text...</strong>"
-	    if ( preg_match( "#^<strong>[^.]+\.\.\.</strong>#", $comment->content ) )
-	    {
+		// is the conent the same as the name?
+		if ( strtolower( $textonly ) == strtolower( $comment->name ) ) {
 			$comment->status = Comment::STATUS_SPAM;
-	    }
+		}
 
-	    // are there more than 8 URLs posted?  If so, it's almost certainly spam
-	    if ( 3 <= preg_match_all( "/a href=/", strtolower( $comment->content ), $matches ) ) 
+		// a lot of spam starts with "<strong>some text...</strong>"
+		if ( preg_match( "#^<strong>[^.]+\.\.\.</strong>#", $comment->content ) )
 		{
 			$comment->status = Comment::STATUS_SPAM;
-	   	}
+		}
 
-	    // otherwise everything looks good, so continue processing the comment
-	    return $comment;
+		// are there more than 3 URLs posted?  If so, it's almost certainly spam
+		if ( 3 <= preg_match_all( "/a href=/", strtolower( $comment->content ), $matches ) ) 
+		{
+			$comment->status = Comment::STATUS_SPAM;
+		}
+
+		// otherwise everything looks good, so continue processing the comment
+		return $comment;
 	}
 	
 	/**
