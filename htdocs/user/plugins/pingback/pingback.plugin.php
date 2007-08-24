@@ -133,7 +133,7 @@ class Pingback extends Plugin {
 			throw new XMLRPCException( 17 );
 		}
 		
-		$source_excerpt= '...' . strip_tags( $source_excerpt[0] ) . '...';
+		$source_excerpt= '...' . InputFilter::filter( $source_excerpt[0] ) . '...';
 
 		// Add a new pingback comment
 		$pingback= new Comment( array(
