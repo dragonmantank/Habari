@@ -48,7 +48,7 @@ class SpamChecker extends Plugin
 	 * @param Comment The comment that will be processed before storing it in the database.
 	 * @return Comment The comment result to store.
 	 **/	 	 	 	 	
-	function act_comment_insert_before ( $comment )
+	function action_comment_insert_before ( $comment )
 	{
 		// This plugin ignores non-comments
 		if($comment->type != Comment::COMMENT) {
