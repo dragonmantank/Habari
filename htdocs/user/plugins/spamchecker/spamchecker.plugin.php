@@ -54,92 +54,102 @@ class SpamChecker extends Plugin
 		if($comment->type != Comment::COMMENT) {
 			return $comment;
 		}
-
+		
+		$spamcheck = array();
+		
 		// <script> is bad, mmmkay?
-		 preg_replace( '#<script[^>]*>.*?</script>#si', '', $comment->content );
+		$comment->content = InputFilter::filter($comment->content);
 
-		// first, check the commenter's name
-		// if it's only digits, then we can discard this comment
-		if ( preg_match( "/^\d+$/", $comment->name ) ) {
+    // first, check the commenter's name
+    // if it's only digits, then we can discard this comment
+    if ( preg_match( "/^\d+$/", $comment->name ) ) {
 			$comment->status = Comment::STATUS_SPAM;
-		}
+			$spamcheck[] = _t('Commenters with numeric names are spammy.'); 
+    }
 
-		// now look at the comment text
-		// if it's digits only, discard it
-		$textonly = strip_tags( $comment->content );
+    // now look at the comment text
+    // if it's digits only, discard it
+    $textonly = strip_tags( $comment->content );
 
-		if ( preg_match( "/^\d+$/", $textonly ) ) {
+    if ( preg_match( "/^\d+$/", $textonly ) ) {
 			$comment->status = Comment::STATUS_SPAM;
-		}
+			$spamcheck[] = _t('Comments that are only numeric are spammy.'); 
+    }
 
-		// is the content the single word "array"?
-		if ( 'array' == strtolower( $textonly ) ) {
+    // is the content the single word "array"?
+    if ( 'array' == strtolower( $textonly ) ) {
 			$comment->status = Comment::STATUS_SPAM;
-		}
+			$spamcheck[] = _t('Comments that are only "array" are spammy.'); 
+    }
 
-		// is the conent the same as the name?
-		if ( strtolower( $textonly ) == strtolower( $comment->name ) ) {
+    // is the conent the same as the name?
+    if ( strtolower( $textonly ) == strtolower( $comment->name ) ) {
 			$comment->status = Comment::STATUS_SPAM;
-		}
+			$spamcheck[] = _t('Comments that consist of only the commenters name are spammy.'); 
+    }
 
-		// a lot of spam starts with "<strong>some text...</strong>"
+    // a lot of spam starts with "<strong>some text...</strong>"
 		if ( preg_match( "#^<strong>[^.]+\.\.\.</strong>#", $comment->content ) )
 		{
 			$comment->status = Comment::STATUS_SPAM;
-		}
+			$spamcheck[] = _t('Comments that start with strong text are spammy.');
+    }
 
-		// are there more than 3 URLs posted?  If so, it's almost certainly spam
-		if ( 3 <= preg_match_all( "/a href=/", strtolower( $comment->content ), $matches ) ) 
-		{
+    // are there more than 8 URLs posted?  If so, it's almost certainly spam
+    if ( preg_match_all( "/\\bhref=/", strtolower( $comment->content ), $matches, PREG_SET_ORDER ) > 3 ) {
 			$comment->status = Comment::STATUS_SPAM;
+			$spamcheck[] = _t('There is a 3 URL limit in comments.'); 
+   	}
+
+    // are there more than 3 URLencoded characters in the content?
+    if ( preg_match_all( "/%[0-9a-f]{2}/", strtolower( $comment->content ), $matches, PREG_SET_ORDER ) > 3 ) {
+			$comment->status = Comment::STATUS_SPAM;
+			$spamcheck[] = _t('There is a 3 URL-encoded character limit in comments.'); 
+   	}
+
+		// Was the tcount high enough?
+		/* // This only works with special javascript running on comment form
+		if ( empty($handlervars['tcount']) || $handlervars['tcount'] < 10 ) {
+			$comment->status = Comment::STATUS_SPAM;
+			$spamcheck[] = _t('Commenter did not actually type content.'); 
+		}
+		*/
+
+		// We don't allow bbcode here, silly
+		if ( strpos($comment->content, '[url=') !== false ) {
+			$comment->status = Comment::STATUS_SPAM;
+			$spamcheck[] = _t('We do not accept BBCode here.');
+		}
+		
+		// Must have less than half link content
+		$nonacontent = strip_tags(preg_replace('/<a.*?<\/a/i', '', $comment->content));
+		if ( strlen($nonacontent) / strlen($textonly) < 0.5 ) {
+			$comment->status = Comment::STATUS_SPAM;
+			$spamcheck[] = _t('Too much text that is a link compared to that which is not.'); 
+		}
+		
+		// Only do db checks if it's not already spam
+		if($comment->status == Comment::STATUS_SPAM) {
+			$spams = DB::get_value('SELECT count(*) FROM ' . DB::table('comments') . ' WHERE status = 2 AND ip = ?', array($comment->ip));
+			// If you've already got two spams on your IP address, all you ever do is spam
+			if($spams > 1) {
+				$comment->status == Comment::STATUS_SPAM;
+				$spamcheck[] = sprintf(_t('Too many existing spams from this IP: %s'), long2ip($comment->ip)); 
+			}
 		}
 
-		// otherwise everything looks good, so continue processing the comment
-		return $comment;
-	}
-	
-	/**
-	 * These code functions will be used as soon as 
-	 * you can hook rewrite rules to modify the output for
-	 * a specific rule.
-	 * 
-	 * You would be able to use this for the comment form action:
-	 * 	  URL::get( 'add_comment', array('id'=>$post->id, 'code'=>Plugins::filter('get_code', 0) );
-	 * 
-	 * And then verify that the URL used to submit the form 
-	 * was valid before execution ever hit the comment filtering. 	 	 	 
-	 **/	 	 	 	
-	
-	/**
-	 * Get a 10-digit hex code that identifies the user submitting the comment
-	 * @param A post id to which the comment will be submitted
-	 * @param The IP address of the commenter
-	 * @return A 10-digit hex code
-	 **/	 	 	 	 
-	public static function get_code($post_id, $ip = '')
-	{
-		if( $ip == '' ) {
-			$ip = ip2long($_SERVER['REMOTE_ADDR']);
+		if ( $comment->status != Comment::STATUS_SPAM ) {
+			$spamcheck[] = sprintf(_t('No spam detected by spamchecker on comment #%s'), $comment->id); 
 		}
-		$code = substr(md5( $post_id . Options::get('GUID') . 'more salt' . $ip ), 0, 10);
-		$code = Plugins::filter('comment_code', $code, $post_id, $ip);
-		return $code;
-	}
-	
-	/**
-	 * Verify a 10-digit hex code that identifies the user submitting the comment
-	 * @param A post id to which the comment has been submitted
-	 * @param The IP address of the commenter
-	 * @return True if the code is valid, false if not
-	 **/	 	 	 	 
-	public static function verify_code($suspect_code, $post_id, $ip = '')
-	{
-		if( $ip == '' ) {
-			$ip = ip2long($_SERVER['REMOTE_ADDR']);
+		
+		if(is_array($comment->info->spamcheck)) {
+			$comment->info->spamcheck = array_unique(array_merge($comment->info->spamcheck, $spamcheck));
 		}
-		$code = substr(md5( $post_id . Options::get('GUID') . 'more salt' . $ip ), 0, 10);
-		$code = Plugins::filter('comment_code', $code, $post_id, $ip);
-		return ($suspect_code == $code);
-	}
+		else {
+			$comment->info->spamcheck = $spamcheck;
+		}
 
+    // otherwise everything looks good, so continue processing the comment
+    return $comment;
+	}
 }
