@@ -45,7 +45,7 @@ class Pingback extends Plugin {
 	 */	 
 	public function action_post_insert_after( $post ) {
 		// only execute if this is a published post
-		if ( Post::status('publish') != $post->status ) {
+		if ( Post::status('published') != $post->status ) {
 			return;
 		}
 		self::pingback_all_links( $post->content, $post->permalink, $post );
@@ -63,10 +63,10 @@ class Pingback extends Plugin {
 	 */	 
 	public function action_post_update_after( $post ) {
 		// only execute if this is a published post
-		if ( Post::status('publish') != $post->status) {
+		if ( Post::status('published') != $post->status) {
 			return;
 		}
-		self::pingback_all_links( $newvalue, $post->permalink, $post );
+		self::pingback_all_links( $post->content, $post->permalink, $post );
 	}
 
 	/**
