@@ -19,9 +19,9 @@ class Undelete extends Plugin
 	{
 		return array (
 			'name' => 'Undelete',
-			'url' => 'http://skippy.net',
-			'author' => 'Scott Merill',
-			'authorurl' => 'http://skippy.net',
+			'url' => 'http://habariproject.org/',
+			'author' => 'Habari Community',
+			'authorurl' => 'http://habariproject.org/',
 			'version' => '1.0',
 			'description' => 'Stores deleted items in a virtual trashcan to support undelete functionality.',
 			'license' => 'Apache License 2.0',
@@ -57,7 +57,7 @@ class Undelete extends Plugin
 	 * @param Post The post object to potentially delete
 	 * @return Boolean Whether to delete the post or not
 	 **/	 	 	 	 	
-	function filter_allow_post_delete( $result, $post )
+	function filter_post_delete_allow( $result, $post )
 	{
 		// all we need to do is set the post status to "deleted"
 		// and then return false.  The Post::delete() method will

@@ -35,29 +35,40 @@ class Pingback extends Plugin {
 	 * Unregister the Pingback event type on deactivation
 	 * @todo Should we be doing this?
 	 */	 	 
-	public function action_plugin_desactivation() {
+	public function action_plugin_deactivation() {
 		EventLog::unregister_type( 'Pingback' );
 	}
 	
 	/**
 	 * Pingback links from the post content when a post is inserted into the database.
-	 * @todo Only do this when a post is published.
+	 * @param post The post from which to send pingbacks
 	 */	 
-	public function action_post_inserted( $post ) {
+	public function action_post_insert_after( $post ) {
+		// only execute if this is a published post
+		if ( Post::status('publish') != $post->status ) {
+			return;
+		}
 		self::pingback_all_links( $post->content, $post->permalink, $post );
 	}
 	
 	/**
 	 * Pingback mentioned links when a post is updated.
-	 * @param Post $post The post the is updated
-	 * @param string $oldvalue The old value of the post content
-	 * @param string @newvalue The new value of the post content	 	 	 
-	 * @todo Only do this if the post status is published.
+	 * @param Post $post The post is updated
+	 * We invoke this function regardless of what might have been updated
+	 * in the post because:
+	 * 	- this will only execute if the post is published
+	 *	- the pingback_all_links function keeps track of links its
+	 *		already pinged, so if the content hasnt changed no
+	 *		pings will be sent`
 	 */	 
-	public function action_post_update_content( $post, $oldvalue, $newvalue ) {
+	public function action_post_update_after( $post ) {
+		// only execute if this is a published post
+		if ( Post::status('publish') != $post->status) {
+			return;
+		}
 		self::pingback_all_links( $newvalue, $post->permalink, $post );
 	}
-	
+
 	/**
 	 * Add the Pingback header on single post/page requests
 	 * Not to the entire site.  Clever.
@@ -81,7 +92,7 @@ class Pingback extends Plugin {
 		list( $source_uri, $target_uri )= $params;
 	
 		// This should really be done by an Habari core function
-		$target_parse= parse_url( $target_uri );
+		$target_parse= InputFilter::parse_url( $target_uri );
 		$target_stub= $target_parse['path'];
 		$base_url= Site::get_path( 'base', TRUE );
 		

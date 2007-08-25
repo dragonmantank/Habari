@@ -17,12 +17,12 @@ class SpamChecker extends Plugin
 	function info()
 	{
 		return array (
-			'name' => 'SDM Spam Check',
-			'url' => 'http://skippy.net',
-			'author' => 'Scott Merill',
-			'authorurl' => 'http://skippy.net',
+			'name' => 'Spam Checker',
+			'url' => 'http://habariproject.org/',
+			'author' => 'Habari Community',
+			'authorurl' => 'http://habariproject.org/',
 			'version' => '1.0',
-			'description' => 'Silently discards obvious comment spam.',
+			'description' => 'Flags as spam obvious comment spam.',
 			'license' => 'Apache License 2.0',
 		);
 	}
@@ -37,7 +37,7 @@ class SpamChecker extends Plugin
 	}
 	
 	/**
-	 * function filter_add_comment
+	 * function act_comment_insert_before
 	 * This function is executed when the filter "add_comment" is applied to a Comment object.
 	 * The parent class, Plugin, handles registering the filter and hook name using the 
 	 * name of the function to determine where it will be applied.
@@ -48,7 +48,7 @@ class SpamChecker extends Plugin
 	 * @param Comment The comment that will be processed before storing it in the database.
 	 * @return Comment The comment result to store.
 	 **/	 	 	 	 	
-	function filter_add_comment( $comment )
+	function act_comment_insert_before ( $comment )
 	{
 		// This plugin ignores non-comments
 		if($comment->type != Comment::COMMENT) {
