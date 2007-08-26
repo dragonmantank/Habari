@@ -155,7 +155,7 @@ class Pingback extends Plugin {
 			'ip'		=>	'',
 			'content'	=>	$source_excerpt,
 			'status'	=>	Comment::STATUS_APPROVED,
-			'date'		=>	gmdate('Y-m-d H:i:s'),
+			'date'		=>	date( 'Y-m-d H:i:s' ),
 			'type' 		=> 	Comment::PINGBACK,
 			) );
 		$pingback->insert();
