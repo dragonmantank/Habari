@@ -237,7 +237,7 @@ class Pingback extends Plugin {
 			self::send_pingback( $source_uri, $target_uri, $post );
 		}
 
-		EventLog::log( sprintf(_t('Sent pingbacks for "%s".'), $post->title, 'info', 'Pingback' ));
+		EventLog::log( sprintf( _t( 'Sent pingbacks for "%s".' ), $post->title ), 'info', 'Pingback' );
 	}
 }
 ?>
