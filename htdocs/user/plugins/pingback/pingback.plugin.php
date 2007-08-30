@@ -193,7 +193,7 @@ class Pingback extends Plugin {
 			return false;
 		}
 	
-		$response= XMLRPCClient::open( $pingback_endpoint )->pingback->ping( array( $source_uri, $target_uri ) );
+		$response= XMLRPCClient::open( $pingback_endpoint )->pingback->ping( $source_uri, $target_uri );
 		
 		if ( isset( $response->faultString ) ) {
 			EventLog::log( $response->faultCode . ' - ' . $response->faultString . ' (Source: ' . $source_uri . ' | Target: ' . $target_uri . ')', 'info', 'Pingback' );
