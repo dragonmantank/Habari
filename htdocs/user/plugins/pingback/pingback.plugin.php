@@ -234,10 +234,10 @@ class Pingback extends Plugin {
 		$links= array_unique( $links );
 
 		foreach ( $links as $target_uri ) {
-			self::send_pingback( $source_uri, $target_uri, $post );
+			if ( self::send_pingback( $source_uri, $target_uri, $post ) ) {
+				EventLog::log( sprintf( _t( 'Sent pingbacks for "%1$s", target: %2$s' ), $post->title, $target_uri ), 'info', 'Pingback' );
+			}
 		}
-
-		EventLog::log( sprintf( _t( 'Sent pingbacks for "%s".' ), $post->title ), 'info', 'Pingback' );
 	}
 }
 ?>
