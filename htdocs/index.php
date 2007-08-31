@@ -54,7 +54,9 @@ function __autoload($class_name) {
 			// directories to check for class files
 			$glob = glob( $site_user_dir . '/classes/*.php' );
 			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
-			$files = array_merge($files, array_combine($fnames, $glob));
+			if ( ! empty( $glob ) && ! empty( $fnames ) ) {
+				$files = array_merge($files, array_combine($fnames, $glob));
+			}
 		}
 	}
 
