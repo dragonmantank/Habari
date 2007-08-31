@@ -44,7 +44,7 @@ function __autoload($class_name) {
 			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
 			$files = array_merge($files, array_combine($fnames, $glob));
 		}
-		// Proload the Site class to get the classes from the site directory
+		// Preload the Site class to get the classes from the site directory
 		if(isset($files['site.php'])) {
 			require_once $files['site.php'];
 		}
