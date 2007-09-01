@@ -51,7 +51,7 @@ class MyTheme extends Theme
 	public function add_template_vars() 
 	{
 		if( !$this->template_engine->assigned( 'pages' ) ) {
-			$this->assign('pages', Posts::get( array( 'content_type' => 'page', 'status' => Post::status('published') ) ) );
+			$this->assign('pages', Posts::get( array( 'content_type' => 'page', 'status' => Post::status('published'), 'nolimit' => 1 ) ) );
 		}
 		if( !$this->template_engine->assigned( 'user' ) ) {
 			$this->assign('user', User::identify() );
