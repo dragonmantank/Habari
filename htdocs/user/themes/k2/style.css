@@ -546,31 +546,6 @@ li.bypostauthor blockquote {
 	border: none;
 	}
 	
-#leavecomment, .comments #loading {
-	text-align: center;
-	margin: 30px 0 20px !important;
-	color: #ddd;
-	font-size: 2em;
-	letter-spacing: -2px;
-	}
-
-.comments #loading {
-	margin-top: 20px !important;
-	}
-
-.comments #error {
-	line-height: 2.0;
-	padding: 5px;
-	color: #FF0000;
-	background-color: #FFFF99;
-}
-
-.comments #commentload {
-	padding-top: 3px;
-	float: right;
-	vertical-align: middle;
-}
-
 .comments form {
 	clear: both;
 	padding: 1px 0 10px;
@@ -766,11 +741,6 @@ hr {
 	padding: 5px 20px;
 	}
 
-img.wp-smiley {
-	border: none !important;
-	padding: 0 0 0 5px !important;
-	}
-
 /*- Begin Lists */
 .entry-content ol, .entry-content ul {
 	padding: 0 0 0 35px;
@@ -839,68 +809,23 @@ input[type=text], textarea {
 	width: 79%;
 	}
 
-#s.livesearch {
-	width: 89%;
-	}
-
-#searchreset {
-	position: absolute;
-	right: 3px;
-	top: 3px;
-	height: 13px;
-	width: 13px;
-	background: url('images/reset-fff.png') center center no-repeat;
-	}
-
-#searchload {
-	position: absolute;
-	right: 0;
-	top: 0;
-	height: 18px;
-	width: 18px;
-	background: url('images/spinner.gif') center center no-repeat;
-	}
-
-.livesearchform input[type=submit] {
-	margin: 0;
-	}
-
-#searchcontrols {
-	text-align: center;
-	padding: 1px;
-	background: #ddd url('images/livesearchbgdark.jpg') center repeat-y;
-	}
-
-#searchcontrols small {
-	margin: 0;
-	padding: 0;
-	}
-
-/*- Attachment */
-
-.attachment {
-	text-align: center;
-	}
-
-
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */
 
 
 /*-
-	Brian's Latest Comments
-	http://meidell.dk/archives/2004/09/12/brians-latest-comments/
+	Latest Comments
 */
-.sb-comments-blc ul li span a, .sb-comments ul li small a {
+.sb-comments-lc ul li span a, .sb-comments ul li small a {
 	color: #999;
 	font-weight: normal;
 	word-spacing: -1px;
 	}
 
-.sb-comments-blc ul li {
+.sb-comments-lc ul li {
 	margin-bottom: 6px;
 }
 
-.sb-comments-blc li > a[title="Go to the comments of this entry"] {
+.sb-comments-lc li > a[title="Go to the comments of this entry"] {
 	position: absolute;
 	right:0;
 	color: #999;
@@ -910,13 +835,12 @@ input[type=text], textarea {
 	font-size: 1.1em;
 	}
 
-div#brians-latest-comments small {
+div#latest-comments small {
 	display: block;
 	margin: 0;
 	font-weight: normal;
 	line-height: 1em;
 	}
-
 
 /*-
 	FlickrRSS
@@ -936,76 +860,6 @@ div#brians-latest-comments small {
 .sb-flickr div a:hover img {
 	border: 1px solid #999;
 }
-
-/*-
-	WordPress: Touched
-	http://twilightuniverse.com/2005/03/wordpress-touched/
-	
-	No support for Touched 0.6 in the rest of K2.
-	Seems a bit flaky just now. Waiting for new version.
-*/
-
-#poststuff fieldset {
-	border: none;
-	}
-
-#poststuff #title, #poststuff #excerpt, #poststuff #tags {
-	width: 470px;
-	}
-	
-#poststuff #title {
-	font-size: 2em;
-	}
-
-/*
-	Ultimate Tag Warrior
-	K2 removes UTW's default tags for more default control.
-*/
-
-.localtags, .technoratitags {
-	display: none;
-	}
-
-/*
-	Contact Form
-*/
-
-.contactform {
-	width: 100%; 
-	position: relative;
-	}
-
-.contactleft {
-	width: 15%; 
-	text-align: right;
-	clear: both; 
-	float: left; 
-	display: inline; 
-	padding: 4px; 
-	margin: 5px 0; 
-	}
-
-.contactright {
-	width: 70%; 
-	text-align: left;
-	float: right; 
-	display: inline; 
-	padding: 4px; 
-	margin: 5px 0; 
-	}
-	
-.contacterror {
-	border: 1px solid #ff0000;
-	}
-
-/* Noteworthy */
-.category-noteworthy h3.entry-title {
-	background: url('images/heart.png') no-repeat right center;
-	padding-right: 25px;
-	display: inline;
-}
-
-.noteworthyLink { margin-left: 5px }
 
 /* Peace and forgiveness */
 /* Learn more about the other K2: http://en.wikipedia.org/wiki/K2 */
