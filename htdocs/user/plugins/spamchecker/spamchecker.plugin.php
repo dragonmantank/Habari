@@ -116,7 +116,7 @@ class SpamChecker extends Plugin
 		*/
 
 		// We don't allow bbcode here, silly
-		if ( strpos($comment->content, '[url=') !== false ) {
+		if ( stripos($comment->content, '[url=') !== false ) {
 			$comment->status = Comment::STATUS_SPAM;
 			$spamcheck[] = _t('We do not accept BBCode here.');
 		}
