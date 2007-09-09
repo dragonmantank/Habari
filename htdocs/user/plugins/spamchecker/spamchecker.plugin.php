@@ -133,7 +133,7 @@ class SpamChecker extends Plugin
 			$spams = DB::get_value('SELECT count(*) FROM ' . DB::table('comments') . ' WHERE status = 2 AND ip = ?', array($comment->ip));
 			// If you've already got two spams on your IP address, all you ever do is spam
 			if($spams > 1) {
-				$comment->status == Comment::STATUS_SPAM;
+				$comment->status= Comment::STATUS_SPAM;
 				$spamcheck[] = sprintf(_t('Too many existing spams from this IP: %s'), long2ip($comment->ip)); 
 			}
 		}
