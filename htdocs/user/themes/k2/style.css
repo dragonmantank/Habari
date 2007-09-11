@@ -789,25 +789,32 @@ ol li {
 
 /*- Search Form and Livesearch */
 
-#searchform {
-	margin-top: 20px;
-	display: block;
-	position: relative;
-	}
-
-#search h2 {
-	display: none;
-	}
-
-input[type=text], textarea {
-	color: #444;
-	padding: 1px;
-	margin: 0;
-	}
-
 #s {
-	width: 79%;
+	width: 12em;
 	}
+#s:focus {
+	border-color: #666;
+}
+	
+#searchsubmit {
+	width: 3em;
+}
+	
+/*- Login Form */
+
+#loginform label {
+	display:block;
+	font-size: 0.9em;
+	font-weight: bold;
+	line-height: 1.5em;
+	color: #777;
+}
+#habari_username, #habari_password {
+	width: 15em;
+}
+#habari_username:focus, #habari_password:focus {
+	border-color: #666;
+}
 
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */
 

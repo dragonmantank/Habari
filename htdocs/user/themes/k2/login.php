@@ -4,6 +4,7 @@
    <div id="primary">
     <div id="primarycontent" class="hfeed">
 <?php include 'loginform.php'; ?>
+<?php Plugins::act( 'theme_login' ); ?>
     </div>
  
    </div>
@@ -12,16 +13,8 @@
  
    <div class="secondary">
  
-    <div id="search">
-     <h2>Search</h2>
-<?php include 'searchform.php'; ?>
-    </div>	
- 
-    <div class="sb-about">
-     <h2>About</h2>
-     <p><?php Options::out('about'); ?></p>
-    </div>
-  
+<?php include 'sidebar.php'; ?>
+
    </div>
  
    <div class="clear"></div>
