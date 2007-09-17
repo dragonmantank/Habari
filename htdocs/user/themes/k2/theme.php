@@ -64,7 +64,7 @@ class MyTheme extends Theme
 	
 	public function header()
 	{
-		if ( $this->user instanceof User ) {
+		if ( User::identify() != FALSE ) {
 			Stack::add( 'template_header_javascript', Site::get_url('scripts') . '/jquery.js', 'jquery' );
 		}
 	}
