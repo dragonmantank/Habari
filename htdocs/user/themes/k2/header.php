@@ -12,9 +12,7 @@
 
  <link rel="stylesheet" type="text/css" media="screen" href="<?php Site::out_url( 'theme' ); ?>/style.css">
 
-<?php if ( $user ) { // Still needs to check for edit permissions ?>
- <script type="text/javascript" src="<?php Site::out_url( 'habari' ); ?>/scripts/jquery.js"></script>
-<?php } ?>
+<?php Theme::header() ?>
 </head>
 
 <body class="home">
