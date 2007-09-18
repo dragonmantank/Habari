@@ -30,7 +30,7 @@
     </div>
  
     <div id="page-selector">
-     <strong>Page:</strong> <?php echo Utils::page_selector( $page, Utils::archive_pages( $posts->count_all() ), URL::get_matched_rule()->name, URL::get_matched_rule()->named_arg_values ); ?>
+     <strong>Page:</strong> <?php echo Utils::page_selector( $page, Utils::archive_pages( $posts->count_all() ) ); ?>
     
     </div>
  
