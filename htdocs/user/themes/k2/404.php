@@ -2,7 +2,7 @@
 <!-- error -->
   <div class="content">
    <div id="primary">
-    <div id="post-<?php echo $post->id; ?>" class="<?php echo $post->statusname; ?>">
+    <div id="post" class="error">
 
      <div class="entry-head">
       <h3 class="entry-title">Error!</h3>
