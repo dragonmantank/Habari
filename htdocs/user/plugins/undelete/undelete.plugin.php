@@ -35,7 +35,8 @@ class Undelete extends Plugin
 	**/
 	public function action_plugin_activation()
 	{
-		Post::add_new_status( 'deleted' );
+		Post::add_new_status( 'deleted', true );
+		Options::set( 'undelete:style', '#primarycontent .deleted { background-color: #933; text-decoration: line-through; }' );
 	}
 	
 	/**
@@ -72,24 +73,6 @@ class Undelete extends Plugin
 		return false;
 	}
 
-	/** 
-	 * function filter_admin_publish_list_post_statuses
-	 * This filter modifies the array of all post statuses to
-	 * ensure that the logged-in user can't select "deleted" as
-	 * a post status when composing or editing a post
-	**/
-	public function filter_admin_publish_list_post_statuses( $statuses )
-	{
-		$new_statuses= array();
-		foreach ( $statuses as $name => $value ) {
-			if ( 'deleted' == $name ) {
-				continue;
-			}
-			$new_statuses[$name]= $value;
-		}
-		return $new_statuses;
-	}
-
 	/**
 	 * function undelete_post
 	 * This function reverts a post's status from 'deleted' to whatever
@@ -103,9 +86,48 @@ class Undelete extends Plugin
 		$post->update();
 	}
 
-	function undelete_css()
+/*
+	public function filter_rewrite_rules()
 	{
-		echo '#primarycontent .draft { background-color: #ffc; }';
-		echo '#primarycontent .deleted { background-color: #933; text-decoration: line-through; }';
+	}
+*/
+
+	public function filter_plugin_config( $actions, $plugin_id )
+	{
+		if ( $plugin_id == $this->plugin_id() ) {
+			$actions[]= _('Configure');
+		}
+		return $actions;
+	}
+
+	public function action_plugin_ui( $plugin_id, $action )
+	{
+		if ( $plugin_id == $this->plugin_id() ) {
+			switch ( $action ) {
+			case _('Configure'):
+				$ui = new FormUI( strtolower( get_class( $this ) ) );
+				$head_code = $ui->add( 'text', 'style', 'Style declaration for deleted content:', Options::get('undelete:style') );
+				$ui->on_success( array( $this, 'updated_config' ) );
+				$ui->out();
+				break;
+			}
+		}
+	}
+
+	public function updated_config( $ui )
+	{
+		return true;
+	}
+
+	// this method will inject some CSS into the <head>
+	// so that deleted posts will show up differently
+	function action_template_header()
+	{
+		// only show the style to logged in users
+		if ( User::authenticate() !== false ) {
+			echo '<style type="text/css">';
+			Options::out('undelete:style');
+			echo '</style>';
+		}
 	}
 }
