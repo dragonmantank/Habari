@@ -124,7 +124,7 @@ class Undelete extends Plugin
 	function action_template_header()
 	{
 		// only show the style to logged in users
-		if ( User::authenticate() !== false ) {
+		if ( User::identify() !== false ) {
 			echo '<style type="text/css">';
 			Options::out('undelete:style');
 			echo '</style>';
