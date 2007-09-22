@@ -38,13 +38,13 @@ class SpamChecker extends Plugin
 	
 	/**
 	 * function act_comment_insert_before
-	 * This function is executed when the filter "add_comment" is applied to a Comment object.
-	 * The parent class, Plugin, handles registering the filter and hook name using the 
-	 * name of the function to determine where it will be applied.
-	 * You can still register functions as hooks without using this method, but boy, is it handy.
-	 * Note that other plugins may filter this data also, so the Comment object should pass
-	 * through this function relatively unscathed.  The implication of this, for example
-	 * is that you shouldn't return null from this function.	 	 
+	 * This function is executed when the action "comment_insert_before"
+	 * is invoked from a Comment object.
+	 * The parent class, Plugin, handles registering the action 
+	 * and hook name using the name of the function to determine 
+	 * where it will be applied.
+	 * You can still register functions as hooks without using
+	 * this method, but boy, is it handy.
 	 * @param Comment The comment that will be processed before storing it in the database.
 	 * @return Comment The comment result to store.
 	 **/	 	 	 	 	
@@ -60,52 +60,52 @@ class SpamChecker extends Plugin
 		// <script> is bad, mmmkay?
 		$comment->content = InputFilter::filter($comment->content);
 
-    // first, check the commenter's name
-    // if it's only digits, then we can discard this comment
-    if ( preg_match( "/^\d+$/", $comment->name ) ) {
+		// first, check the commenter's name
+		// if it's only digits, then we can discard this comment
+		if ( preg_match( "/^\d+$/", $comment->name ) ) {
 			$comment->status = Comment::STATUS_SPAM;
 			$spamcheck[] = _t('Commenters with numeric names are spammy.'); 
-    }
+		}
 
-    // now look at the comment text
-    // if it's digits only, discard it
-    $textonly = strip_tags( $comment->content );
+		// now look at the comment text
+		// if it's digits only, discard it
+		$textonly = strip_tags( $comment->content );
 
-    if ( preg_match( "/^\d+$/", $textonly ) ) {
+		if ( preg_match( "/^\d+$/", $textonly ) ) {
 			$comment->status = Comment::STATUS_SPAM;
 			$spamcheck[] = _t('Comments that are only numeric are spammy.'); 
-    }
+		}
 
-    // is the content the single word "array"?
-    if ( 'array' == strtolower( $textonly ) ) {
+		// is the content the single word "array"?
+		if ( 'array' == strtolower( $textonly ) ) {
 			$comment->status = Comment::STATUS_SPAM;
 			$spamcheck[] = _t('Comments that are only "array" are spammy.'); 
-    }
+		}
 
-    // is the conent the same as the name?
-    if ( strtolower( $textonly ) == strtolower( $comment->name ) ) {
+		// is the content the same as the name?
+		if ( strtolower( $textonly ) == strtolower( $comment->name ) ) {
 			$comment->status = Comment::STATUS_SPAM;
 			$spamcheck[] = _t('Comments that consist of only the commenters name are spammy.'); 
-    }
+		}
 
-    // a lot of spam starts with "<strong>some text...</strong>"
+		// a lot of spam starts with "<strong>some text...</strong>"
 		if ( preg_match( "#^<strong>[^.]+\.\.\.</strong>#", $comment->content ) )
 		{
 			$comment->status = Comment::STATUS_SPAM;
 			$spamcheck[] = _t('Comments that start with strong text are spammy.');
-    }
+		}
 
-    // are there more than 8 URLs posted?  If so, it's almost certainly spam
-    if ( preg_match_all( "/\\bhref=/", strtolower( $comment->content ), $matches, PREG_SET_ORDER ) > 3 ) {
+		// are there more than 3 URLs posted?  If so, it's almost certainly spam
+		if ( preg_match_all( "#http://#", strtolower( $comment->content ), $matches, PREG_SET_ORDER ) > 3 ) {
 			$comment->status = Comment::STATUS_SPAM;
 			$spamcheck[] = _t('There is a 3 URL limit in comments.'); 
-   	}
+		}
 
-    // are there more than 3 URLencoded characters in the content?
-    if ( preg_match_all( "/%[0-9a-f]{2}/", strtolower( $comment->content ), $matches, PREG_SET_ORDER ) > 3 ) {
+		// are there more than 3 URLencoded characters in the content?
+		if ( preg_match_all( "/%[0-9a-f]{2}/", strtolower( $comment->content ), $matches, PREG_SET_ORDER ) > 3 ) {
 			$comment->status = Comment::STATUS_SPAM;
 			$spamcheck[] = _t('There is a 3 URL-encoded character limit in comments.'); 
-   	}
+		}
 
 		// Was the tcount high enough?
 		/* // This only works with special javascript running on comment form
@@ -129,7 +129,7 @@ class SpamChecker extends Plugin
 		}
 		
 		// Only do db checks if it's not already spam
-		if($comment->status == Comment::STATUS_SPAM) {
+		if($comment->status != Comment::STATUS_SPAM) {
 			$spams = DB::get_value('SELECT count(*) FROM ' . DB::table('comments') . ' WHERE status = 2 AND ip = ?', array($comment->ip));
 			// If you've already got two spams on your IP address, all you ever do is spam
 			if($spams > 1) {
@@ -149,7 +149,8 @@ class SpamChecker extends Plugin
 			$comment->info->spamcheck = $spamcheck;
 		}
 
-    // otherwise everything looks good, so continue processing the comment
-    return $comment;
+		// otherwise everything looks good
+		// so continue processing the comment
+		return;
 	}
 }
