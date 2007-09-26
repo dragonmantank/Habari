@@ -33,10 +33,12 @@ class Undelete extends Plugin
 	 * adds the "deleted" status type to the poststatus table
 	 * when this plugin is activated.
 	**/
-	public function action_plugin_activation()
+	public function action_plugin_activation( $file )
 	{
-		Post::add_new_status( 'deleted', true );
-		Options::set( 'undelete:style', '#primarycontent .deleted { background-color: #933; text-decoration: line-through; }' );
+		if ( realpath( $file ) == __FILE__ ) {
+			Post::add_new_status( 'deleted', true );
+			Options::set( 'undelete:style', '#primarycontent .deleted { background-color: #933; text-decoration: line-through; }' );
+		}
 	}
 	
 	/**

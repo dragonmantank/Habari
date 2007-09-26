@@ -27,16 +27,20 @@ class Pingback extends Plugin {
 	/**
 	 * Register the Pingback event type with the event log
 	 */	 
-	public function action_plugin_activation() {
-		EventLog::register_type( 'Pingback' );
+	public function action_plugin_activation( $file ) {
+		if ( realpath( $file ) == __FILE__ ) {
+			EventLog::register_type( 'Pingback' );
+		}
 	}
 	
 	/**
 	 * Unregister the Pingback event type on deactivation
 	 * @todo Should we be doing this?
 	 */	 	 
-	public function action_plugin_deactivation() {
-		EventLog::unregister_type( 'Pingback' );
+	public function action_plugin_deactivation( $file ) {
+		if ( realpath( $file ) == __FILE__ ) {
+			EventLog::unregister_type( 'Pingback' );
+		}
 	}
 	
 	/**
