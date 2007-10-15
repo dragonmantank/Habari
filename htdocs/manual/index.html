@@ -496,30 +496,476 @@ Also see AdvancedOptions</pre>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="DefaultTiddlers" modifier="miklb" modified="200707302054" created="200703132340" changecount="1">
+<div title="Asides" modifier="miklb" modified="200710131845" created="200710131844" tags="MediaWikiFormat" changecount="4">
+<pre>Asides, or short posts, are a common feature in blogs.  These are generally a few lines, and intended to be outside the loop of larger posts.  It's quite common it show these in a sidebar or big footer.
+
+To accomplish this with Habari, you will employ the use of tags.  Your first order is to determine what tag you want to use.  In this example &quot;aside&quot; will be used.
+
+The first file you will be editing will be your theme.php file.
+
+You will be adding a few lines to your custom Class. (In k2 this class is called myTheme, your custom theme should be named something different)
+
+First, we are going to exclude the aside tag from the main loop.
+&lt;pre&gt;public function act_display_home()
+{
+    parent::act_display_home( array( 'not:tag' =&gt; 'aside' ) );
+}
+&lt;/pre&gt;
+
+(Note, if you use a different tag other than &quot;aside&quot;, you will need to change it in all the code examples).
+
+Next you are going to define a variable so that you can control how many posts to show, and output the list of posts.
+&lt;pre&gt;$this-&gt;assign( 'asides', Posts::get( array( 'tag'=&gt;'aside', 'limit'=&gt;5) ) );
+parent::add_template_vars();
+&lt;/pre&gt;
+You can obviously change the limit variable to alter the number of items you are going to output.
+
+Now that the theme.php file has been edited, the &quot;aside&quot; tag is excluded from the main loop of posts, and you are ready to output your list of asides.  Determine where you want to output this list (as mentioned, a sidebar is a very common place).
+
+&lt;pre&gt;&lt;ul&gt;
+&lt;?php
+foreach($asides as $post):
+echo '&lt;li&gt;&lt;span class=&quot;date&quot;&gt;';
+echo $post-&gt;pubdate_out . ' - ' . '&lt;/span&gt;';
+echo '&lt;a href=&quot;' . $post-&gt;permalink .'&quot;/&gt;' . $post-&gt;title_out . '&lt;/a&gt; - ';
+echo '&lt;/li&gt;'; ?&gt;
+&lt;?php endforeach; ?&gt;
+&lt;/ul&gt;
+&lt;/pre&gt;
+
+In this example, Only the post title and a permalink to the post is shown.  You can add &lt;code&gt;echo $post-&gt;content_out;&lt;/code&gt; where you want it shown in the foreach (ie, before the closing &lt;code&gt;&lt;/li&gt;&lt;/code&gt;)
+
+You may also want to read over [[Using Excerpts]] if you want to have full length posts in your main content, and excerpts for your asides.
+
+Here is [http://www.chrisjdavis.org/asides-with-habari another tutorial] for doing inline asides.  That is, asides listed along with primary posts, however with the ability to format them differently.</pre>
+</div>
+<div title="Available Themes" modifier="miklb" created="200710131833" tags="MediaWikiFormat" changecount="1">
+<pre>== [http://www.morydd.net/ Sean T Evans (a.k.a. Morydd)] ==
+[http://www.morydd.net/aidens-theme-for-habari-011 Aiden's Theme for Habari]
+''A simple blue and brown theme''
+* Current Version: 0.1
+* Tested on Habari Versions: DR 0.1
+
+== Mzingi ==
+[http://bloggingmeta.com/mzingi Mzingi Theme for Habari]
+* Current Version: 0.1alpha
+* Tested on r845 (post DR 0.2)</pre>
+</div>
+<div title="Choosing a Custom Theme" modifier="miklb" created="200710131835" tags="MediaWikiFormat" changecount="1">
+<pre>Habari now supports a basic way to change themes.  The first step is to create a new directory in /user/themes/ for your new theme.  Either copy your k2 theme over, or start from scratch.
+
+If you are copying k2 over, you can simply edit the theme.xml file in the theme directory.  You should leave the first line alone, and simply edit the tags below that.  They are pretty self explanatory.  If you are creating a theme from scratch, the theme.xml file should start with &lt;pre&gt;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;&lt;/pre&gt;
+Then add a &lt;pre&gt;&lt;theme&gt;&lt;/pre&gt; tag.
+
+Below that, add these tags:
+
+===Name===
+&lt;pre&gt;&lt;name&gt;&lt;/name&gt;&lt;/pre&gt; This is the name you are giving your theme.
+
+
+===Author===
+&lt;pre&gt;&lt;author&gt;&lt;/author&gt;&lt;/pre&gt; Your name, or whom ever is being credited with the design.
+
+
+===Url===
+&lt;pre&gt;&lt;url&gt;&lt;/url&gt;&lt;/pre&gt;  The url the theme can be found at.
+
+
+===Version===
+&lt;pre&gt;&lt;version&gt;&lt;/version&gt;&lt;/pre&gt;  The version number for the theme/design.
+
+
+===Template Engine===
+&lt;pre&gt;&lt;template_engine&gt;&lt;/template_engine&gt;&lt;/pre&gt; The template engine that the theme uses.  Currently Habari supports rawphpengine, however, by design, any number of other engines can be supported (Smarty and PHPTal are currently being developed for Habari).
+
+
+
+Finally, a closing &lt;pre&gt;&lt;/themes&gt;&lt;/pre&gt; tag is needed.
+
+This file should be uploaded the new theme's directory if it's not there already.
+
+You can now visit your Admin -&gt; Themes page, and should have the option to &quot;active&quot; your new theme.  Note, you must have at least a home.php file in your theme directory, however Habari currently supports numerous templates (see [[Template_File_Hierarchy]]), and at this point, you should also have the theme.php  file (see the example in k2).
+</pre>
+</div>
+<div title="Code Submisson" modifier="miklb" created="200710132030" tags="MediaWikiFormat" changecount="1">
+<pre>== Editing the Code ==
+First, you must [[Installation#Downloading_Habari|download the source code]] from SVN.
+
+Then, following the [[Coding Standards]], make your changes to the code.
+
+Next, create a .diff file of the changes you have made. Here is an example of how to do this, where ''filename.php'' is the name of the file you've changed, and ''rXXX'' is the version you've made the change to.
+&lt;pre&gt; svn diff filename.php &gt; filename.php.rXXX.diff &lt;/pre&gt;
+
+Then, attach your .diff file to the appropriate issue in the gcode issue tracker.
+
+Other users will then be able to apply your patch to test its compatibility with other configurations, and once tested and approved a comitter will then be able to apply your patch to the code to become a part of '''Habari'''
+</pre>
+</div>
+<div title="Coding Standards" modifier="miklb" modified="200710132029" created="200710132028" tags="MediaWikiFormat" changecount="3">
+<pre>These are the Coding Standards for Habari:
+
+* Use tabs instead of spaces for indentation
+* for functions and classes, the opening brace { should be on its own line
+* conditionals have the opening brace on the same line: &lt;code&gt;if ( foo == bar ) {&lt;/code&gt;
+* on an else condition, closing brace on new line, else and opening brace on same line: &lt;code&gt;} ''[line break]'' else {&lt;/code&gt; are named like so: &lt;code&gt;ClassName&lt;/code&gt;
+* Variables are named with underscores: &lt;code&gt;variable_name&lt;/code&gt;
+* spaces inside parentheses and operators: ( parentheses ), &lt;code&gt;foo == bar&lt;/code&gt;
+* no space before assignment, space after: &lt;code&gt;$foo= bar&lt;/code&gt;
+</pre>
+</div>
+<div title="Creating_A_Plugin" modifier="miklb" created="200710132108" tags="MediaWikiFormat" changecount="1">
+<pre>Writing a plugin in Habari is dirt-simple.
+
+First, have in mind the idea for your plugin, and what you might like to call it, then proceed with the steps below.
+
+== Step 1: Create The Plugin Class File ==
+
+Create a new directory in your &lt;tt&gt;/user/plugins&lt;/tt&gt; directory that uses the name of your plugin.  As an example, you could create: &lt;tt&gt;/user/plugins/mysample&lt;/tt&gt;
+
+In that directory, create a php file that contains the name of your plugin (the same as the directory) plus &lt;tt&gt;.plugin.php&lt;/tt&gt; added to the end.  For our example, we would create:  &lt;tt&gt;/user/plugins/mysample/mysample.plugin.php&lt;/tt&gt;
+
+== Step 2: Create the Base Plugin Class == 
+
+All plugins in Habari should be created as a class.  This allows the system to easily find and register your plugin.  The class you create must extend the core &lt;tt&gt;Plugin&lt;/tt&gt; class:
+
+&lt;pre&gt;class MyPlugin extends Plugin
+ {
+   function info()
+   {
+     return array(
+       'url'=&gt;'http://habariproject.org',
+       'name'=&gt;'My Plugin',
+       'license'=&gt;'Apache License 2.0',
+       'author'=&gt;'Owen Winkler',
+       'version'=&gt;'1.0',
+     );
+   }
+ }&lt;/pre&gt;
+
+The &lt;tt&gt;info()&lt;/tt&gt; member of the plugin is _required_.  It indicates the basic plugin information.  If you want your plugin to appear properly in Habari's list of plugins in the admin, then you need to provide these fields at a minimum:
+
+;name: The name of the plugin as it will appear in the admin console.
+;url: The URL location of your plugin.  This will be used to create a link to your plugin from the admin console.
+;license: The distribution license of your plugin.
+;author: The name of the author of your plugin.  (Your name!)
+;version: The version of your plugin.  It is important that this version number be compatible with PHP's [http://php.net/version_compare version_compare()] function if you want your plugin to be compatible with the habariproject.org update beacon.
+
+You should not create an instance of your plugin (&lt;tt&gt;$foo = new MyPlugin()&lt;/tt&gt;) within your plugin class file.  Habari will find your plugin and create an instance of it for you when your plugin is activated.  It is able to do this because your plugin extends the core &lt;tt&gt;Plugin&lt;/tt&gt; class.  (If your plugin requires a separate class, Habari won't create an instance of it, because it wouldn't extend &lt;tt&gt;Plugin&lt;/tt&gt;.)
+
+== Step 3: Add Actions and Filters ==
+
+The plugin system in Habari works based on Actions and Filters.
+
+An Action occurs when a certain event in the software takes place.  This could happen when a post is saved or displayed.  An Action does not allow you to change the values that are passed to it.  It simply notifies you that the event has taken place.
+
+A Filter is processed in the software when you should be allowed to change data that will be used by the system.  This could happen when a comment is submitted and the &quot;spamminess&quot; of the comment needs to be returned.  The value that is returned from a filter is passed to subsequent filters as the first parameter, and eventually used as the value for the filtered item.
+
+Each action or filter has a name called a &quot;hook name&quot;.  A plugin &quot;hook&quot; is the place in the code where plugin code is executed.  A plugin &quot;sink&quot; is one of the actual functions that gets executed when the plugin hook code is run.  The methods in your plugin class are &quot;sinks&quot;.
+
+Creating sinks that are activated for specific hooks is as simple as adding a method to your class with the appropriate name.
+
+=== Action Example ===
+
+Assume that you want your plugin to perform a task whenever the system has finished loading all plugins.  The hook name of this hook is &lt;tt&gt;plugins_loaded&lt;/tt&gt;.  &lt;tt&gt;plugins_loaded&lt;/tt&gt; is an action.
+
+To sink this action, create a new method in your plugin like so:
+
+&lt;pre&gt;function action_plugins_loaded()
+ {
+   Utils::debug('Hello!');
+ }&lt;/pre&gt;
+
+The prefix of &lt;tt&gt;action_&lt;/tt&gt; in your function name tells Habari that you are creating a sink for an action.  The &lt;tt&gt;plugins_loaded&lt;/tt&gt; part of the function name tells Habari what hook you want to sink.
+
+When you activate the plugin with this function in it, you should see the &quot;Hello!&quot; message from inside the pink debug box.  This is executed immediately after all active plugins are loaded.
+
+Some actions will pass values to the sink methods.  These values can be checked and acted upon.
+
+=== Filter Example ===
+
+Assume that you want your plugin to check on the spamminess of a comment.  The hook name of a hook that will do this is &lt;tt&gt;spam_filter&lt;/tt&gt;.  &lt;tt&gt;spam_filter&lt;/tt&gt; is a filter.
+
+To sink this filter, create a new method in your plugin like so:
+
+&lt;pre&gt;function filter_spam_filter($rating, $comment, $handler_vars)
+ {
+   if( strpos( $comment-&gt;content, 'viagra' ) ) {
+     $rating++;
+   }
+   return $rating;
+ }&lt;/pre&gt;
+
+The prefix of &lt;tt&gt;filter_&lt;/tt&gt; in your function name tells Habari that you are creating a sink for a filter.  The &lt;tt&gt;spam_filter&lt;/tt&gt; part of the function name tells Habari what hook you want to sink.
+
+When you activate the plugin with this method, Habari will pass every submitted comment through it.  The function looks for the word &quot;viagra&quot; in the content of the comment, and upon finding it, increases the spam rating of the comment.  
+
+Finally, the rating is returned for use by the next plugin, and by the system.  Note that even when no adjustment is made to the value of &lt;tt&gt;$rating&lt;/tt&gt;, &lt;tt&gt;$rating&lt;/tt&gt; *must* be returned, otherwise the system will not have a value to process.
+
+In this sink method, the &lt;tt&gt;$handler_vars&lt;/tt&gt; parameter is provided to the method by the system, but it is not used by the method.  This parameter could have been omitted in the method declaration, but it might be useful to leave it there for future use.
+
+=== XMLRPC Example ===
+
+Implementing XMLRPC via plugins is very easy by use of a special prefix for a plugin function.
+
+&lt;pre&gt;function xmlrpc_namespace__function($param1, $param2, ...);&lt;/pre&gt;
+
+A hook implemented in this way uses the &quot;namespace&quot; part of the hook name as the XMLRPC namespace, and the &quot;function&quot; part as the XMLRPC function.  The two are separated by two underscore characters.
+
+Values passed from to this hook function are those interpreted by processing the incoming values posted to Habari's XMLRPC endpoint.
+
+To return a properly formatted XMLRPC value, simply return a standard PHP data type.  This will be converted into a proper XMLRPC response by the plugin system.
+
+== Step 4: Common Plugin Tasks ==
+
+The previous three steps provide instructions for constructing the basic structure of a Habari plugin.  With that knowledge, leveraging the many plugin hooks is a simple task.
+
+What follows are a few things that are common tasks when creating a plugin.
+
+=== Add Output to a Theme ===
+
+So, you have created your killer plugin and want to provide theme developers a chance to show off your work.  Based on the action example above, you can do something like this:
+
+&lt;pre&gt;function action_add_template_vars( $theme ) {
+ {
+   $theme-&gt;yourvariable= 'Sweet Plugin Output';
+ }&lt;/pre&gt;
+
+This makes &lt;tt&gt;$yourvariable&lt;/tt&gt; available in the theme, where you can do something like 
+
+&lt;pre&gt;&lt;?php echo $yourvariable ?&gt;&lt;/pre&gt;
+
+and that will output the value directly in the theme template file.
+
+
+=== Use FormUI to Create an Options Page ===
+
+Adding an options control to your plugin is also very easy, and most users will be more comfortable with setting the options via the admin panel than editing the plugins code directly. Thankfully Habari provides a mechanism called FormUI that enables plugin developers to quickly create their own option controls.
+
+The basic structure that needs to be added to the plugin, is as follows:
+&lt;pre&gt;public function filter_plugin_config( $actions, $plugin_id )
+        {
+                if ( $plugin_id == $this-&gt;plugin_id() ) {
+                        $actions[] = _('Configure');
+                }
+                return $actions;
+        }&lt;/pre&gt;
+The _() function translates the string into the language used by the site.  For English-language blogs, the output would be &quot;Configure&quot;, while for Spanish-language blogs, for example, the output might be &quot;Configurar&quot;.
+&lt;pre&gt;public function action_plugin_ui( $plugin_id, $action )
+        {
+                if ( $plugin_id == $this-&gt;plugin_id() ) {
+                        switch ( $action ) {
+                                case _('Configure') :
+                                        $ui = new FormUI( strtolower( get_class( $this ) ) );
+                                        $customvalue= $ui-&gt;add( 'text', 'customvalue', _('Your custom value:') );
+                                        $ui-&gt;on_success( array( $this, 'updated_config' ) );
+                                        $ui-&gt;out();
+                                break;
+                        }
+                }
+        }&lt;/pre&gt;
+&lt;pre&gt;public function updated_config( $ui )
+        {
+                return true;
+        }&lt;/pre&gt;
+
+The first function &lt;tt&gt;filter_plugin_config&lt;/tt&gt; enables a simple configure link for the plugin, on the Plugin Administration page.
+&lt;tt&gt;action_plugin_ui&lt;/tt&gt; adds the form controls, in this example a text field called &lt;tt&gt;customvalue&lt;/tt&gt; is added.
+&lt;tt&gt;updated_config&lt;/tt&gt; returns true if the data in the field has been updated.
+
+Now, if you want to read the value of the variable have defined, all you have to do is call &lt;tt&gt;Options::get( 'myplugin:customvalue' );&lt;/tt&gt; and build your logic around the value it returns.
+
+=== Change the Priority of Execution for Your Plugin ===
+
+Sometimes you want your implementation of a plugin hook to execute before certain core hooks or other plugins' implementations.  To do this, you need to set the priority of your hooks.
+
+By default, the priority of every hook in your plugin is 8.  Hooks with a lower priority execute sooner.
+
+To set the priority of one of your hooks, add the method &lt;tt&gt;set_priorities()&lt;/tt&gt; in your plugin class.  Have it return an associative array using the full function name of the hook (including the 'filter_' or 'action_' prefix) as the key and the priority integer as the value.
+
+&lt;pre&gt;function set_priorities()
+ {
+   return array(
+     'action_add_template_vars' =&gt; 10,
+   );
+ }&lt;/pre&gt;
+
+Habari will process this function for priorities, and use them to order the execution of plugin hooks.
+</pre>
+</div>
+<div title="Customizing Theme Behavior" modifier="miklb" created="200710132019" tags="MediaWikiFormat" changecount="2">
+<pre>In addition to the ability of using custom templates to display output for particular requests, Habari allows customization of the code that controls which templates are called for display and what values are passed to them.
+
+To accomplish this, Habari attempts to load a &lt;tt&gt;theme.php&lt;/tt&gt; file located in the theme directory.  If this file is present, is it included in the code before the theme is rendered for any incoming request.
+
+To override the core behavior for themes (defined in &lt;tt&gt;/system/classes/theme.php&lt;/tt&gt;), define a new class structure in the theme's &lt;tt&gt;theme.php&lt;/tt&gt; that extends the core &lt;tt&gt;Theme&lt;/tt&gt; class.  
+
+Consider this custom class:
+
+&lt;pre&gt;// Set a custom theme to use for all public page (UserThemeHandler) theme output
+define('THEME_CLASS', 'CustomTheme');
+
+/**
+ * A custom theme class
+ * Custom themes are not required for themes, but they are handy in letting you 
+ * define your own output data and possibly even additional, non-standard templates.
+ **/   
+class CustomTheme extends Theme
+{
+
+	/**
+	 * Override Theme::display_posts() to provide alternate post display behavior
+	 **/	 	 	
+	public function act_display_posts()
+	{
+		parent::act_display_posts();
+	}
+
+	/**
+	 * Add Theme::act_display_mine() to provide new, custom display behavior
+	 **/	 	 	
+	public function act_display_mine()
+	{
+		parent::act_display_posts();
+	}
+
+}&lt;/pre&gt;
+
+
+This class defines two custom functions for output.  Both of these functions would be executed based on the action field value set for the &lt;tt&gt;rewrite_rules&lt;/tt&gt; record that matches an incoming URL request.
+</pre>
+</div>
+<div title="DefaultTiddlers" modifier="miklb" modified="200707302054" created="200703132340" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200707302054">
 <pre>[[Introduction]]
 
 </pre>
 </div>
-<div title="FAQ" modifier="miklb" modified="200708031911" created="200704162101" changecount="7">
-<pre>''What are the system requirements?''
+<div title="Desktop Blogging" modifier="miklb" created="200710131830" tags="MediaWikiFormat" changecount="1">
+<pre>Many clients exist to allow you to edit your blog and post new content from your desktop without having to interact with the admin interface.
+
+Habari supports Atom Publishing Protocol by default, and with a MetaWeblog plugin, most desktop blogging clients should be able to post to Habari.  Consult the following chart to determine which clients will work best.
+
+{| class=&quot;wikitable&quot; border=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;5&quot;
+|-
+! Client Name
+! OS
+! Protocol Support
+! Create Posts
+! Edit Posts
+! Delete Posts
+|-
+| [http://www.red-sweater.com/marsedit/ MarsEdit]
+| OSX
+| MetaWeblog
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ddffdd&quot; | yes
+|-
+| [http://www.scribefire.com/ ScribeFire]
+| Firefox
+| MetaWeblog
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ddffdd&quot; | yes
+|-
+| [http://infinite-sushi.com/software/ecto/ Ecto]
+| OSX
+| MetaWeblog
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ddffdd&quot; | yes
+|-
+| [http://infinite-sushi.com/software/ecto/ Ecto]
+| Windows
+| *
+| *
+| *
+| *
+|-
+| [http://www.codingrobots.com/blogjet/ BlogJet]
+| Windows
+| MetaWeblog
+| style=&quot;background-color:#ffdddd&quot; | no
+| style=&quot;background-color:#ffdddd&quot; | no
+| style=&quot;background-color:#ffdddd&quot; | no
+|-
+| [http://www.anconia.com/rocketpost/demo/ RocketPost]
+| Windows
+| MetaWeblog
+| style=&quot;background-color:#ffdddd&quot; | no
+| style=&quot;background-color:#ffdddd&quot; | no
+| style=&quot;background-color:#ffdddd&quot; | no
+|-
+| [http://get.live.com/betas/writer_betas Windows Live Writer]
+| Windows
+| MetaWeblog
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ddffdd&quot; | yes
+|-
+| [http://www.qumana.com/ Qumana]
+| OSX
+| MetaWeblog
+| style=&quot;background-color:#ffdddd&quot; | no
+| style=&quot;background-color:#ffdddd&quot; | no
+| style=&quot;background-color:#ffdddd&quot; | no
+|-
+| [http://homepage.mac.com/dschimpf/ MacJournal]
+| OSX
+| Atom
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ffdddd&quot; | no
+|-
+| [http://options.wordpress.com/2006/01/08/dotpost/ DotPost]
+| Windows
+| MetaWeblog
+| style=&quot;background-color:#ddffdd&quot; | yes
+| style=&quot;background-color:#ffdddd&quot; | no
+| style=&quot;background-color:#ffdddd&quot; | no
+|}
+</pre>
+</div>
+<div title="Developer Documentation" modifier="miklb" modified="200710132305" created="200710132024" tags="MediaWikiFormat" changecount="2">
+<pre>This page should be the main index to learning about '''Habari''' internals, plugin development, etc.
+
+* [[QueryRecord]]: the building block of Habari
+* [[Coding Standards]]: generally accepted practiced within the project
+* [[Habari Workflow]] : how '''Habari''' processes requests
+* [[Code Submisson]] : how to submit code and patches for '''Habari'''
+* [[Multisite]] : how multi-site configurations work in '''Habari'''
+* [[User Overrides]] : how to use the `/user/classes` directory to override core '''Habari''' functionality
+* [[Creating_A_Plugin|Creating A Plugin]] : tutorial on Habari Plugin architecture
+* [[Rewrite Tutorial]] : How to construct rewrite rules for '''Habari'''
+* [[Stack Class]] The Stack class allows a developer to create a &quot;stack&quot; of items for later output.
+</pre>
+</div>
+<div title="FAQ" modifier="miklb" modified="200710132021" created="200704162101" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708031911" changecount="1">
+<pre>==What does &quot;habari&quot; mean?==
+&quot;Habari&quot; is a Swahili word that means &quot;what's the news?&quot;  It's similar to the English &quot;What's up?&quot; or the Spanish &quot;¿Qué pasa?&quot;  The typical response is &quot;mzuri sana&quot;, which means &quot;very good.&quot;
+
+==What are the system requirements?==
 Habari is a modern solution for blogging, and requires modern software.  To successfully use Habari, you will need:
-#a web server ([[Apache|http://httpd.apache.org/ ]] and [[lighttpd|http://www.lighttpd.net/ ]] tested so far)
-#PHP version 5 or above.  Habari *will not* work with PHP 4.
-#[http://www.php.net/pdo PHP Data Objects] support
-#A database.  [[MySQL}http://www.mysql.com/]] and [[SQLite|http://www.sqlite.org/]] tested,  [[PostgreSQLhttp://www.postgresql.org/]] coming soon.
 
-Habari has been successfully tested on Etch, the soon-to-be-released next stable version of [[Debian|http://www.debian.org/]].
+* A web server ([http://httpd.apache.org/ Apache] and [http://www.lighttpd.net/ lighttpd] tested so far)
+* [http://www.php.net/ PHP] version 5.2.x or above.  Habari ''will not'' work with PHP 4.
+* [http://www.php.net/pdo PHP Data Objects] support
+* A database.  [http://www.mysql.com/ MySQL] and [http://www.sqlite.org/ SQLite] tested,  [http://www.postgresql.org/ PostgreSQL] coming soon.
 
-Habari has been successfully tested on 
-#[[Dreamhost | http://dreamhost.com]]
-#[[Site5 | http://www.site5.com/ ]]
-#[[(mt) Media Temple - (gs) Grid-Server | http://www.mediatemple.net/webhosting/gs/ ]]
-#[[A Small Orange (servers Claire, Epsilon, Libby, Nu, Pickett) | http://www.asmallorange.com/ ]] 
-#[[Celeonet | http://www.celeonet.fr ]]
-#[[1and1 France | http://www.1and1.fr ]]
+Habari has been successfully tested on Etch, the stable version of [http://www.debian.org/ Debian].
 
-''How is this different from the eleventy billion other blog packages?''
+==Will Habari work with my web host?==
+Habari should work with any web host that support the above requirement, the below hosts were successfully tested to run Habari:
+
+*[http://dreamhost.com/ Dreamhost]
+*[http://www.site5.com/ Site5]
+*[http://www.mediatemple.net/webhosting/gs/ (mt) Media Temple - (gs) Grid-Server]
+*[http://www.asmallorange.com/ A Small Orange] (servers Claire, Epsilon, Libby, Nu, Pickett)
+*[http://www.celeonet.fr/ Celeonet]
+*[http://www.1and1.fr 1and1 France]
+*[http://www.nearlyfreespeech.net NearlyFreeSpeech (with PHP5 requested)]
+*[http://slicehost.com/ Slicehost ''(running apache 2, php5, mysql5 or sqlite3)'']
+
+==How is this different from the eleventy billion other blog packages?==
 It's true that there are tons of blogging software solutions from which to choose.  Each has their place, and their legion of ardent followers.
 
 Habari is being written with a firm understanding of the current state of blogging.  Most other blogging packages have been around long enough that their responses to things like comment spam and Digg site overloads are bolted on after the fact; whereas Habari is being written from the beginning to take these things -- and more -- into account.
@@ -530,38 +976,42 @@ Habari is being written specifically for modern web hosting environments, and us
 
 Those are just a few of the technical differences, but a major component of what makes Habari different is its community participation model.  Users who demonstrate a consistent level of quality contributions to the project are granted more privileges within the project.
 
-''Why not fork an existing project?''
+==Why not fork an existing project?==
 None of the packages we've tried have really satisfied us, so in the fine tradition of open source software we're trying to scratch our own itch.  
 
 To be sure, there's a lot that many blog packages do right, and we'd be foolish to re-invent the wheel simply to be different.  But many existing blog packages have made fundamental decisions that limit what can be done, or how, with the system.  Rather than try to work around those limitations, or try to remove what's broken, we'd prefer to start fresh and import those ideas that are good.
 
-''How is Habari licensed?''
-Habari uses a modified version of the [[Apache License|http://www.apache.org/licenses/LICENSE-2.0]]. For those unfamiliar with this license, the [[Apache License FAQ page|http://www.apache.org/foundation/licence-FAQ.html]] should answer most of your questions.
+==How is Habari licensed?==
+Habari uses a modified version of the Apache License (http://www.apache.org/licenses/LICENSE-2.0). For those unfamiliar with this license, the [http://www.apache.org/foundation/licence-FAQ.html Apache License FAQ page] should answer most of your questions.
 
 Developers contributing to the Habari project itself should note that, unless explicitly stated otherwise, any contribution intentionally submitted for inclusion shall be under the terms and conditions of the Habari license, without any additional terms or conditions. However, plugins and themes designed to work with Habari are not required to have the same license as Habari itself.
 
-You can find our license included in the source, and [[in our code repository|http://habari.googlecode.com/svn/trunk/LICENSE]].
+You can find our license included in the source, and [http://habari.googlecode.com/svn/trunk/LICENSE in our code repository].
 
-''How can I help?''
-#Open new issues here describing problems you experience, or to request new features.
-#Join the Google Group(s) in which you have the most interest, and start sharing!
-#The habari-users group is for end user support, and general discussion.
-#The habari-dev group is for nitty-gritty implementation discussions of the code, database schemas, and the like.
-#The habari-svn group is a way to track the development activity of the source code.  You can review the commit logs, and monitor changes as they occur.
-#The habari-issues group is a way to follow by email the Issue Tracker here at Google Code.
+==Why HTML vs XHTML==
+A consensus amongst project members concluded a thorough discussion as to the merits of the two DOC types, and what would be appropriate for the Admin pages of Habari.  The conclusion was that HTML was the &quot;proper&quot; way, however, end users are welcome to serve their pages in any way they prefer by declaring the DOC type in their theme.  A more [[XHTML_vs_HTML|comprehensive outline]] of the discussion, culled from the information in the original discussion is provided.
 
-''How do I add my code changes to the project?''
+==How can I help?==
+* Open new issues [http://code.google.com/p/habari/issues/list here] describing problems you experience, or to request new features.
+* Join the Google Group(s) in which you have the most interest, and start sharing!
+** The [http://groups.google.com/group/habari-users habari-users] group is for end user support, and general discussion.
+** The [http://groups.google.com/group/habari-dev habari-dev] group is for nitty-gritty implementation discussions of the code, database schemas, and the like.
+** The [http://groups.google.com/group/habari-svn habari-svn] group is a way to track the development activity of the source code.  You can review the commit logs, and monitor changes as they occur.
+** The [http://groups.google.com/group/habari-issues habari-issues] group is a way to follow by email the Issue Tracker here at Google Code.
+
+==How do I add my code changes to the project?==
 
 If you would like to work on a feature or bug fix, there is a best practice for getting your changes into the process.
 
 Regardless of the type of fix/change, first create an issue in the issue tracker describing your proposed change.  Allowing the group to review your proposal could save you the time of implementing something that is being done as part of a larger task, and could gain you the insight or help of other people who are interested in what you're doing.
 
+As you write your code, review Habari's [[Coding Standards|coding standards]] to get acquainted to how your code should be formatted.
 As you prepare your changes, ask for review on the development mailing list as often as you need it.
 
 When your changes are complete, file code changes as a diff in the issue that you're tracking, and attach any associated files.  Be sure to mention how the files are to be applied if there are any special considerations.  Your issue will be reviewed, and if suitable, will be applied in the code repository.
 </pre>
 </div>
-<div title="Formatting" modifier="Khaled Abou Alfa" created="200704162110">
+<div title="Formatting" modifier="Khaled Abou Alfa" created="200704162110" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200704162110">
 <pre>Like most wikis, TiddlyWiki supports a range of simplified character formatting:
 | !To get | !Type this |h
 | ''Bold'' | {{{''Bold''}}} |
@@ -584,62 +1034,151 @@ The highlight can also accept CSS syntax to directly style the text:
 }}}
 @@bgcolor(#ff0000):color(#ffffff):red coloured@@</pre>
 </div>
-<div title="Installation" modifier="miklb" modified="200708031903" created="200707290741" changecount="17">
-<pre>!!System Requirements
-Your system needs the following:
-* web server (Apache2 and lighttpd tested)
-* PHP version 5 or above
-* PHP with PHP Data Objects (PDO) enabled
-* A supported database (MySQL 4.1.x+ or SQLite)
+<div title="Habari Classes" modifier="miklb" modified="200710132105" created="200710132032" tags="MediaWikiFormat" changecount="2">
+<pre></pre>
+</div>
+<div title="Habari Workflow" modifier="miklb" created="200710132029" tags="MediaWikiFormat" changecount="1">
+<pre>''Workflow'' might be the wrong term.  This page will attempt to describe in general terms what happens when '''Habari''' receives a request from a user.  The process is basically the same for visitors (anonymous or otherwise) and users (administrators or otherwise), but each will be explained in detail for your benefit.
 
-Support for postgreSQL is planned
+For the purposes of this document, we will assume that a client somewhere on the internet is accessing an instance of '''Habari''' at &lt;code&gt;&lt;nowiki&gt;http://habariproject.org/en/&lt;/nowiki&gt;&lt;/code&gt;.
 
-Some hosts may offer both PHP4 and PHP5, but execute files with the .php extension using PHP4 by default. You can often change this behavior by adding the following single line in your .htaccess file:
+==End User Workflow==
+The client computer will initiate an HTTP request to &lt;code&gt;&lt;nowiki&gt;http://habariproject.org/en/&lt;/nowiki&gt;&lt;/code&gt;.  The '''Habari''' instance on the server will accept the request.
 
-{{{  AddHandler application/x-httpd-php5 .php }}}
+===mod_rewrite===
+Before '''Habari''' is ever invoked, the web server software (Apache, Lighttpd, IIS) will evaluate whether the incoming request is an actual file on the server's hard disk(s) or not.  If the request is for a specific file that does actually exist, the web server software will deliver this file to the client, and '''Habari''' will not be involved.  This happens when serving &lt;code&gt;.css&lt;/code&gt; stylesheets, for example.  This might also happen when serving media files (images, podcasts, etc).
 
-You should check with your host to see what will work best for your PHP5 needs.
-Some hosts require a different AddHandler.
+If the client request is not for a specific file that exists on the server's hard disk(s), the web server software will pass the request on to the '''Habari''' &lt;code&gt;index.php&lt;/code&gt;.
 
-Also note, this should be an .htaccess file in your root directory, not the .htaccess file in your /system/installer/ directory.
+===Version Check===
+The very first thing &lt;code&gt;index.php&lt;/code&gt; does is to determine whether the version of PHP installed on the server is at least version 5.1.0 or above.  This is the absolute bare minimum version of PHP that '''Habari''' will support.
 
+===HABARI_PATH===
+Next, &lt;code&gt;index.php&lt;/code&gt; sets a constant -- &lt;code&gt;HABARI_PATH&lt;/code&gt; -- that will be used throughout the program.  This constant contains the filesystem path to the &lt;code&gt;index.php&lt;/code&gt; file.  For example, if '''Habari''' is installed at &lt;code&gt;/home/habari/public_html&lt;/code&gt;, then &lt;code&gt;HABARI_PATH&lt;/code&gt; will contain ''/home/habari/public_html''.  The &lt;code&gt;HABARI_PATH&lt;/code&gt; constant is used in many places throughout the '''Habari''' code.
 
-!!Access the Software
-Habari is still in development, however there is a developer release [[available for download|http://code.google.com/p/habari/downloads/list ]]
+===Output Buffering===
+Once the constant has been set, '''Habari''' enables output buffering.  This is a process to delay sending any data to the client until such time as the server is ready to do so.  In the normal execution of a web site, content is delivered to the client directly from the server as it is read in by the server.  With output buffering, content is held on the server until the script on the server specifically tells the server to send it to the client.
 
-(''note: as this is still in development, no guarantees are made that these are fully stable versions, or that updating won't break the current database structure.  This is &quot;bleeding&quot; edge, meant for testing and development'')
+===__autoload()===
+The next portion of the &lt;code&gt;index.php&lt;/code&gt; defines a function, &lt;code&gt;__autoload()&lt;/code&gt;, that represents one of the fundamental building blocks of '''Habari'''.  Although it is defined here in &lt;code&gt;index.php&lt;/code&gt;, it is not executed at this time.  The &lt;code&gt;[http://www.php.net/autoload __autoload()]&lt;/code&gt; function automatically locates and loads any PHP class files that are referenced for use within '''Habari'''.  This function looks for class files first in the Site classes directory, if it exists, and then in &lt;code&gt;HABARI_PATH/system/classes&lt;/code&gt;.  By using the &lt;code&gt;__autoload()&lt;/code&gt; function, '''Habari''' is able to dynamically load class files as they are needed, without requiring the '''Habari''' developers to pre-define every single class file and its location.
 
+===Error Reporting===
+With the &lt;code&gt;__autoload()&lt;/code&gt; function defined, '''Habari''' now sets PHP error reporting to &quot;All&quot;.  This step is primarily to aid server administrators by ensuring that sufficient diagnostic information is recorded in the web server error logs if something goes wrong.  Without this, it is often difficult to know exactly where a problem has occurred, or why.
 
-!!Downloading Habari
-Download the current stable release as outlined above, or you can checkout the the latest revision from the subversion repository.
+===revert_magic_quotes_gpc()===
+Next '''Habari''' invokes a function called &lt;code&gt;revert_magic_quotes_gpc()&lt;/code&gt; inside the &lt;code&gt;Utils&lt;/code&gt; class.  Because the &lt;code&gt;Utils&lt;/code&gt; class is not yet defined, the &lt;code&gt;__autoload()&lt;/code&gt; function is triggered.  &lt;code&gt;__autoload()&lt;/code&gt; searches for a file named &lt;code&gt;utils.php&lt;/code&gt; in one of several directories.  Unless you have created your own &lt;code&gt;utils.php&lt;/code&gt; file, '''Habari''' will load &lt;code&gt;HABARI_PATH/system/classes/utils.php&lt;/code&gt; and execute the &lt;code&gt;revert_magic_quotes_gpc()&lt;/code&gt; function therein.  This function undoes &quot;[http://www.php.net/magic_quotes magic quotes]&quot;.  '''Habari''' does not rely on magic quotes in the same way that many other tools do.
 
-In order to use svn you will need ssh access to your web host. In some hosts this is not supplied by default but is available on request. Once you are set up you need to do:
-{{{ ssh username@yourblog.com }}}
+===config.php===
+With all of that set, '''Habari''' is finally ready to load the &lt;code&gt;config.php&lt;/code&gt; file that specifies how to connect to the database.  A single installation of the '''Habari''' source code can power many sites, so there are a number of places in which the &lt;code&gt;config.php&lt;/code&gt; file might be found.  The &lt;code&gt;get_config_path()&lt;/code&gt; function in the &lt;code&gt;Site&lt;/code&gt; class determines where the correct &lt;code&gt;config.php&lt;/code&gt; file is for this invocation of '''Habari'''.  Remember, the &lt;code&gt;Site&lt;/code&gt; class will be automatically loaded by the &lt;code&gt;__autoload()&lt;/code&gt; function!
+
+If '''Habari''' is only being used for a single site -- say a personal blog -- then the &lt;code&gt;config.php&lt;/code&gt; file should reside inside the &lt;code&gt;HABARI_PATH&lt;/code&gt; directory.  However, '''Habari''' has no immediate way of determining whether it is being used for one site or one hundred sites.  &lt;code&gt;get_config_path()&lt;/code&gt; does the following:
+* defines the path to the &lt;code&gt;config.php&lt;/code&gt; as &lt;code&gt;HABARI_PATH&lt;/code&gt;, by default
+* looks for the existence of any &lt;code&gt;config.php&lt;/code&gt; files inside any sub-directories of &lt;code&gt;HABARI_PATH/user/sites&lt;/code&gt;
+** if none are found, return the default path of &lt;code&gt;HABARI_PATH&lt;/code&gt;
+* Compare the URL used to access '''Habari''' for this request with the directories in &lt;code&gt;HABARI_PATH/user/sites&lt;/code&gt;, using the following formula:
+** strip off the protocol used to access the site.  &lt;code&gt;&lt;nowiki&gt;http://habariproject.org/en/&lt;/nowiki&gt;&lt;/code&gt; becomes &lt;code&gt;//habariproject.org/en/&lt;/code&gt;
+** replace all slashes with periods.  So &lt;code&gt;habariproject.org/en&lt;/code&gt; becomes &lt;code&gt;habariproject.org.en&lt;/code&gt;.
+** place any non-standard HTTP port at the beginning of the directory.  So &lt;code&gt;habariproject.org/en:8080&lt;/code&gt; becomes &lt;code&gt;8080.habariproject.org.en&lt;/code&gt;
+** if a match exists between the URL used for this request and a directory, return that directory.  For example, &lt;code&gt;&lt;nowiki&gt;http://habariproject.org/en/&lt;/nowiki&gt;&lt;/code&gt; matches &lt;code&gt;HABARI_PATH/user/sites/habariproject.org.en&lt;/code&gt;
+
+===Install?===
+If there is no &lt;code&gt;config.php&lt;/code&gt;, or if it is incomplete, the '''Habari''' installation process will be invoked.  If there is a valid &lt;code&gt;config.php&lt;/code&gt;, '''Habari''' will attempt to connect to the database.  If that fails, the installation process will be invoked.
+
+===Content Type===
+'''Habari''' next forcibly sets the content type to &lt;code&gt;text/html;charset=utf-8&lt;/code&gt;.
+
+===Locale===
+'''Habari''' sets the locale, which governs the language used to display '''Habari'''-generated messages.  The default locale is U.S. English.
+
+===Plugins===
+Plugins are loaded next, and the very first plugin hook is triggered.  Any plugins registered against the &lt;code&gt;plugins_loaded&lt;/code&gt; hook will be executed.
+
+===Controller===
+The controller ( '''C''' in MVC ([http://en.wikipedia.org/wiki/Model-view-controller model-view-controller]) &quot;[p]rocesses and responds to events, typically user actions, and may invoke changes on the model.&quot;  The controller first examines the request (&lt;code&gt;Controller::parse_request();&lt;/code&gt;).  This compares the requested URL against the list of registered actions in the &lt;code&gt;rewrite_rules&lt;/code&gt; database table.  If a match is found, the action specified in the rule is invoked against the handler specified in the rule.  The controller contains an array of &lt;code&gt;handler_vars&lt;/code&gt;, which are set by HTTP POST and GET values passed to this request, as well as any values set by plugins.
+
+For the normal case of a user viewing the site, the handler will be UserThemeHandler.  UserThemeHandler evaluates the request (home page, single post view, date-based archive view, etc) and loads the proper theme template files.  The handler will place the &lt;code&gt;handler_vars&lt;/code&gt; into the theme's global variable space.  The template files are then delivered to the viewer.
+
+===Flush Output===
+The very last thing that &lt;code&gt;index.php&lt;/code&gt; does is to flush the output buffer.  Any output that has been prepared is finally sent to the browser.
+
+==Administrative Workflow==
+</pre>
+</div>
+<div title="Installation" modifier="miklb" modified="200710131818" created="200707290741" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708031903" changecount="5">
+<pre>==Before You Install==
+
+=== Server Requirements ===
+* Supported Web Server
+** [http://httpd.apache.org/ Apache (1.3.x or higher, 2.x or higher recommended)] with [http://httpd.apache.org/docs/1.3/mod/mod_rewrite.html mod_rewrite] enabled
+** [http://www.lighttpd.net/ Lighttpd]
+** [http://www.nginx.net/ Nginx]
+* Supported Database
+** MySQL 4.1.x or greater
+** SQLite
+* PHP version 5.2 or above
+** PHP Data Objects (PDO) enabled
+** SimpleXML enabled
+
+''Support for PostgreSQL is planned.''
+
+To install habari on [http://dreamhost.com/ Dreamhost]you need to make sure that you have php5 selected when you are in the manage domains menu. If you are stuck there is a  
+[http://wiki.habariproject.org/en/Installation:Dreamhost faq here.]
+
+=== Change Permissions ===
+
+It is required to make writable the folder where Habari will be installed, the installer will create a &lt;tt&gt;config.php&lt;/tt&gt; file.
+
+We recommend you allow modifications on the &lt;tt&gt;.htaccess&lt;/tt&gt; file that may already exist, Habari will need to add several lines to it.
+
+&lt;em&gt;Apply the following chmod to the root folder of your Habari installation.&lt;/em&gt;
+&lt;pre&gt;
+chmod g+ w .
+&lt;/pre&gt;
+
+&lt;em&gt;Apply the following chmod to the &lt;tt&gt;.htaccess&lt;/tt&gt; file in the root folder of your Habari installation.&lt;/em&gt;
+&lt;pre&gt;
+chmod g+ w .htaccess
+&lt;/pre&gt;
+
+=== Activate PHP5 ===
+
+Some hosts may offer both PHP4 and PHP5, but execute files with the &lt;tt&gt;.php&lt;/tt&gt; extension using the PHP4 by default. You can often change this behavior by adding the following single line in the &lt;tt&gt;.htaccess&lt;/tt&gt; file found in the root folder of your Habari installation:
+
+&lt;pre&gt;AddHandler application/x-httpd-php5 .php &lt;/pre&gt;
+
+&lt;em&gt;Please read your host's FAQ as some hosts may require a different &lt;tt&gt;AddHandler&lt;/tt&gt;.&lt;/em&gt;
+
+== Installing Habari ==
+
+=== Step 1: Download and Extract ===
+
+&lt;em&gt;As Habari is still in development, no guarantees are made that these are fully stable versions, or that updating won't break the current database structure.&lt;/em&gt;
+
+==== Developer Release ====
+* Habari is still in development, however there is a developer release [http://code.google.com/p/habari/downloads/list available for download].
+
+==== SVN Checkout ====
+&lt;em&gt;In order to use SVN you will need SSH access to your server. Some hosts have it enabled by default, but others may only enable it upon request.&lt;/em&gt;
+
+* Login to your web host.
+&lt;pre&gt;ssh username@yourblog.com&lt;/pre&gt;
 
 Your host will then ask for your host password. Put it in and you are in. 
 
-You now need to go to your directory in which you wish to install Habari.
-It will be something like:
+* Change directory to the one you wish to install Habari in. &lt;em&gt;Directory name may differ.&lt;/em&gt;
+&lt;pre&gt;cd ~/public_html/habari/&lt;/pre&gt;
 
-{{{cd ~/public_html/habari/}}}
+* Checkout the source code.
+&lt;pre&gt;svn checkout http://habari.googlecode.com/svn/trunk/htdocs .&lt;/pre&gt;
 
-Now you need to *checkout* the source code
-{{{svn checkout http://habari.googlecode.com/svn/trunk/htdocs .}}}
+* If you are not in the Habari directory, use the following command to &lt;em&gt;checkout&lt;/em&gt; in a new directory called &lt;tt&gt;habari&lt;/tt&gt;.
 
-If for some reason you are not in the Habari directory the command which puts the checkout in a directory /habari is:. 
+&lt;pre&gt;svn checkout http://habari.googlecode.com/svn/trunk/ habari&lt;/pre&gt;
 
-{{{svn checkout http://habari.googlecode.com/svn/trunk/ habari}}}
+&lt;em&gt;Reference: [[Subversion and applying patchs]]&lt;/em&gt;
 
-A quick lesson on [[Subversion and applying patches|http://wiki.habariproject.org/en/Subversion_and_applying_patchs]]
-
-!!chmod
-You may now need to permit access to the files in the instance directory
-
-{{{chmod g+ w . }}}
-
-
-!!Preparing the Database
-As mentioned, Habari requires a database from one of the supported formats.  If you are running on a professional hosting company (see [[Supported Hosts|http://wiki.habariproject.org/en/Supported_Hosts]]), chances are you either were provided with a database, or a web interface for creating a database. If that's the case, you can skip to the next step. Either way you are going to need:
+===Step 2: Preparing the Database===
+As mentioned, Habari requires a database from one of the supported formats.  If you are running on a professional hosting company (see [[Supported Hosts]]), chances are you either were provided with a database, or a web interface for creating a database. If that's the case, you can skip to the next step. Either way you are going to need:
 
 * The name of the database
 * The database user
@@ -647,111 +1186,1349 @@ As mentioned, Habari requires a database from one of the supported formats.  If 
 
 Please note that by default some third party hosts add your user name prior to these items.
 
-
-!!htaccess
-Your .htaccess file in /system/installer/ should be writable, if not, be sure to set permissions.
-
-
-!!Running the Installer
-After checking out the files, and creating your database, you are ready to run the installer.  Open your web browser and navigate to your install location, ie, http://example.com/habari.
+===Step 3: Running the Installer===
+After checking out the files, and creating your database, you are ready to run the installer.  Open your web browser and navigate to your install location, ie, &lt;tt&gt;&lt;nowiki&gt;http://example.com/habari&lt;/nowiki&gt;&lt;/tt&gt;.
 You should be prompted with an installer, requiring you to choose your database type, and the necessary information to complete installation.
-!!!Database Host
-99% of the time, this is going to be localhost, and should be prefilled in the installer.  
 
-If this is not the case, your host should have provided you with the necessary information.  For example, if your installation is to be hosted on [[Dreamhost|http://dreamhost.com/]], then this value will be mysql.yourDomain.com.
+If the installer is not working properly, the [[Common Questions]] page has some information that may help you troubleshoot the installer.
+====Database Host====
+99% of the time, this is going to be &lt;tt&gt;localhost&lt;/tt&gt;, and should be the default value in the installer.  
 
-!!!User Name
-This is the user name for the database, not your domain's user name.  If you created your database via the common C-Panel interface, remember this name is prefixed by the account, then the username, ie, user_dbusername.
-!!!Password
+If this is not the case, your host should have provided you with the necessary information.  For example, if your installation is to be hosted on [http://dreamhost.com/ Dreamhost], then this value will be &lt;tt&gt;mysql.yourDomain.com&lt;/tt&gt;.
+
+====User Name====
+This is the user name for the database, not your domain's user name.  If you created your database via the common C-Panel interface, remember this name is prefixed by the account, then the username, ie, &lt;tt&gt;user_dbusername&lt;/tt&gt;.
+====Password====
 Again, this is the database user's password, not necessarily the account password.
-!!!Database Name
-This is the name of the database you created for your installation.  As with the user, it's possible the database name is prefixed with your domain username, ie, user_databasename.
-!!!Table Prefix
-{{{habari__}}}  is the default, however if you are using multiple instances of habari in the same database, or have your own naming conventions, you can change the prefix here.
+====Database Name====
+This is the name of the database you created for your installation.  As with the user, it's possible the database name is prefixed with your domain username, ie, &lt;tt&gt;user_databasename&lt;/tt&gt;.
+====Table Prefix====
+&lt;tt&gt;habari__&lt;/tt&gt; is the default, however if you are using multiple instances of habari in the same database, or have your own naming conventions, you can change the prefix here.
 
 Fill in the remaining data with the name of your blog, an admin user name and password, and a default email.  Note that these can be changed later.
 
 Click install, and if all goes well, you should be taken to the blog's home page.  You can then log in with the admin name and password you used on the installer page, and start blogging!
 
-If you had any problems, you can post to the [[habari user group|http://groups.google.com/group/habari-users]].  Be sure to provide as many details as possible, including version of PHP, MySQL, and server config.
+If you had any problems, you can post to the [http://groups.google.com/group/habari-users Habari user group].  Be sure to provide as many details as possible, including version of PHP, MySQL, and server config.
 
-!!Advanced Installation
-[[Multi-site Installation|http://wiki.habariproject.org/en/Multisite]]
+==Advanced Installation==
+This procedure outlines a way to automate the installation process by predefining the &lt;tt&gt;.config&lt;/tt&gt; file.
 
-Below outlines advanced proceedures for installation, primarily outlining an automated way of setting your .config file for automated installations, and is not a required step in the installation process.
+=== Predefined Configuration ===
+Depending on your DBMS of choice, MySQL or SQLite, copy &lt;tt&gt;&lt;root&gt;/system/schema/&lt;dbms&gt;/config.php&lt;/tt&gt; to the root folder, where &lt;tt&gt;index.php&lt;/tt&gt; is.
 
-!!presetting config.php 
-Depending on your DBMS of choice (SQL lite or MySQL), copy config.php.sqlite or config.php.mysql to config.php.  Inside of config.php, add an array definition (similar to below):
-{{{
+&lt;em&gt;Modify this array definition, or similar, in the copied &lt;tt&gt;config.php&lt;/tt&gt; file.&lt;/em&gt;
+&lt;pre&gt;
 $blog_data= array( 'admin_username' =&gt; 'ernie',
         'admin_pass1' =&gt; 'RubberDuck',
         'admin_pass2' =&gt; 'RubberDuck',
         'admin_email' =&gt; 'ernie@www.sesamestreetlive.com'
         );
-}}}
+&lt;/pre&gt;
 
-valid element names are:
-{{{
+&lt;em&gt;Valid Parameters&lt;/em&gt;
+&lt;pre&gt;
         'db_user' =&gt; '',
         'db_pass' =&gt; '',
         'db_schema' =&gt; 'habari',
         'connection_string' =&gt; '',
-        'table_prefix' =&gt; 'habari__,
+        'table_prefix' =&gt; 'habari__',
         'admin_username' =&gt; 'admin',
         'admin_pass1' =&gt; '',
         'admin_pass2' =&gt; '',
         'blog_title' =&gt; 'I love Cookies',
         'admin_email' =&gt; 'bert@www.sesamestreetlive.com', 
-}}}
+&lt;/pre&gt;
 
-These values will be extracted when / if index.php detects that there are DBMS tables present.  In this case, the installer will not display the form but use these values insetad.
+These values will be extracted when or if &lt;tt&gt;index.php&lt;/tt&gt; detects that there are DBMS tables present.  In that case, the installer will not display the form but use these values instead.
 
 This will allow a fully automated installation, without any prompts being displayed to the user (assuming the $db_connection array is properly constructed, too).
 
 At the moment, it's a convenience for those who are constantly re-installing Habari and who don't want to waste a bunch of time keying in the same values over and over.  It's also the basis of an automagic deployment tool for hosting providers.
 </pre>
 </div>
-<div title="Introduction" modifier="miklb" modified="200708032058" created="200707302035" changecount="6">
-<pre>These documents are intended for basic information on installing, upgrading and base use.  As development continues, additional information will be added.  For more comprehensive documentation, visit the [[main Habari wiki|http://wiki.habariproject.org/en/Main_Page]].
+<div title="Introduction" modifier="miklb" modified="200710131749" created="200707302035" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708032058" changecount="10">
+<pre>These documents are intended for basic information on installing, upgrading and base use. As development continues, additional information will be added. For more
+comprehensive documentation, visit the [http://wiki.habariproject.org/en/Main_Page main Habari wiki].
 
-!!About Habari
-Habari intends to represent a fresh start to the idea of blogging. The system will be fast, easy to use, and easy to modify. New users should have no problem using and enjoying Habari. Advanced users should have no problem tweaking Habari to do exactly what they need it to do.
+==About Habari== 
+Habari intends to represent a fresh start to the idea of blogging. The system will be fast, easy to use, and easy to modify. New users should have no
+problem using and enjoying Habari. Advanced users should have no problem tweaking Habari to do exactly what they need it to do.
 
-!!What Does Habari Mean?
-&quot;Habari&quot; is a Swahili word that means &quot;what's the news?&quot; It's similar to the English &quot;What's up?&quot; or the Spanish &quot;¿Qué pasa?&quot; The typical response is &quot;mzuri sana&quot;, which means &quot;very good.&quot;
+==What Does Habari Mean?== 
+&quot;Habari&quot; is a Swahili word that means &quot;what's the news?&quot; It's similar to the English &quot;What's up?&quot; or the Spanish &quot;¿Qué pasa?&quot; The typical
+response is &quot;mzuri sana&quot;, which means &quot;very good.&quot;
 
-!!How Will it be Different?
-Habari is being written with a firm understanding of the current state of blogging. Most other blogging packages have been around long enough that their responses to things like comment spam and Digg site overloads are bolted on after the fact; whereas Habari is being written from the beginning to take these things -- and more -- into account.
+==How Will it be Different?== 
+Habari is being written with a firm understanding of the current state of blogging. Most other blogging packages have been around long
+enough that their responses to things like comment spam and Digg site overloads are bolted on after the fact; whereas Habari is being written from the beginning to
+take these things -- and more -- into account.
 
-Habari strongly favors open, standard, and documented protocols. Atom, being both open and documented, is the prefered syndication format, and the Atom Publishing Protocol is the prefered means of remote communication with your site. This is a core feature, and not a plugin.
+Habari strongly favors open, standard, and documented protocols. Atom, being both open and documented, is the prefered syndication format, and the Atom Publishing
+Protocol is the prefered means of remote communication with your site. This is a core feature, and not a plugin.
 
-Habari is being written specifically for modern web hosting environments, and uses modern object-oriented programming techniques. Using these recent but well-established additions to the PHP language allows Habari to make use of PDO, enabling prepared statements for all interactions with the database. This greatly reduces the system's vulnerability to SQL injection attacks. This is just one of many benefits of modern object-oriented techniques.
+Habari is being written specifically for modern web hosting environments, and uses modern object-oriented programming techniques. Using these recent but
+well-established additions to the PHP language allows Habari to make use of PDO, enabling prepared statements for all interactions with the database. This greatly
+reduces the system's vulnerability to SQL injection attacks. This is just one of many benefits of modern object-oriented techniques.
 
-Those are just a few of the technical differences, but a major component of what makes Habari different is its community participation model. Users who demonstrate a consistent level of quality contributions to the project are granted more privileges within the project.
+Those are just a few of the technical differences, but a major component of what makes Habari different is its community participation model. Users who demonstrate a
+consistent level of quality contributions to the project are granted more privileges within the project.
 
-!!Our Process
-!!!Meritocracy
-Following the [[meritocracy|http://www.apache.org/foundation/how-it-works.html#meritocracy]] model advocated by the Apache Software Foundation, the Habari project rewards contributors with decision making privilege in the project. Regular participants should be able to influence the direction of the project to which they dedicate their time and talent. The requirement for participation will be something of a moving target over time, but the barrier to entry should never be so high that dedicated people are excluded.
+==Our Process==
+===Meritocracy=== 
+Following the [http://www.apache.org/foundation/how-it-works.html#meritocracy/ meritocracy] model advocated by the Apache Software
+Foundation, the Habari project rewards contributors with decision making privilege in the project. Regular participants should be able to influence the direction of
+the project to which they dedicate their time and talent. The requirement for participation will be something of a moving target over time, but the barrier to entry
+should never be so high that dedicated people are excluded.
 
-!!!Transparency
-A fundamental aspect of successful open source projects is transparency. Decisions are made in the public's eye, and discussion and deliberation takes place in the open. The Habari project pursues transparency by using the Google issues tracker to maintain a record of proposed changes, and discussion associated with those changes. All proposals -- whether for code, documentation, visual style, etc -- are logged through the issues tracker for public scrutiny and input.
+===Transparency===
+A fundamental aspect of successful open source projects is transparency. Decisions are made in the public's eye, and discussion and deliberation
+takes place in the open. The Habari project pursues transparency by using the Google issues tracker to maintain a record of proposed changes, and discussion
+associated with those changes. All proposals -- whether for code, documentation, visual style, etc -- are logged through the issues tracker for public scrutiny and
+input.
 
-!!!Licensing
-All contributions to Habari will acquire the Apache License, which is a modified version of the [[Apache License|http://www.apache.org/licenses/LICENSE-2.0]]. For those unfamiliar with this license, the [[Apache License FAQ page|http://www.apache.org/foundation/licence-FAQ.html ]] should answer most of your questions.
+===Licensing=== 
+All contributions to Habari will acquire the Apache License, which is a modified version of the [http://www.apache.org/licenses/LICENSE-2.0 Apache
+License]. For those unfamiliar with this license, the [http://www.apache.org/foundation/licence-FAQ.html Apache License FAQ
+page] should answer most of your questions.
 
-Developers contributing to the Habari project itself should note that, unless explicitly stated otherwise, any contribution intentionally submitted for inclusion shall be under the terms and conditions of the Habari license, without any additional terms or conditions. However, plugins and themes designed to work with Habari are not required to have the same license as Habari itself.
+Developers contributing to the Habari project itself should note that, unless explicitly stated otherwise, any contribution intentionally submitted for inclusion
+shall be under the terms and conditions of the Habari license, without any additional terms or conditions. However, plugins and themes designed to work with Habari
+are not required to have the same license as Habari itself.
 
-You can find our license included in the source, and in our [[code repository|http://habari.googlecode.com/svn/trunk/LICENSE ]].
-
+You can find our license included in the source, and in our [http://habari.googlecode.com/svn/trunk/LICENSE code repository].
 </pre>
 </div>
-<div title="MainMenu" modifier="miklb" modified="200708031913" created="200703132343" changecount="4">
+<div title="MainMenu" modifier="miklb" modified="200709160129" created="200703132343" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200709160129">
 <pre>[[Introduction]]
 [[Installation]]
 [[Upgrading]]
-[[FAQ]]</pre>
+[[FAQ]]
+[[User Documentation]]
+[[Developer Documentation]]</pre>
 </div>
-<div title="Multi-site Installation" modifier="miklb" created="200707302048" tags="MediaWikiFormat" changecount="1">
+<div title="MediaWikiFormatterPlugin" modifier="miklb" modified="200710131809" created="200610020000" tags="systemConfig" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200709192148" changecount="4">
+<pre>/***
+|''Name:''|MediaWikiFormatterPlugin|
+|''Description:''|Allows Tiddlers to use [[MediaWiki|http://meta.wikimedia.org/wiki/Help:Wikitext]] ([[WikiPedia|http://meta.wikipedia.org/]]) text formatting|
+|''Source:''|http://martinswiki.com/prereleases.html#MediaWikiFormatterPlugin|
+|''Author:''|Martin Budden (mjbudden (at) gmail (dot) com)|
+|''Version:''|0.3.8|
+|''Status:''|alpha pre-release|
+|''Date:''|Oct 21, 2006|
+|''Comments:''|Please make comments at http://groups.google.co.uk/group/TiddlyWikiDev|
+|''License:''|[[Apache Software License 2.0|http://www.apache.org/licenses/LICENSE-2.0.html]]|
+|''~CoreVersion:''|2.1.0|
+
+|''Display instrumentation''|&lt;&lt;option chkDisplayInstrumentation&gt;&gt;|
+|''Display empty template links:''|&lt;&lt;option chkMediaWikiDisplayEmptyTemplateLinks&gt;&gt;|
+|''Allow zooming of thumbnail images''|&lt;&lt;option chkMediaWikiDisplayEnableThumbZoom&gt;&gt;|
+|''List references''|&lt;&lt;option chkMediaWikiListReferences&gt;&gt;|
+
+This is an early release of the MediaWikiFormatterPlugin, which allows you to insert MediaWiki
+formated text into a TiddlyWiki.
+
+The aim is not to fully emulate MediaWiki, but to allow you to create MediaWiki content off-line
+and then paste the content into your MediaWiki later on, with the expectation that only minor
+edits will be required.
+
+To use MediaWiki format in a Tiddler, tag the Tiddler with MediaWikiFormat. See [[testMediaWikiFormat]]
+for an example.
+
+!!!Issues
+This is an early alpha release, with (at least) the following known issues:
+# Not all styles from http://meta.wikimedia.org/wiki/MediaWiki:Common.css incorporated
+## Styles for tables don't yet match Wikipedia styles.
+## Styles for image galleries don't yet match Wikipedia styles.
+# Anchors not yet supported.
+
+!!!Not supported
+# Magic words and variables http://meta.wikimedia.org/wiki/Help:Magic_words
+# Template substitution http://meta.wikimedia.org/wiki/Help:Substitution
+# Template colon functions http://meta.wikimedia.org/wiki/Help:Colon_function
+# Template parser functions (eg #if) http://meta.wikimedia.org/wiki/ParserFunctions
+
+***/
+
+//{{{
+// Ensure that the MediaWikiFormatter Plugin is only installed once.
+if(!version.extensions.MediaWikiFormatterPlugin) {
+version.extensions.MediaWikiFormatterPlugin = {installed:true};
+
+if(version.major &lt; 2 || (version.major == 2 &amp;&amp; version.minor &lt; 1))
+	{alertAndThrow(&quot;MediaWikiFormatterPlugin requires TiddlyWiki 2.1 or later.&quot;);}
+
+if(config.options.chkDisplayInstrumentation == undefined)
+	{config.options.chkDisplayInstrumentation = false;}
+
+if(config.options.chkMediaWikiDisplayEmptyTemplateLinks == undefined)
+	{config.options.chkMediaWikiDisplayEmptyTemplateLinks = false;}
+if(config.options.chkMediaWikiDisplayEnableThumbZoom == undefined)
+	{config.options.chkMediaWikiDisplayEnableThumbZoom = false;}
+if(config.options.chkMediaWikiListReferences == undefined)
+	{config.options.chkMediaWikiListReferences = false;}
+
+MediaWikiFormatter = {}; // &quot;namespace&quot; for local functions
+
+mwDebug = function(out,str)
+{
+	createTiddlyText(out,str.replace(/\n/mg,&quot;\\n&quot;).replace(/\r/mg,&quot;RR&quot;));
+	createTiddlyElement(out,&quot;br&quot;);
+};
+
+wikify = function(source,output,highlightRegExp,tiddler)
+{
+	if(source &amp;&amp; source != &quot;&quot;) {
+		var w = new Wikifier(source,getParser(tiddler),highlightRegExp,tiddler);
+		w.linkCount = 0;
+		w.tableDepth = 0;
+		w.output = tiddler==null ? output : createTiddlyElement(output,&quot;p&quot;);
+		var time1,time0 = new Date();
+		w.subWikifyUnterm(w.output);
+		if(tiddler &amp;&amp; config.options.chkDisplayInstrumentation) {
+			time1 = new Date();
+			var t = tiddler ? tiddler.title : source.substr(0,10);
+			displayMessage(&quot;Wikify '&quot;+t+&quot;' in &quot; + (time1-time0) + &quot; ms&quot;);
+		}
+	}
+//#at point of usage can use:
+//#var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName==&quot;P&quot; ? w.output.parentNode : w.output;
+};
+
+MediaWikiFormatter.getTemplateParams = function(w)
+{
+//#{{test|a|b}}
+//#{{test|n=a|m=b}}
+	var params = {};
+
+	var i = 1;
+	var text = w.source + &quot;|&quot;;
+	var pRegExp = /(?:([^\|]*)=)?([^\|]*)\|/mg;
+	var match = pRegExp.exec(text);
+	if(match) {
+		// skip template name
+		match = pRegExp.exec(text);
+	}
+	while(match) {
+		//params[match[1] ? match[1] : i++] = match[2];
+		if(match[1]) {
+			params[match[1]] = match[2];
+		} else {
+			params[i] = match[2];
+			i++;
+		}
+		match = pRegExp.exec(text);
+	}
+	return params;
+};
+
+MediaWikiFormatter.expandTemplate = function(w,tiddler,params)
+// see http://meta.wikimedia.org/wiki/Help:Template
+{
+	var text = tiddler.text;
+	text = text.replace(/&lt;noinclude&gt;((?:.|\n)*?)&lt;\/noinclude&gt;/mg,&quot;&quot;);// remove text between noinclude tags
+	var ioRegExp = /&lt;includeonly&gt;((?:.|\n)*?)&lt;\/includeonly&gt;/mg;
+	var t = &quot;&quot;;
+	var match = ioRegExp.exec(text);
+	while(match) {
+		t += match[1];
+		match = ioRegExp.exec(text);
+	}
+	text = t == &quot;&quot; ? text : t;
+
+	var paramsRegExp = /\{\{\{(.*?)(?:\|(.*?))?\}\}\}/mg;
+	t = &quot;&quot;;
+	var pi = 0;
+	match = paramsRegExp.exec(text);
+	while(match) {
+		var name = match[1];
+		var def = match[2];
+		var val = params[name];
+		if(!val) {
+			val = def;
+		}
+		if(!val) {
+			val = match[0];
+		}
+		t += text.substring(pi,match.index) + val;
+		pi = paramsRegExp.lastIndex;
+		match = paramsRegExp.exec(text);
+	}
+	return t == &quot;&quot; ? text : t;
+};
+
+MediaWikiFormatter.endOfParams = function(w,text)
+{
+	var p = 0;
+	var i = text.indexOf(&quot;|&quot;);
+	if(i==-1) {return -1;}
+	var n = text.indexOf(&quot;\n&quot;);
+	if(n!=-1 &amp;&amp; n&lt;i) {return -1;}
+	var b = text.indexOf(&quot;[[&quot;);
+	if(b!=-1 &amp;&amp; b&lt;i) {return -1;}// can't have [[ in parameters
+	
+	b = text.indexOf(&quot;{{&quot;);
+	while(b!=-1 &amp;&amp; b&lt;i) {
+		// have {{ before |, so need to find first &quot;|&quot; after &quot;{{..}}&quot; pairs
+		//cut off the ..{{, find the }} cut off and repeat
+		p += b;
+		text = text.substr(b);
+		var c = text.indexOf(&quot;}}&quot;);
+		p += c;
+		text = text.substr(c);
+		i = text.indexOf(&quot;|&quot;);
+		if(i==-1) {return -1;}
+		n = text.indexOf(&quot;\n&quot;);
+		if(n!=-1 &amp;&amp; n&lt;i) {return -1;}
+		b = text.indexOf(&quot;{{&quot;);
+		i = -1;
+	}
+	return i;
+};
+
+MediaWikiFormatter.readToDelim = function(w)
+//!!! this is a bit rubish, needs doing properly.
+{
+//#delimiter, startBracket terminatorBracket
+	var dRegExp = /\|/mg;
+	var sRegExp = /\[\[/mg;
+	var tRegExp = /\]\]/mg;
+
+	dRegExp.lastIndex = w.startMatch;
+	var dMatch = dRegExp.exec(w.source);
+	sRegExp.lastIndex = w.startMatch;
+	var sMatch = sRegExp.exec(w.source);
+	tRegExp.lastIndex = w.startMatch;
+	var tMatch = tRegExp.exec(w.source);
+	if(!tMatch) {
+		//mwDebug(w.output,&quot;ERROR1&quot;);
+		return false;
+	}
+
+	while(sMatch &amp;&amp; sMatch.index&lt;tMatch.index) {
+		if(dMatch &amp;&amp; dMatch.index&lt;sMatch.index) {
+			//# delim is before startBracket, so return it
+//mwDebug(w.output,&quot;di:&quot;+dMatch.index+&quot; dl:&quot;+sRegExp.lastIndex);
+			w.nextMatch = dRegExp.lastIndex;
+			w.matchLength = dMatch.index - w.startMatch;
+			return true;
+		}
+//mwDebug(w.output,&quot;si:&quot;+sMatch.index+&quot; sl:&quot;+sRegExp.lastIndex);
+//mwDebug(w.output,&quot;ti:&quot;+tMatch.index+&quot; tl:&quot;+tRegExp.lastIndex);
+		//# startBracket before termBracket, so skip over bracket pairs
+		// found eg [[, so look for ]]
+		tRegExp.lastIndex = sRegExp.lastIndex;
+		tMatch = tRegExp.exec(w.source);
+//mwDebug(w.output,&quot;xti:&quot;+tMatch.index+&quot; tl:&quot;+tRegExp.lastIndex);
+		
+		// and look for another [[
+		w.nextMatch = tRegExp.lastIndex;
+		dRegExp.lastIndex = w.nextMatch;
+		dMatch = dRegExp.exec(w.source);
+		sRegExp.lastIndex = w.nextMatch;
+		sMatch = sRegExp.exec(w.source);
+		tRegExp.lastIndex = w.nextMatch;
+		tMatch = tRegExp.exec(w.source);
+	}
+		
+	if(dMatch &amp;&amp; dMatch.index&lt;tMatch.index) {
+		//# delim is before term, so return it
+//mwDebug(w.output,&quot;2di:&quot;+dMatch.index+&quot; dl:&quot;+sRegExp.lastIndex);
+		w.nextMatch = dRegExp.lastIndex;
+		w.matchLength = dMatch.index - w.startMatch;
+		return true;
+	}
+	if(tMatch) {
+		//# delim is before term, so return it
+//mwDebug(w.output,&quot;2ti:&quot;+tMatch.index+&quot; tl:&quot;+tRegExp.lastIndex);
+		w.nextMatch = tRegExp.lastIndex;
+		w.matchLength = tMatch.index - w.startMatch;
+		return false;
+	}
+	//mwDebug(w.output,&quot;ERROR2&quot;);
+	//# return term
+	w.nextMatch = tRegExp.lastIndex;
+	w.matchLength = -1;
+	return false;
+};
+
+MediaWikiFormatter.getParams = function(w)
+{
+	var params = [];
+	var i = 1;
+	w.startMatch = w.nextMatch;
+	var read = MediaWikiFormatter.readToDelim(w);
+	if(w.matchLength!=-1) {
+		params[i] = w.source.substr(w.startMatch,w.matchLength);
+	}
+	while(read) {
+		i++;
+		w.startMatch = w.nextMatch;
+		read = MediaWikiFormatter.readToDelim(w);
+		if(w.matchLength!=-1) {
+			params[i] = w.source.substr(w.startMatch,w.matchLength);
+		}
+	}
+	return params;
+};
+
+MediaWikiFormatter.setFromParams = function(w,p)
+{
+	var r = {};
+	var re = /\s*(.*?)=(?:(?:&quot;(.*?)&quot;)|(?:'(.*?)')|((?:\w|%|#)*))/mg;
+	var match = re.exec(p);
+	while(match)
+		{
+		var s = match[1].unDash();
+		if(match[2]) {
+			r[s] = match[2];
+		} else if(match[3]) {
+			r[s] = match[3];
+		} else {
+			r[s] = match[4];
+		}
+		match = re.exec(p);
+	}
+	return r;
+};
+
+MediaWikiFormatter.setAttributesFromParams = function(e,p)
+{
+	var re = /\s*(.*?)=(?:(?:&quot;(.*?)&quot;)|(?:'(.*?)')|((?:\w|%|#)*))/mg;
+	var match = re.exec(p);
+	while(match) {
+		var s = match[1].unDash();
+		if(s == &quot;bgcolor&quot;) {
+			s = &quot;backgroundColor&quot;;
+		}
+		try {
+			if(match[2]) {
+				e.setAttribute(s,match[2]);
+			} else if(match[3]) {
+				e.setAttribute(s,match[3]);
+			} else {
+				e.setAttribute(s,match[4]);
+			}
+		}
+		catch(ex) {}
+		match = re.exec(p);
+	}
+};
+
+config.mediaWikiFormatters = [
+{
+	name: &quot;mediaWikiHeading&quot;,
+	match: &quot;^={2,6}(?!=)\\n?&quot;,
+	termRegExp: /(={2,6}\n?)/mg,
+	handler: function(w)
+	{
+		var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName==&quot;P&quot; ? w.output.parentNode : w.output;
+		var e = createTiddlyElement(output,&quot;h&quot; + w.matchLength);
+		var a = createTiddlyElement(e,&quot;a&quot;);// drop anchor
+		var t = w.tiddler ? w.tiddler.title + &quot;:&quot; : &quot;&quot;;
+		var len = w.source.substr(w.nextMatch).indexOf(&quot;=&quot;);
+		a.setAttribute(&quot;name&quot;,t+w.source.substr(w.nextMatch,len));
+		w.subWikifyTerm(e,this.termRegExp);
+		w.output = createTiddlyElement(output,&quot;p&quot;);
+	}
+},
+
+{
+	name: &quot;mediaWikiTable&quot;,
+	match: &quot;^\\{\\|&quot;, // ^{|
+	tableTerm: &quot;\\n\\|\\}&quot;, // |}
+	rowStart: &quot;\\n\\|\\-&quot;, // \n|-
+	cellStart: &quot;\\n!|!!|\\|\\||\\n\\|&quot;, //\n! or !! or || or \n|
+	caption: &quot;\\n\\|\\+&quot;,
+	rowTerm: null,
+	cellTerm: null,
+	inCellTerm: null,
+	tt: 0,
+	debug: null,
+	rowTermRegExp: null,
+	handler: function(w)
+	{
+		if(!this.rowTermRegExp) {
+			this.rowTerm = &quot;(&quot; + this.tableTerm +&quot;)|(&quot; + this.rowStart + &quot;)&quot;;
+			this.cellTerm = this.rowTerm + &quot;|(&quot; + this.cellStart + &quot;)&quot;;
+			this.inCellTerm = &quot;(&quot; + this.match + &quot;)|&quot; + this.rowTerm + &quot;|(&quot; + this.cellStart + &quot;)&quot;;
+			this.caption = &quot;(&quot; + this.caption + &quot;)|&quot; + this.cellTerm;
+
+			this.rowTermRegExp = new RegExp(this.rowTerm,&quot;mg&quot;);
+			this.cellTermRegExp = new RegExp(this.cellTerm,&quot;mg&quot;);
+			this.inCellTermRegExp = new RegExp(this.inCellTerm,&quot;mg&quot;);
+			this.captionRegExp = new RegExp(this.caption,&quot;mg&quot;);
+		}
+//this.debug = createTiddlyElement(w.output,&quot;p&quot;);
+//mwDebug(this.debug,&quot;start table&quot;);
+		this.captionRegExp.lastIndex = w.nextMatch;
+		var match = this.captionRegExp.exec(w.source);
+		if(!match) {return;}
+		//var inPara = w.output.nodeType==1 &amp;&amp; w.output.nodeName==&quot;P&quot; ? true : false;
+		//var output = inPara ? w.output.parentNode : w.output;
+		var output = w.output;
+		var table = createTiddlyElement(output,&quot;table&quot;);
+		var rowContainer = table;
+
+		var i = w.source.indexOf(&quot;\n&quot;,w.nextMatch);
+		if(i&gt;w.nextMatch) {
+			MediaWikiFormatter.setAttributesFromParams(table,w.source.substring(w.nextMatch,i));
+			w.nextMatch = i;
+		}
+
+		var rowCount = 0;
+		var eot = false;
+		if(match[1]) {
+			// caption
+			var caption = createTiddlyElement(table,&quot;caption&quot;);
+			w.nextMatch = this.captionRegExp.lastIndex;
+			var captionText = w.source.substring(w.nextMatch);
+			var n = captionText.indexOf(&quot;\n&quot;);
+			captionText = captionText.substr(0,n);
+			i = MediaWikiFormatter.endOfParams(w,captionText);
+			if(i!=-1) {
+				captionText = w.source.substr(w.nextMatch,i);
+				//captionText = captionText.replace(/^\+/mg,&quot;&quot;)//!!hack until I fix this properly
+				//MediaWikiFormatter.setAttributesFromParams(caption,captionText);
+				w.nextMatch += i+1;
+			}
+			if(caption != table.firstChild) {
+				table.insertBefore(caption,table.firstChild);
+			}
+			w.subWikify(caption,this.cellTerm);
+			w.nextMatch -= w.matchLength;// rewind to before the match
+			this.cellTermRegExp.lastIndex = w.nextMatch;
+			var match2 = this.cellTermRegExp.exec(w.source);
+			if(match2) {
+				if(match2[3]) {
+					// no first row marker
+					eot = this.rowHandler(w,createTiddlyElement(rowContainer,&quot;tr&quot;));
+					rowCount++;
+				}
+			}
+		} else if(match[3]) {
+			// row
+			w.nextMatch = this.captionRegExp.lastIndex-match[3].length;// rewind to before the match
+		} else if(match[4]) {
+			// cell, no first row marker in table
+			w.nextMatch = this.captionRegExp.lastIndex-match[4].length;// rewind to before the match
+			eot = this.rowHandler(w,createTiddlyElement(rowContainer,&quot;tr&quot;));
+			rowCount++;
+		}
+
+		this.rowTermRegExp.lastIndex = w.nextMatch;
+		match = this.rowTermRegExp.exec(w.source);
+		while(match &amp;&amp; eot==false) {
+			if(match[1]) {
+				// end table
+				w.nextMatch = this.rowTermRegExp.lastIndex;
+				if(w.tableDepth==0) {
+					return;
+				}
+			} else if(match[2]) {
+				// row
+				var rowElement = createTiddlyElement(rowContainer,&quot;tr&quot;);
+				w.nextMatch += match[2].length;// skip over the match
+				i = w.source.indexOf(&quot;\n&quot;,w.nextMatch);
+				if(i&gt;w.nextMatch) {
+					MediaWikiFormatter.setAttributesFromParams(rowElement,w.source.substring(w.nextMatch,i));
+					w.nextMatch = i;
+				}
+				eot = this.rowHandler(w,rowElement);
+			}
+			rowCount++;
+			this.rowTermRegExp.lastIndex = w.nextMatch;
+			match = this.rowTermRegExp.exec(w.source);
+		}//# end while
+		if(w.tableDepth==0) {
+			w.nextMatch +=3;// skip over tableterm, \n|}
+		}
+		//if(inPara)
+		//	w.output = createTiddlyElement(output,&quot;p&quot;);
+	},//# end handler
+
+	rowHandler: function(w,e)
+	{// assumes w.nextMatch points to first cell terminator, returns false if any improperly terminated element
+		var cell;
+		this.inCellTermRegExp.lastIndex = w.nextMatch;
+		var match = this.inCellTermRegExp.exec(w.source);
+		while(match) {
+			if(match[1])
+				{// nested table
+				w.tableDepth++;
+				w.subWikify(cell,this.tableTerm);
+				w.nextMatch = this.tt;
+				w.tableDepth--;
+				return false;
+			} else if(match[2]) {
+				//# end table
+				this.tt = this.inCellTermRegExp.lastIndex;
+				return true;
+			} else if(match[3]) {
+				//# end row
+				return false;
+			} else if(match[4]) {
+				//# cell
+				var len = match[4].length;
+				cell = createTiddlyElement(e,match[4].substr(len-1)==&quot;!&quot;?&quot;th&quot;:&quot;td&quot;);
+				w.nextMatch += len;//skip over the match
+
+				this.inCellTermRegExp.lastIndex = w.nextMatch;
+				var lookahead = this.inCellTermRegExp.exec(w.source);
+				if(!lookahead) {
+					return false;// improperly terminated table
+				}
+				var cellText = w.source.substr(w.nextMatch,lookahead.index-w.nextMatch);
+				var oldSource = w.source;
+				var i = MediaWikiFormatter.endOfParams(w,cellText);//cellText.indexOf(&quot;|&quot;);
+				if(i!=-1) {
+					cellText = cellText.replace(/^\+/mg,&quot;&quot;);  //!!hack until I fix this properly
+					MediaWikiFormatter.setAttributesFromParams(cell,cellText.substr(0,i-1));
+					cellText = cellText.substring(i+1);
+				}
+				cellText = cellText.replace(/^\s*/mg,&quot;&quot;); //# remove leading spaces so not treated as preformatted
+				w.source = cellText;
+				w.nextMatch = 0;
+				w.subWikifyUnterm(cell);
+				w.source = oldSource;
+				w.nextMatch = lookahead.index;
+			}
+			this.inCellTermRegExp.lastIndex = w.nextMatch;
+			match = this.inCellTermRegExp.exec(w.source);
+		}//# end while
+		return false;
+	}//# end rowHandler
+},
+
+{
+	name: &quot;mediaWikiList&quot;,
+	match: &quot;^[\\*#;:]+ &quot;,
+	lookaheadRegExp: /^([\*#;:])+ /mg,
+	termRegExp: /(\n)/mg,
+	handler: function(w)
+	{
+		var output = w.output.parentNode;
+		var stack = [output];
+		var currLevel = 0, currType = null;
+		var listType, itemType;
+		w.nextMatch = w.matchStart;
+		this.lookaheadRegExp.lastIndex = w.nextMatch;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		while(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.nextMatch) {
+			switch(lookaheadMatch[1]) {
+			case &quot;*&quot;:
+				listType = &quot;ul&quot;;
+				itemType = &quot;li&quot;;
+				break;
+			case &quot;#&quot;:
+				listType = &quot;ol&quot;;
+				itemType = &quot;li&quot;;
+				break;
+			case &quot;;&quot;:
+				listType = &quot;dl&quot;;
+				itemType = &quot;dt&quot;;
+				break;
+			case &quot;:&quot;:
+				listType = &quot;dl&quot;;
+				itemType = &quot;dd&quot;;
+				break;
+			default:
+				break;
+			}
+			var listLevel = lookaheadMatch[0].length;
+			w.nextMatch += listLevel;
+			if(listLevel &gt; currLevel) {
+				for(var i=currLevel; i&lt;listLevel; i++) {
+					stack.push(createTiddlyElement(stack[stack.length-1],listType));
+				}
+			} else if(listLevel &lt; currLevel) {
+				for(i=currLevel; i&gt;listLevel; i--) {
+					stack.pop();
+				}
+			} else if(listLevel == currLevel &amp;&amp; listType != currType) {
+				stack.pop();
+				stack.push(createTiddlyElement(stack[stack.length-1],listType));
+			}
+			currLevel = listLevel;
+			currType = listType;
+			var e = createTiddlyElement(stack[stack.length-1],itemType);
+			w.subWikifyTerm(e,this.termRegExp);
+			this.lookaheadRegExp.lastIndex = w.nextMatch;
+			lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		}
+		w.output = createTiddlyElement(output,&quot;p&quot;);
+	}
+},
+
+{
+	name: &quot;mediaWikiRule&quot;,
+	match: &quot;^----+$\\n?&quot;,
+	handler: function(w)
+	{
+		var output = w.output.parentNode;
+		createTiddlyElement(output,&quot;hr&quot;);
+		w.output = createTiddlyElement(output,&quot;p&quot;);
+	}
+},
+
+{
+	name: &quot;mediaWikiLeadingSpaces&quot;,
+	match: &quot;^ &quot;,
+	lookaheadRegExp: /^ /mg,
+	termRegExp: /(\n)/mg,
+	handler: function(w)
+	{
+		var e = createTiddlyElement(w.output,&quot;pre&quot;);
+		while(true) {
+			w.subWikifyTerm(e,this.termRegExp);
+			createTiddlyElement(e,&quot;br&quot;);
+			this.lookaheadRegExp.lastIndex = w.nextMatch;
+			var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+			if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.nextMatch) {
+				w.nextMatch += lookaheadMatch[0].length;
+			} else {
+				break;
+			}
+		}
+	}
+},
+
+/*
+[[Image:Westminstpalace.jpg|frame|none|caption text]]
+//http://en.wikipedia.org/wiki/Image:Westminstpalace.jpg
+&lt;a href=&quot;/wiki/Image:Westminstpalace.jpg&quot; class=&quot;internal&quot; title=&quot;caption text&quot;&gt;
+&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/3/39/Westminstpalace.jpg&quot;
+ alt=&quot;caption text&quot; width=&quot;400&quot; height=&quot;300&quot; longdesc=&quot;/wiki/Image:Westminstpalace.jpg&quot; /&gt;
+&lt;/a&gt;
+
+[[image:Stockholm.jpg|right|350px|thumb|Stockholm panorama from the City Hall]]
+&lt;div class=&quot;thumb tright&quot;&gt;
+	&lt;div style=&quot;width:352px;&quot;&gt;
+		&lt;a href=&quot;/wiki/Image:Stockholm.jpg&quot; class=&quot;internal&quot; title=&quot;Stockholm panorama from the City Hall&quot;&gt;
+			&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Stockholm.jpg/350px-Stockholm.jpg&quot; alt=&quot;Stockholm panorama from the City Hall&quot; width=&quot;350&quot; height=&quot;84&quot; longdesc=&quot;/wiki/Image:Stockholm.jpg&quot; /&gt;
+		&lt;/a&gt;
+		&lt;div class=&quot;thumbcaption&quot;&gt;
+			&lt;div class=&quot;magnify&quot; style=&quot;float:right&quot;&gt;
+				&lt;a href=&quot;/wiki/Image:Stockholm.jpg&quot; class=&quot;internal&quot; title=&quot;Enlarge&quot;&gt;
+				&lt;img src=&quot;/skins-1.5/common/images/magnify-clip.png&quot; width=&quot;15&quot; height=&quot;11&quot; alt=&quot;Enlarge&quot; /&gt;
+				&lt;/a&gt;
+			&lt;/div&gt;
+			Stockholm panorama from the City Hall
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+*/
+
+{
+	name: &quot;mediaWikiImage&quot;,
+	match: &quot;\\[\\[(?:[Ii]mage|Bild):&quot;,
+	lookaheadRegExp: /\[\[(?:[Ii]mage|Bild):/mg,
+	defaultPx: 180,
+	handler: function(w)
+	{
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+			var params = MediaWikiFormatter.getParams(w);
+			var src = params[1];
+			src = src.trim().replace(/ /mg,&quot;_&quot;);
+			src = src.substr(0,1).toUpperCase() + src.substring(1);
+			var palign = null;
+			var ptitle = null;
+			var psrc = false;
+			var px = null;
+			var pthumb = false;
+			var pframed = false;
+			for(var i=2;i&lt;params.length;i++) {
+				//# right, left, center, none, sizepx, thumbnail (thumb), frame, and alternate (caption) text.
+				var p = params[i];
+				if(p==&quot;right&quot;||p==&quot;left&quot;||p==&quot;center&quot;||p==&quot;none&quot;) {
+					palign = p;
+				} else if(p==&quot;thumbnail&quot;||p==&quot;thumb&quot;) {
+					pthumb = true;
+				} else if(p==&quot;framed&quot;) {
+					pframed = true;
+				} else if(/\d{1,4} ?px/.exec(p)) {
+					px = p.substr(0,p.length-2).trim();
+				} else {
+					ptitle = p;
+				}
+			}//#end for
+			if(pthumb) {
+				var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName==&quot;P&quot; ? w.output.parentNode : w.output;
+				if(!palign) {
+					palign = &quot;right&quot;;
+				}
+				if(!px) {
+					px = 180;
+				}
+				psrc = px + &quot;px-&quot; + src;
+				var t = createTiddlyElement(output,&quot;div&quot;,null,&quot;thumb&quot;+(palign?&quot; t&quot;+palign:&quot;&quot;));
+				var s = createTiddlyElement(t,&quot;div&quot;);
+				s.style[&quot;width&quot;] = Number(px) + 2 + &quot;px&quot;;
+				var a = createTiddlyElement(s,&quot;a&quot;,null,&quot;internal&quot;);
+				if(config.options.chkMediaWikiDisplayEnableThumbZoom) {
+					a.href = src;
+				}
+				a.title = ptitle;
+				var img = createTiddlyElement(a,&quot;img&quot;);
+				img.src = psrc;
+				img.width = px;
+				img.longdesc = &quot;Image:&quot; + src;
+				img.alt = ptitle;
+
+				var tc = createTiddlyElement(s,&quot;div&quot;,null,&quot;thumbcaption&quot;);
+				var oldSource = w.source; var oldMatch = w.nextMatch;
+				w.source = ptitle; w.nextMatch = 0;
+				w.subWikifyUnterm(tc);
+				w.source = oldSource; w.nextMatch = oldMatch;
+
+				if(config.options.chkMediaWikiDisplayEnableThumbZoom) {
+					var tm = createTiddlyElement(tc,&quot;div&quot;,null,&quot;magnify&quot;);
+					tm.style[&quot;float&quot;] = &quot;right&quot;;
+					var ta = createTiddlyElement(tm,&quot;a&quot;,null,&quot;internal&quot;);
+					ta.title = &quot;Enlarge&quot;;
+					timg = createTiddlyElement(ta,&quot;img&quot;); timg.src = &quot;magnify-clip.png&quot;; timg.alt = &quot;Enlarge&quot;; timg.width = &quot;15&quot;; timg.height = &quot;11&quot;;
+					ta.href = src;
+				}
+			} else {
+				// not pthumb
+				a = createTiddlyElement(w.output,&quot;a&quot;,null,&quot;image&quot;);
+				a.title = ptitle;
+				img = createTiddlyElement(a,&quot;img&quot;);
+				if(palign) {img.align = palign;}
+				img.src = px ? px + &quot;px-&quot; + src : src;
+				if(px) {img.width = px;}
+				img.longdesc = &quot;Image:&quot; + src;
+				img.alt = ptitle;
+			}
+		}
+	}//#end image handler
+},
+
+{
+	name: &quot;mediaWikiExplicitLink&quot;,
+	match: &quot;\\[\\[&quot;,
+	lookaheadRegExp: /\[\[(?:([a-z]{2,3}:)?)(#?)([^\|\]]*?)(?:(\]\](\w)*)|(\|(.*?)\]\]))/mg,
+	handler: function(w)
+	{
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+			if(!lookaheadMatch[1]) {
+				// not (eg) [[en:...]]
+				var e;
+				var link = lookaheadMatch[3];
+				var text = link;
+				link = link.substr(0,1).toUpperCase() + link.substring(1);
+				if(lookaheadMatch[4]) {
+					// Simple bracketted link
+					if(lookaheadMatch[2]) {
+						var a = createTiddlyElement(e,&quot;a&quot;);// drop anchor
+						a.setAttribute(&quot;name&quot;,link);
+					} else {
+						e = createTiddlyLink(w.output,link,false,null,w.isStatic);
+						if(lookaheadMatch[5]) {
+							text += lookaheadMatch[5];//add any non-space after the ]]
+						}
+						createTiddlyText(e,text);
+					}
+				} else if(lookaheadMatch[6]) {
+					// Piped link
+					if(config.formatterHelpers.isExternalLink(link)) {
+						e = createExternalLink(w.output,link);
+					} else {
+						e = createTiddlyLink(w.output,link,false,null,w.isStatic);
+					}
+					var oldSource = w.source; var oldMatch = w.nextMatch;
+					w.source = lookaheadMatch[7].trim(); w.nextMatch = 0;
+					w.subWikifyUnterm(e);
+					w.source = oldSource; w.nextMatch = oldMatch;
+				}
+			}
+			w.nextMatch = this.lookaheadRegExp.lastIndex;
+		}
+	}
+},
+
+//#{{Audio|sv-Stockholm.ogg|Stockholm}}
+//**tem//
+{
+	name: &quot;mediaWikiTemplate&quot;,
+	match: &quot;\\{\\{[^\\{]&quot;,
+	lookaheadRegExp: /\{\{((?:.|\n)*?)\}\}/mg,
+	handler: function(w)
+	{
+//mwDebug(w.output,&quot;wt:&quot;+w.matchText+&quot; ws:&quot;+w.matchStart+&quot; wn:&quot;+w.nextMatch+&quot; wl:&quot;+w.matchLength);
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+//mwDebug(w.output,&quot;lm:&quot;+lookaheadMatch);
+//mwDebug(w.output,&quot;lmi:&quot;+lookaheadMatch.index+&quot; lI:&quot;+this.lookaheadRegExp.lastIndex);
+//mwDebug(w.output,&quot;lm1:&quot;+lookaheadMatch[1]);
+//mwDebug(w.output,&quot;lm2:&quot;+lookaheadMatch[2]);
+			var lastIndex = this.lookaheadRegExp.lastIndex;
+			var contents = lookaheadMatch[1];
+			// see http://meta.wikimedia.org/wiki/Help:Variable
+			if(contents==&quot;PAGENAME&quot;) {
+				createTiddlyText(w.output,w.tiddler.title);
+				w.nextMatch = lastIndex;
+				return;
+			}
+			var i = contents.indexOf(&quot;|&quot;);
+			var title = i==-1 ? contents : contents.substr(0,i);
+			title = title.trim().replace(/_/mg,&quot; &quot;);// Underscore in template name is equivalent to space
+			title = &quot;Template:&quot; + title.substr(0,1).toUpperCase() + title.substring(1);
+			var tiddler = store.fetchTiddler(title);
+			var oldSource = w.source;
+			if(tiddler) {
+				params = {};
+				w.source = lookaheadMatch[1];
+				if(i!=-1) {
+					w.nextMatch = 0;
+					params = MediaWikiFormatter.getTemplateParams(w);
+				}
+				w.source = MediaWikiFormatter.expandTemplate(w,tiddler,params);
+				w.nextMatch = 0;
+				w.subWikifyUnterm(w.output);
+			} else {
+				if(config.options.chkMediaWikiDisplayEmptyTemplateLinks) {
+					// for conveniece, output the name of the template so can click on it and create tiddler
+					w.source = &quot;[[&quot;+title+&quot;]]&quot;;
+					w.nextMatch = 0;
+					w.subWikifyUnterm(w.output);
+				}
+			}
+			w.source = oldSource;
+			w.nextMatch = lastIndex;
+		}
+	}
+},
+
+{
+	name: &quot;mediaWikiParagraph&quot;,
+	match: &quot;\\n{2,}&quot;,
+	handler: function(w)
+	{
+		var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName==&quot;P&quot; ? w.output.parentNode : w.output;
+		w.output = createTiddlyElement(output,&quot;p&quot;);
+	}
+},
+
+{
+	name: &quot;mediaWikiExplicitLineBreak&quot;,
+	match: &quot;&lt;br ?/?&gt;&quot;,
+	handler: function(w)
+	{
+		createTiddlyElement(w.output,&quot;br&quot;);
+	}
+},
+
+{
+	name: &quot;mediaWikiExplicitLineBreakWithParams&quot;,
+	match: &quot;&lt;br(?:\\s*(?:(?:.*?)=[\&quot;']?(?:.*?)[\&quot;']?))*?\\s*/?&gt;&quot;,
+	lookaheadRegExp: /&lt;br((?:\s+(?:.*?)=[&quot;']?(?:.*?)[&quot;']?)*?)?\s*\/?&gt;/mg,
+	handler: function(w)
+	{
+		//# copes with erroneous &lt;br clear=&quot;right&quot;&gt;
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+			var e =createTiddlyElement(w.output,&quot;br&quot;);
+			if(lookaheadMatch[1]) {
+				MediaWikiFormatter.setAttributesFromParams(e,lookaheadMatch[1]);
+			}
+			w.nextMatch = this.lookaheadRegExp.lastIndex;// empty tag
+		}
+	}
+},
+
+{
+	name: &quot;mediaWikiTitledUrlLink&quot;,
+	match: &quot;\\[&quot; + config.textPrimitives.urlPattern + &quot;(?:\\s+[^\\]]+)?&quot; + &quot;\\]&quot;,
+	//# eg [http://www.nupedia.com] or [http://www.nupedia.com Nupedia]
+	//# &lt;sup id=&quot;_ref-1&quot; class=&quot;reference&quot;&gt;&lt;a href=&quot;#_note-1&quot; title=&quot;&quot;&gt;[2]&lt;/a&gt;
+	handler: function(w)
+	{
+		var lookaheadRegExp = new RegExp(&quot;\\[(&quot; + config.textPrimitives.urlPattern + &quot;)(?:\\s+([^\[]+))?&quot; + &quot;\\]&quot;,&quot;mg&quot;);
+		lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index==w.matchStart) {
+			var link = lookaheadMatch[1];
+			var s = createTiddlyElement(w.output);
+			var e = createExternalLink(s,link);
+			if(lookaheadMatch[2]) {
+				var oldSource = w.source; var oldMatch = w.nextMatch;
+				w.source = lookaheadMatch[2].trim(); w.nextMatch = 0;
+				w.subWikifyUnterm(e);
+				w.source = oldSource; w.nextMatch = oldMatch;
+			} else {
+				w.linkCount++;
+				createTiddlyText(e,&quot;[&quot;+w.linkCount+&quot;]&quot;);
+			}
+			w.nextMatch = lookaheadRegExp.lastIndex;
+		}
+	}
+},
+
+{
+	name: &quot;mediaWikiUrlLink&quot;,
+	match: config.textPrimitives.urlPattern,
+	handler: function(w)
+	{
+		w.outputText(createExternalLink(w.output,w.matchText),w.matchStart,w.nextMatch);
+	}
+},
+
+{
+	name: &quot;mediaWikiBold&quot;,
+	match: &quot;'''&quot;,
+	termRegExp: /('''|\n)/mg,
+	element: &quot;strong&quot;,
+	handler: config.formatterHelpers.createElementAndWikify
+},
+
+{
+	name: &quot;mediaWikiItalic&quot;,
+	match: &quot;''(?!')&quot;,
+	termRegExp: /(''(?!')|\n)/mg,
+	element: &quot;em&quot;,
+	handler: config.formatterHelpers.createElementAndWikify
+},
+
+{
+	name: &quot;mediaWikiUnderline&quot;,
+	match: &quot;&lt;u&gt;&quot;,
+	termRegExp: /(&lt;\/u&gt;|\n)/mg,
+	element: &quot;u&quot;,
+	handler: config.formatterHelpers.createElementAndWikify
+},
+
+{
+	name: &quot;mediaWikiStrike&quot;,
+	match: &quot;&lt;s&gt;&quot;,
+	termRegExp: /(&lt;\/s&gt;|\n)/mg,
+	element: &quot;strike&quot;,
+	handler: config.formatterHelpers.createElementAndWikify
+},
+
+{
+	name: &quot;mediaWikiBoldTag&quot;,
+	match: &quot;&lt;b&gt;&quot;,
+	termRegExp: /(&lt;\/b&gt;|\n)/mg,
+	element: &quot;b&quot;,
+	handler: config.formatterHelpers.createElementAndWikify
+},
+
+{
+	name: &quot;mediaWikiTemplateParam&quot;,// note, this only gets invoked when viewing the template
+	match: &quot;\\{\\{\\{&quot;,
+	lookaheadRegExp: /(\{\{\{(?:.|\n)*?\}\}\})/mg,
+	element: &quot;span&quot;,
+	handler: config.formatterHelpers.enclosedTextHelper
+},
+
+//# See http://en.wikipedia.org/wiki/Wikipedia:Footnotes
+//# for an explanation of how to generate footnotes using the &lt;ref(erences/)&gt; tags
+{
+	name: &quot;mediaWikiInsertReference&quot;,
+	match: &quot;&lt;ref[^/]*&gt;&quot;,
+	lookaheadRegExp: /&lt;ref(\s+(?:.*?)=[&quot;']?(?:.*?)[&quot;']?)?&gt;([^&lt;]*?)&lt;\/ref&gt;/mg,
+	handler: function(w)
+	{
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+			var x = {id:&quot;&quot;,value:&quot;&quot;};
+			w.nextMatch = this.lookaheadRegExp.lastIndex;
+			if(!w.referenceCount) {
+				w.referenceCount = 0;
+				w.references = {};
+			}
+			var s = createTiddlyElement(w.output,&quot;sup&quot;,null,&quot;reference&quot;);
+			var a = createTiddlyElement(s,&quot;a&quot;);
+			var prefix = w.tiddler ? w.tiddler.title + &quot;:&quot; : &quot;&quot;;
+			if(lookaheadMatch[1]) {
+				var r = {};
+				r = MediaWikiFormatter.setFromParams(w,lookaheadMatch[1]);
+				var name = r.name ? r.name.trim() : &quot;&quot;;
+				name = name.replace(/ /g,&quot;_&quot;);
+				s.id = prefix + &quot;_ref-&quot; + name;// + &quot;_&quot; + nameCount;(w.referenceCount+1);
+				if(!w.references[name]) {
+					w.references[name] = x;
+					w.references[name].id = w.referenceCount;
+					w.references[name].value = lookaheadMatch[2].trim();
+				}
+			} else {
+				w.references[w.referenceCount] = x;
+				w.references[w.referenceCount].id = w.referenceCount;
+				w.references[w.referenceCount].value = lookaheadMatch[2].trim();
+				name = w.referenceCount;
+				s.id = prefix + &quot;_ref-&quot; + w.referenceCount;
+			}
+			w.referenceCount++;
+			a.title = lookaheadMatch[2].trim();//mb, extra to wikipedia
+			a.href = &quot;#&quot; + prefix + &quot;_note-&quot; + name;
+			a.innerHTML = &quot;[&quot;+w.referenceCount+&quot;]&quot;;
+//#&lt;sup id=&quot;_ref-0&quot; class=&quot;reference&quot;&gt;&lt;a href=&quot;#_note-0&quot; title=&quot;&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt;
+//#&lt;sup id=&quot;_ref-foreign_ministry_0&quot; class=&quot;reference&quot;&gt;&lt;a href=&quot;#_note-foreign_ministry&quot; title=&quot;&quot;&gt;[2]&lt;/a&gt;&lt;/sup&gt;
+		}
+	}
+},
+
+{
+	name: &quot;mediaWikiListReferences&quot;,
+	match: &quot;&lt;references ?/&gt;&quot;,
+	lookaheadRegExp: /&lt;references ?\/&gt;/mg,
+	handler: function(w)
+	{
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(config.options.chkMediaWikiListReferences &amp;&amp; w.referenceCount) {
+			var ol = createTiddlyElement(w.output,&quot;ol&quot;,null,&quot;references&quot;);
+			var oldSource = w.source;
+			if(w.referenceCount&gt;0) {
+				for(var i in w.references) {
+					var li = createTiddlyElement(ol,&quot;li&quot;);
+					var prefix = w.tiddler ? w.tiddler.title + &quot;:&quot; : &quot;&quot;;
+					var b = createTiddlyElement(li,&quot;b&quot;);
+					var a = createTiddlyElement(b,&quot;a&quot;);
+					li.id = prefix + &quot;_note-&quot; + i;
+					a.href = &quot;#&quot; + prefix + &quot;_ref-&quot; + i;
+					a.innerHTML = &quot;^&quot;;
+					w.source = w.references[i].value;
+					w.nextMatch = 0;
+					w.subWikifyUnterm(li);
+				}
+			}
+			w.source = oldSource;
+		}
+		w.nextMatch = this.lookaheadRegExp.lastIndex;
+	}
+},
+
+{
+	name: &quot;mediaWikiRepeatReference&quot;,
+	match: &quot;&lt;ref[^/]*/&gt;&quot;,
+	lookaheadRegExp: /&lt;ref(\s+(?:.*?)=&quot;(?:.*?)&quot;)?\s*\/&gt;/mg,
+	handler: function(w)
+	{
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+			var x = {id:&quot;&quot;,value:&quot;&quot;};
+			w.nextMatch = this.lookaheadRegExp.lastIndex;
+//#&lt;ref name=&quot;foreign ministry&quot;&gt;
+//#&lt;sup id=&quot;_ref-foreign_ministry_1&quot; class=&quot;reference&quot;&gt;&lt;a href=&quot;#_note-foreign_ministry&quot; title=&quot;&quot;&gt;[2]&lt;/a&gt;&lt;/sup&gt;
+			var s = createTiddlyElement(w.output,&quot;sup&quot;,null,&quot;reference&quot;);
+			var a = createTiddlyElement(s,&quot;a&quot;);
+			var prefix = w.tiddler ? w.tiddler.title : &quot;&quot;;
+			if(lookaheadMatch[1]) {
+				var r = {};
+				r = MediaWikiFormatter.setFromParams(w,lookaheadMatch[1]);
+				var name = r.name ? r.name.trim() : &quot;&quot;;
+				name = name.replace(/ /g,&quot;_&quot;);
+				s.id = prefix + &quot;_ref-&quot; + name +&quot;_&quot; + (w.referenceCount+1);
+				var count = w.references &amp;&amp; w.references[name] ? (w.references[name].id+1) : &quot;?&quot;;
+			}
+			a.href = &quot;#&quot; + prefix + &quot;_note-&quot; + name;
+			a.innerHTML = &quot;[&quot;+count+&quot;]&quot;;
+			a.title = name;
+		}
+	}//# end handler
+},
+
+{
+	name: &quot;mediaWikiHtmlEntitiesEncoding&quot;,
+	match: &quot;&amp;#?[a-zA-Z0-9]{2,8};&quot;,
+	handler: function(w)
+	{
+		createTiddlyElement(w.output,&quot;span&quot;).innerHTML = w.matchText;
+	}
+},
+
+{
+	name: &quot;mediaWikiComment&quot;,
+	match: &quot;&lt;!\\-\\-&quot;,
+	lookaheadRegExp: /&lt;!\-\-((?:.|\n)*?)\-\-&gt;/mg,
+	handler: function(w)
+	{
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+			w.nextMatch = this.lookaheadRegExp.lastIndex;
+		}
+	}
+},
+
+{
+	name: &quot;mediaWikiIncludeOnly&quot;,
+	match: &quot;&lt;includeonly&gt;&quot;,
+	lookaheadRegExp: /&lt;includeonly&gt;((?:.|\n)*?)&lt;\/includeonly&gt;/mg,
+	handler: function(w)
+	{
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+			w.nextMatch = this.lookaheadRegExp.lastIndex;
+		}
+	}
+},
+
+{
+	name: &quot;mediaWikiNoWiki&quot;,
+	match: &quot;&lt;nowiki&gt;&quot;,
+	lookaheadRegExp: /&lt;nowiki&gt;((?:.|\n)*?)&lt;\/nowiki&gt;/mg,
+	element: &quot;span&quot;,
+	handler: config.formatterHelpers.enclosedTextHelper
+},
+
+{
+	name: &quot;mediaWikiPreNoWiki&quot;,
+	match: &quot;&lt;pre&gt;\s*&lt;nowiki&gt;&quot;,
+	lookaheadRegExp: /&lt;pre&gt;\s*&lt;nowiki&gt;((?:.|\n)*?)&lt;\/nowiki&gt;\s*&lt;\/pre&gt;/mg,
+	element: &quot;pre&quot;,
+	handler: config.formatterHelpers.enclosedTextHelper
+},
+
+{
+	name: &quot;mediaWikiPre&quot;,
+	match: &quot;&lt;pre&gt;&quot;,
+	lookaheadRegExp: /&lt;pre&gt;((?:.|\n)*?)&lt;\/pre&gt;/mg,
+	element: &quot;pre&quot;,
+	handler: config.formatterHelpers.enclosedTextHelper
+},
+
+{
+	name: &quot;mediaWikiGallery&quot;,
+	match: &quot;&lt;gallery&gt;&quot;,
+	lookaheadRegExp: /[Ii]mage:(.*?)\n/mg,
+	handler: function(w)
+	{
+//#basic syntax is:
+//#&lt;gallery&gt;
+//#Image:Wiki.png
+//#Image:Wiki.png|Captioned
+//#Image:Wiki.png|[[Help:Contents/Links|Links]] can be put in captions.
+//#Image:Wiki.png|Full [[MediaWiki]]&lt;br /&gt;[[syntax]] may now be used…
+//#&lt;/gallery&gt;
+//#&lt;table class=&quot;gallery&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot;&gt;
+//#&lt;tr&gt;
+//#...
+//#&lt;/tr&gt;
+//#&lt;/table&gt;
+		var table = createTiddlyElement(w.output,&quot;table&quot;,null,&quot;gallery&quot;);
+		table.cellspacing = &quot;0&quot;;
+		table.cellpadding = &quot;0&quot;;
+		var rowElem = createTiddlyElement(table,&quot;tr&quot;);
+		var col = 0;
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var nM = w.nextMatch;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		var oldSource = w.source;
+		while(lookaheadMatch) {
+			nM += lookaheadMatch[1].length;
+			w.source = lookaheadMatch[1] +&quot;]]&quot;;//!! ]] is hack until getParams is working
+			w.nextMatch = 0;
+			var params = MediaWikiFormatter.getParams(w);
+			var src = params[1];
+			src = src.trim().replace(/ /mg,&quot;_&quot;);
+			src = src.substr(0,1).toUpperCase() + src.substring(1);
+			var palign = &quot;right&quot;; 
+			var psrc = &quot;120px-&quot;+src;
+			var px = 120;
+			var pframed = false;
+			ptitle = null;
+			for(var i=2;i&lt;params.length;i++) {
+				//right, left, center, none, sizepx, thumbnail (thumb), frame, and alternate (caption) text.
+				var p = params[i];
+				if(p==&quot;right&quot;||p==&quot;left&quot;||p==&quot;center&quot;||p==&quot;none&quot;) {
+					palign = p;
+				} else if(p==&quot;framed&quot;) {
+					pframed = true;
+				} else if(/\d{1,4}px/.exec(p)) {
+					px = p.substr(0,p.length-2).trim();
+					psrc = px + &quot;px-&quot; + src;
+				} else {
+					ptitle = p;
+				}
+			}//#end for
+//#&lt;td&gt;
+//#&lt;div class=&quot;gallerybox&quot;&gt;
+//#	&lt;div class=&quot;thumb&quot; style=&quot;padding: 26px 0;&quot;&gt;
+//#		&lt;a href=&quot;/wiki/Image:Paul_C%C3%A9zanne_184.jpg&quot; title=&quot;Image:Paul Cézanne 184.jpg&quot;&gt;
+//#		&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Paul_C%C3%A9zanne_184.jpg/120px-Paul_C%C3%A9zanne_184.jpg&quot; width=&quot;120&quot; height=&quot;94&quot; alt=&quot;&quot; /&gt;
+//#		&lt;/a&gt;
+//#	&lt;/div&gt;
+//#	&lt;div class=&quot;gallerytext&quot;&gt;
+//#		&lt;p&gt;&lt;i&gt;La Pain et les Oeufs&lt;/i&gt; (Bread and Eggs), thought to present austerity, 1865. Signed and dated. Possibly in Spanish style.&lt;/p&gt;
+//#	&lt;/div&gt;
+//#&lt;/div&gt;
+//#&lt;/td&gt;
+			var td = createTiddlyElement(rowElem,&quot;td&quot;);
+			var gb = createTiddlyElement(td,&quot;div&quot;,null,&quot;gallerybox&quot;);
+			var t = createTiddlyElement(gb,&quot;div&quot;,null,&quot;thumb&quot;);
+			t.style[&quot;padding&quot;] = &quot;26px 0&quot;;
+
+			var a = createTiddlyElement(t,&quot;a&quot;);
+			if(config.options.chkMediaWikiDisplayEnableThumbZoom) {
+				a.href = src;
+			}
+			a.title = ptitle;
+			var img = createTiddlyElement(a,&quot;img&quot;);
+			img.src = psrc;
+			img.width = px;
+			img.alt = &quot;&quot;;//ptitle;
+
+			var gt = createTiddlyElement(gb,&quot;div&quot;,null,&quot;gallerytext&quot;);
+			p = createTiddlyElement(gt,&quot;p&quot;);
+			var oldSource2 = w.source; var oldMatch = w.nextMatch;
+			w.source = ptitle; w.nextMatch = 0;
+			w.subWikifyUnterm(p);
+			w.source = oldSource2; w.nextMatch = oldMatch;
+
+			col++;
+			if(col&gt;3) {
+				rowElem = createTiddlyElement(table,&quot;tr&quot;);
+				col = 0;
+			}
+			w.source = oldSource;
+			lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		}
+		w.nextMatch = nM + &quot;&lt;gallery&gt;&quot;.length*2+1+&quot;Image:&quot;.length;//!! hack
+	}
+},
+
+{
+	name: &quot;mediaWikiHtmlTag&quot;,
+	match: &quot;&lt;[a-zA-Z]{2,}(?:\\s*(?:(?:.*?)=[\&quot;']?(?:.*?)[\&quot;']?))*?&gt;&quot;,
+	lookaheadRegExp: /&lt;([a-zA-Z]{2,})((?:\s+(?:.*?)=[&quot;']?(?:.*?)[&quot;']?)*?)?\s*(\/)?&gt;/mg,
+	handler: function(w)
+	{
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+			var e =createTiddlyElement(w.output,lookaheadMatch[1]);
+			if(lookaheadMatch[2]) {
+				MediaWikiFormatter.setAttributesFromParams(e,lookaheadMatch[2]);
+			}
+			if(lookaheadMatch[3]) {
+				w.nextMatch = this.lookaheadRegExp.lastIndex;// empty tag
+			} else {
+				w.subWikify(e,&quot;&lt;/&quot;+lookaheadMatch[1]+&quot;&gt;&quot;);
+			}
+		}
+	}
+}
+];
+
+config.parsers.mediaWikiFormatter = new Formatter(config.mediaWikiFormatters);
+config.parsers.mediaWikiFormatter.formatTag = &quot;MediaWikiFormat&quot;;
+} // end of &quot;install only once&quot;
+//}}}
+</pre>
+</div>
+<div title="Multi-site Installation" modifier="miklb" created="200707302048" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200707302048">
 <pre>A single installation of the '''Habari''' source code can power multiple, independent sites.
 
 If you have only a single site, then '''Habari''' will use the config.php file that resides in the same directory as index.php.  This is the default configuration file, and will be used if no site-specific configuration can be found.
@@ -780,7 +2557,36 @@ Each '''Habari''' site can use its own themes and plugins, as well as the themes
 # In order for the installation routine to work for a site other than the default site, there '''must''' be a &lt;code&gt;config.php&lt;/code&gt; in that site's directory.
 </pre>
 </div>
-<div title="PageTemplate" modifier="YourName" modified="200701122313" created="200701122350" tags="BlackicityTheme">
+<div title="Multisite" modifier="miklb" created="200710131829" tags="MediaWikiFormat" changecount="1">
+<pre>A single installation of the '''Habari''' source code can power multiple, independent sites.
+
+If you have only a single site, then '''Habari''' will use the config.php file that resides in the same directory as index.php.  This is the default configuration file, and will be used if no site-specific configuration can be found.
+
+In order to run multiple sites, you will first need to create a &lt;code&gt;sites&lt;/code&gt; directory inside your &lt;code&gt;user&lt;/code&gt; directory.  Then, inside &lt;code&gt;user/sites&lt;/code&gt; you will create a directory for each site you want to run.  Inside each of these sub-directories you will place a config.php with that site's configuration directives.
+
+The name of the directory to use for each site is constructed in the following way:
+* strip off the protocol used to access the site. http://habariproject.org/en/ becomes habariproject.org/en/
+* replace all slashes with periods. So habariproject.org/en becomes habariproject.org.en.
+* place any non-standard HTTP port at the beginning of the directory. So habariproject.org/en:8080 becomes 8080.habariproject.org.en
+
+'''Habari''' will traverse the directories in /user/sites looking for the closest match.  So, for a request to www.habariproject.org/en, '''Habari''' will look in the following directories in the following order for a config.php
+* www.habariproject.org.en
+* habariproject.org.en
+* org.en
+* www.habariproject.org
+* habariproject.org
+* org
+
+Additional '''Habari'''-powered sites do not need to use the same domain.  Provided the web server is properly configured, a single installation of the '''Habari''' source code can serve www.habariproject.org, www.habarithemes.org, and www.habari-ya-kazi.com.  Likewise, sub-domains and sub-directories are also supported.
+
+Each '''Habari''' site can use its own themes and plugins, as well as the themes and plugins available to the &quot;main&quot; site.  Simply create /themes and /plugins sub-directories inside each site's directory.  A theme or plugin located in a site's directory structure is only available to that site; while themes and plugins in the top-level /user directory will be available to all sites.
+
+== Notes ==
+# Each '''Habari''' site is strictly independent.  Although sites may share themes and plugins located in the top-level /user directory, no data is shared between sites.  User accounts, posts, and settings are completely independent.
+# In order for the installation routine to work for a site other than the default site, there '''must''' be a &lt;code&gt;config.php&lt;/code&gt; in that site's directory.
+</pre>
+</div>
+<div title="PageTemplate" modifier="YourName" modified="200701122313" created="200701122350" tags="BlackicityTheme" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200701122313">
 <pre>&lt;!--{{{--&gt;
 
 &lt;div id='topMenu' refresh='content' tiddler='MainMenu'&gt;&lt;/div&gt;
@@ -794,16 +2600,438 @@ Each '''Habari''' site can use its own themes and plugins, as well as the themes
 &lt;/div&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
-<div title="Site Title" modifier="Khaled Abou Alfa" created="200703132345">
+<div title="Pingbacks" modifier="miklb" created="200710131847" tags="MediaWikiFormat" changecount="1">
+<pre>As of revision 756 Habari now supports the sending and recieving of Pingbacks.  That is all well and good, but how do we display them on our sites?
+
+Quite simple actually.  Let's go over the code you will need to add to your comments template.
+
+By default Habari grabs all the comments for a given post (normal comments, trackbacks, etc) and sorts them into &quot;buckets&quot; for later use.  For instance when we want to display all our comments, we would do something like this:
+&lt;pre&gt;if( $post-&gt;comments-&gt;approved-&gt;count ) :
+	foreach ( $post-&gt;comments-&gt;comments-&gt;approved as $comment ) :&lt;/pre&gt;
+
+In the above code we are checking that there are approved comments for this post, and if so we are processing them for display.  Pretty simple.  The code for displaying pingbacks is much the same:
+
+&lt;pre&gt;if( $post-&gt;comments-&gt;pingbacks-&gt;count ) : 
+	foreach ( $post-&gt;comments-&gt;pingbacks-&gt;approved as $pingback ) :
+&lt;/pre&gt;
+
+At this point, if we have approved pingbacks they have been returned and we are processing them for display.  Here is a sample of the code that I am using on my site to display pingbacks:
+
+&lt;pre&gt;&lt;?php if( $post-&gt;comments-&gt;pingbacks-&gt;count ) : ?&gt;
+	&lt;h1&gt;&lt;?php echo $post-&gt;comments-&gt;pingbacks-&gt;count; ?&gt; &lt;?php echo _n( 'Pingback', 'Pingbacks', $post-&gt;comments-&gt;pingbacks-&gt;count ); ?&gt; to &lt;?php echo $post-&gt;title; ?&gt;&lt;/h1&gt;
+		&lt;div id=&quot;pings&quot;&gt;
+			&lt;ol id=&quot;pings-list&quot;&gt;
+				&lt;?php foreach ( $post-&gt;comments-&gt;pingbacks-&gt;approved as $pingback ) : ?&gt;
+					&lt;li id=&quot;ping-&lt;?php echo $pingback-&gt;id; ?&gt;&quot;&gt;
+						&lt;p&gt;
+							&lt;a href=&quot;&lt;?php echo $pingback-&gt;url; ?&gt;&quot; title=&quot;&quot;&gt;&lt;?php echo $pingback-&gt;name; ?&gt;&lt;/a&gt; 
+							&amp;raquo; &lt;?php echo $pingback-&gt;content; ?&gt;
+						&lt;/p&gt;
+					&lt;/li&gt;
+				&lt;?php endforeach; ?&gt;
+			&lt;/ol&gt;
+		&lt;/div&gt;
+	&lt;?php endif; ?&gt;&lt;/pre&gt;
+
+Fairly straightforward I would think.
+
+Note, to only call your comments, you need to use &lt;pre&gt;$post-&gt;comments-&gt;comments-&gt;approved-&gt;count;&lt;/pre&gt;, otherwise, the default comments.php in k2 will show both pingbacks and pingbacks as comments with the above  pingback code.
+</pre>
+</div>
+<div title="Plugins" modifier="miklb" modified="200710132246" created="200710132018" tags="MediaWikiFormat" changecount="2">
+<pre>Plugins are intended to be extensions of the core functionality of Habari.  Your installation will come with several, community developed plugins, or you may download other, community and individually developed plugins.  Eventually, a repository on the official site will house freely available plugins, until then, you can check out the [http://wiki.habariproject.org/en/Available_Plugins Available Plugins].
+
+==Installation &amp; Activation==
+Plugins are installed in the /User/Plugins directory of your Habari installation.  The directory structure must be kept in place, that is, do not upload just the php files of the plugin, rather, the entire directory, even if only one file exists.
+
+Navigate to your /admin/plugins in your dashboard, and a list of all plugins in your user directory should be available. To active or deactivate a plugin, simply click the button to the right of the plugin name.  Some plugins also provide configuration settings, clicking the configure link will open the options below the list of your installed plugins (it does not open in a new page.  Also note, the interface for this is still in development).
+
+==Implementing the Plugin==
+Some plugins will provide features that do not require anything else to implement.  However, some plugins will require adding a line of code to your active theme to output some data.  Generally speaking, the plugin author should provide documentation for this, however, the basics of how they work is that the plugin sets a variable using your theme.php file, and then within the template where you want your data to be outputted, you simply echo that variable.  This is done so that in the future, when other theme engines are added, specific PHP code isn't required for the plugin to work with that theme.  So if a plugin had the variable $my_twitter, in the raw php engine you would add &lt;code&gt;&lt;?php echo $my_twitter; ?&gt;&lt;/code&gt; to the template you wanted to show the data.  As other engines are added, this will be updated to reflect those as well.
+</pre>
+</div>
+<div title="QueryRecord" modifier="miklb" modified="200710132027" created="200710132025" tags="MediaWikiFormat" changecount="4">
+<pre>A single instance of QueryRecord represents a single query result row.  QueryRecord also serves as the base class for derivative classes that provide row-level data access.  QueryRecord is, in many ways, the fundamental building block of Habari.
+
+==Using QueryRecord==
+
+QueryRecord provides basic functions that allow Habari to interact with the single row of data.  The properties of a QueryRecord object represent the field values of the row.  
+
+To obtain an instance of QueryRecord with data, call one of these static methods on the DB class:
+;get_row():Returns a single QueryRecord instance for the single row retrieved
+;get_results():Returns an array of QueryRecord instances, one per row returned in the query
+
+For example:
+&lt;pre&gt;$record = DB::get_row('SELECT id, bar FROM foo WHERE id = 1');
+ echo $record-&gt;bar;&lt;/pre&gt;
+
+The code above firsts queries the database for a record containing the fields &lt;tt&gt;id&lt;/tt&gt; and &lt;tt&gt;bar&lt;/tt&gt; from the table 'foo' where the 'id' field is equal to 1.  The single record (only one is returned by &lt;tt&gt;DB::get_row()&lt;/tt&gt;) is stored in &lt;tt&gt;$record&lt;/tt&gt; as an instance of the QueryRecord class.  The property &lt;tt&gt;bar&lt;/tt&gt; referenced as &lt;tt&gt;$record-&gt;bar&lt;/tt&gt; contains the value of the 'bar' field returned by the query.  Similarly, although this is not shown, the 'id' field is assigned to &lt;tt&gt;$record-&gt;id&lt;/tt&gt;.
+
+By echoing the value of &lt;tt&gt;$record-&gt;bar&lt;/tt&gt;, the value of that field is output.
+
+==Updating a Record==
+
+By changing the values of these properties and calling the update() method on the object, the QueryRow can commit that data back to the database.  For example:
+
+&lt;pre&gt;$record = DB::get_row('SELECT id, bar FROM foo WHERE id = 1');
+ $record-&gt;bar = 'hello';
+ $record-&gt;update('foo', array('id'));&lt;/pre&gt;
+
+As with the prior example, the values of the fields 'id' and 'bar' have been queried into an instance of QueryRecord.
+
+The &lt;tt&gt;$record-&gt;bar&lt;/tt&gt; is then assigned the value 'hello'.  This prepares the new data for update in the database.  The value of &lt;tt&gt;$record-&gt;bar&lt;/tt&gt; will contain 'hello' after this assignment.  
+
+To update the record in the database, the &lt;tt&gt;update()&lt;/tt&gt; method is called.  In QueryRecord, update() accepts two parameters.  The first is the table to which the data will be written and the second is an array of fields that will be used to match the data in the object to the correct row in the database.
+
+In this case, the table updated is 'foo', and the value of &lt;tt&gt;$record-&gt;id&lt;/tt&gt; will be matched against the field 'id' in the database.  Any record in the database with a matching id value will have its fields updated to the other property values of &lt;tt&gt;$record&lt;/tt&gt;
+
+==Inserting a Record==
+
+QueryRecord can also be used to insert new records into a table.  For example:
+
+&lt;pre&gt;$record = new QueryRecord(
+   array('bar'=&gt;'hello')
+ );
+ $record-&gt;insert('foo');&lt;/pre&gt;
+
+In the above example, a new instance of QueryRecord is created and asigned to &lt;tt&gt;$record&lt;/tt&gt;.  The values of the properties in the new QueryRecord are built from the associative array that is passed to the QueryRecord constructor.  The keys of the array become the object's properties, and the values of the array become those properties' values.  After creating &lt;tt&gt;$record&lt;/tt&gt; as above, the value of &lt;tt&gt;$record-&gt;bar&lt;/tt&gt; would be set to 'hello'.
+
+Calling &lt;tt&gt;$record-&gt;insert()&lt;/tt&gt; inserts the property values into the specified table, in this case, 'foo'.
+
+In order for this to work correctly, all of the values required to insert a row into a table must have been set as properties of the QueryRecord object.  Note that in this example, the 'id' field is omitted with the assumption that it is an auto_increment primary key in the 'foo' table.
+
+After the row is inserted, the value of 'id' *will not* be set in &lt;tt&gt;$record-&gt;id&lt;/tt&gt;.  This must be done manually using &lt;tt&gt;DB::last_insert_id()&lt;/tt&gt;, which is often handled from a subclass, as described in the Extending QueryRecord section below.
+
+==Deleting a Record==
+
+This is fundamentally the same as updating a row, except it deletes the row from the table that has fields with the matching values.
+
+&lt;pre&gt;$record-&gt;delete('foo', array('id'));&lt;/pre&gt;
+
+==Extending QueryRecord==
+
+As part of Habari's Object-Oriented approach, other classes can extend the QueryRecord class to provide additional methods that interact with QueryRecords that contain a specific type of data.  For example, the Post class extends QueryRecord to provide additional methods that are post-specific.  The class that extends QueryRecord [http://en.wikipedia.org/wiki/Inheritance_%28computer_science%29 inherits] all of the methods of QueryRecord in addition to any that it provides on its own.
+
+In most cases, a QueryRecord is not the class of a row.  A row is usually requested as one of QueryRecord's descendant classes.
+
+Many classes extend the QueryRecord class.  The following classes all inherit from QueryRecord:
+;Post: Represents a single post
+;Comment: Represents a single comment
+;LogEntry: Represents a single entry in the event log
+;CronJob: Represents a single periodically executed task
+;RewriteRule: Represents a single rewrite rule
+;User: Represents a single user
+
+The classes above represent wildly different functionality and and data representations; yet they each extend the base QueryRecord class.  By providing this core functionality for descendant classes, extended classes don't need to duplicate code.  
+
+QueryRecord descendants map to database tables of the same name, and most of the properties of the descendants map the columns of that table.  For example, the Post table is used to store Post object data.  The Post object has fields 'id', 'title', and 'content', among others.  These fields are also columns in the 'posts' table in the database.
+
+The Post class also provides special functionality that is associated only to posts.  For example, every post has a status value.  In the database, this status value is stored as an integer.  Because it's often easier to work with the names of these status, the Post class provides the ability to accept either the integer or the string as the value of the poperty, but always stores the value in the database as an integer.  This is just one example of what additional functionality a subclass of QueryRecord can provide.
+
+One of the more significant additions a subclass can make is to override the &lt;tt&gt;update()&lt;/tt&gt; and &lt;tt&gt;insert()&lt;/tt&gt; methods of QueryRecord.  By creating having its own &lt;tt&gt;update()&lt;/tt&gt; method, a class can identify the correct table and key fields that are used to update that row in the database.  This allows a subclass instance to omit the table and keyfields parameters in the call to update.  So when updating a post, instead of this:
+
+&lt;pre&gt;$record-&gt;update('foo', array('id'));&lt;/pre&gt;
+
+You would simply call this:
+
+&lt;pre&gt;$post-&gt;update();&lt;/pre&gt;
+
+Using a subclass, you can transparently assign the value of DB::last_insert_id() to the keyfield property of the object.  This will allow you to update the object after it is inserted without having to manually retrieve the key values each time.  So when inserting a post, instead of this, where the &lt;tt&gt;id&lt;/tt&gt; property must be set manually:
+
+&lt;pre&gt;$record = new QueryRecord(/* post field data */);
+ $record-&gt;insert('posts');
+ $record-&gt;id = DB::last_insert_id();
+ $record-&gt;title = 'new title';
+ $record-&gt;update('post', array('id'));&lt;/pre&gt;
+
+You would simply call this:
+
+&lt;pre&gt;$post = new Post(/* post field data*/);
+ $post-&gt;insert();
+ $post-&gt;title = 'new title';
+ $post-&gt;update();&lt;/pre&gt;
+
+It's not that the assignment doesn't need to be made at all, but that it takes place in the Post class (which extends QueryRecord) so that you need not repeat it whenever you insert a new post.
+
+Please review the documentation for the classes that extend QueryRecord for the details of functionality that they provide beyond QueryRecord itself.
+
+
+QueryRecord provides the following:
+* [http://us.php.net/manual/en/language.oop5.overloading.php overloaded] __get(), __set() and __isset()
+* exclude_fields() and list_excluded_fields(), for identifying properties handled exclusively by the database
+* insert(), for adding data to the database
+* to_array(), to permit array operations on the object (like &lt;code&gt;foreach&lt;/code&gt;)
+* get_url_args(), which returns an array of the values represented by the object
+* update(), for recording modified values to the database
+* delete(), for deleting an item from the database
+</pre>
+</div>
+<div title="Recent Comments" modifier="miklb" modified="200710131842" created="200710131840" tags="MediaWikiFormat" changecount="7">
+<pre>It's really simple to get a listing of recent comments to output in your Habari theme.  It's just two steps.
+
+First, add this line to your custom &lt;tt&gt;theme.php&lt;/tt&gt; file for your theme inside the &lt;tt&gt;add_template_vars&lt;/tt&gt; function:
+
+&lt;pre&gt;$this-&gt;assign('recent_comments', Comments::get( array('limit'=&gt;25, 'status'=&gt;Comment::STATUS_APPROVED, 'orderby'=&gt;'date DESC' ) ) );&lt;/pre&gt;
+
+If you are using the Pingback plugin, and want to remove those from your recent comments, you can use:
+&lt;pre&gt;
+$this-&gt;assign('recent_comments', Comments::get( array('limit'=&gt;25, 'status'=&gt;Comment::STATUS_APPROVED, 'type'=&gt;Comment::COMMENT, 'orderby'=&gt;'date DESC' ) ) );
+&lt;/pre&gt;
+
+note the addition of 'type'.  You could in theory separately list 5 most recent pingbacks with a modification of code.
+
+This tells Habari to store the 25 most recent approved comments into a variable called $recent_comments that will be accessible in your template.
+
+Second, add this to your theme's template where you want the comment listing to appear:
+
+&lt;pre&gt;
+&lt;h3&gt;Recent Comments&lt;/h3&gt;
+&lt;ul&gt;
+&lt;?php foreach($recent_comments as $comment): ?&gt;
+&lt;li&gt;&lt;a href=&quot;&lt;?php echo $comment-&gt;url ?&gt;&quot;&gt;&lt;?php echo $comment-&gt;name ?&gt;&lt;/a&gt; on &lt;a href=&quot;&lt;?php echo $comment-&gt;post-&gt;permalink; ?&gt;&quot;&gt;&lt;?php echo $comment-&gt;post-&gt;title; ?&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;?php endforeach; ?&gt;
+&lt;/ul&gt;
+&lt;/pre&gt;
+
+Note that there's a bunch of HTML in there that you can change without affecting the basic output of comments.
+
+This code displays the HTML between the &lt;code&gt;foreach&lt;/code&gt; command and the &lt;code&gt;endforeach&lt;/code&gt; command once for each recent comment.  The comment data is returned relative to the &lt;code&gt;$commment&lt;/code&gt; shown in the &lt;code&gt;foreach&lt;/code&gt; command.
+
+* &lt;code&gt;$comment-&gt;name&lt;/code&gt; is the name of the commenter.
+* &lt;code&gt;$comment-&gt;url&lt;/code&gt; is the URL of the commenter.
+* &lt;code&gt;$comment-&gt;post&lt;/code&gt; is the post object on which the commenter commented.
+* &lt;code&gt;$comment-&gt;post-&gt;title&lt;/code&gt; is the title of the post to which the comment applies.
+
+You could even use &lt;code&gt;$comment-&gt;content&lt;/code&gt; to output the content of the comment, if you wanted.
+
+
+</pre>
+</div>
+<div title="Recent_Posts" modifier="miklb" created="200710131843" changecount="1">
+<pre>Type the text for 'Recent_Posts'</pre>
+</div>
+<div title="Rewrite Tutorial" modifier="miklb" created="200710132109" tags="MediaWikiFormat" changecount="2">
+<pre>==Parts of a rewrite rule==
+Rewrite rules are made up of several parts conforming to the fields in
+the rewrite_rules table, all with a distinct purpose.
+
+'''name''' - The name of the rule.  Used in the code to reference the rule
+to create links.
+
+'''parse_regex''' - A regular expression that attempts to match an incoming
+request.  If it does, then the rule is used to determine what to
+display.
+
+'''build_str''' - A string used to build a URL from code that will be
+matched by the parse_regex.
+
+'''handler''' - The Habari class that handles the request.
+
+'''action''' - The action (&quot;function&quot;) in the handler class that handles the request.
+
+'''priority''' - Rules are tested in order from low to high.  Matching rules
+short-circuit the testing process, so higher priorities for rules that
+are less restrictive.
+
+'''is_active''' - 1 if the rule is enabled, 0 if the rule is disabled.
+
+'''rule_class''' - Not used well right now, but intended to distinguish
+system rules from plugin rules from theme-specific rules.  Just use
+the numer &quot;2&quot; for your own rules for now.
+
+'''description''' - Optional description of the purpose of the rule.
+
+==How to build a regex==
+Instructions on building regular expressions is well beyond the scope
+of what I would write here, but I'll give a very brief primer just to
+give you some idea of what's going on.
+
+Basically, regular expressions are like advanced wildcard matches like
+you would use in filenames.  Instead of using just * to match &quot;any
+characters&quot;, regular expressions have special codes that match
+specific characters.
+
+For example, a dot . will match any single character.  A dot followed
+by a plus .+ will match one or more characters.  A dot followed by an
+asterisk .* will match zero or more characters.
+
+You can match a a specific number of characters by using braces.
+.{0,4} will match up to four characters.  .{4} will match exactly four
+characters.
+
+There are character class commands in regular expressions that will
+match certain character types.  For example \d will match any number.
+If you want to match exactly four numbers, combine the matches so far
+to get this:  \d{4}
+
+Finally for this tutorial, one of the primary uses for regular
+expressions in Habari is subexpression matching.  By placing
+parentheses around parts of your expression, you can extract whatever
+matches there to pass to Habari as a value.  This is how Habari
+figures out that you want the &quot;year&quot; part of your URL to be used to
+find the year.
+
+Normally, you use simple subexpression matches, like this:
+/archives/(\d{4})/
+
+That would capture the subexpression \d{4} into the first match.
+Habari needs more information, though.  It needs to know what that
+expression value should be used for.  So we use named matches.
+
+The syntax for named matches is a little odd, but it's not difficult:
+/archives/(?P&lt;year&gt;\d{4})
+
+You simply add ?P&lt;name&gt; just inside the left paren, and set the &quot;name&quot;
+part to the thing that you want to match.
+
+So the regular expression for the URL your requested is this:
+archives/(?P&lt;year&gt;\d{4})/(?P&lt;mon0&gt;\d{2})/(?P&lt;mday0&gt;\d{2})/(?P&lt;slug&gt;[^/]+)/?$
+
+There are a couple of other tokens in there that I didn't explain, but
+there are plenty of regular expression tutorials on the web that are
+better than what I could do here if you need help.  The names of the
+matched things are important.  I'll explain them with the build_str
+below.
+
+Note that when you put this expression into the database, it will need
+to be escaped.  You'll have to put delimiters around it, and probably
+tell the system that it's case-insensitive by tacking an &quot;i&quot; onto the
+end.  Like this:
+
+%archives/(?P&lt;year&gt;\d{4})/(?P&lt;mon0&gt;\d{2})/(?P&lt;mday0&gt;\d{2})/(?P&lt;slug&gt;[^/]+)/?$%i
+
+
+==build_str==
+
+The next complicated bit for your request is the build_str.
+
+Build strings are actually pretty easy.  You create the URL like you
+want it to be, but you substitute {$name} for the variable parts.  In
+your case, your build_str becomes this:
+
+archives/{$year}/{$mon0}/{$mday0}/{$slug}
+
+$mon0 is a 0-padded month.  So January is &quot;01&quot; not &quot;1&quot;.  If you use
+$mon then you don't get the zero.  Likewise with $mday0.  Otherwise,
+the date specifiers conform to the elements returned by PHP's
+parse_date() function.
+
+{$slug} is, uh, the slug of the post.
+
+Ok.  For the rest of the parameters...
+
+Your handler will be &quot;UserThemeHandler&quot;, which is the class that
+handles all theme requests.  The action will be &quot;display_post&quot; which
+handles displaying posts.  priority can safely be set to &quot;8&quot;, but you
+can make it higher if it interferes with other rules (I don't think it
+will because of the &quot;archives&quot; on front).  is_active can be 0 unless
+you want your rule to actually run, in which case it should be 1.
+rule_class is 2.  description is &quot;Porcupines fly over the south pole
+quite regularly in spring.&quot;
+
+==SQL statement==
+
+In the end you need to execute this SQL statement:
+
+&lt;pre&gt;INSERT INTO habari__rewrite_rules (
+	name,
+	parse_regex,
+	build_str,
+	handler,
+	action,
+	priority,
+	is_active,
+	rule_class,
+	description
+)
+VALUES (
+	'display_entry',
+	'%archives/(?P&lt;year&gt;\\d{4})/(?P&lt;mon0&gt;\\d{2})/(?P&lt;mday0&gt;\\d{2})/(?P&lt;slug&gt;[^/]+)/?$%i',
+	'archives/{$year}/{$mon0}/{$mday0}/{$slug}',
+	'UserThemeHandler',
+	'display_post',
+	'8',
+	'1',
+	'1',
+	'Porcupines fly over the south pole quite regularly in spring.'
+);&lt;/pre&gt;
+
+==Helper Functions==
+
+There are helper functions in the code that help build these rules
+without having to go through the madness of figuring out regexes, but
+there is no interface for them yet.  Also, I'm not sure how well
+they're working after some recent changes.  But basically, two
+function calls would achieve the same as above:
+
+$rule = RewriteRule::create_url_rule('&quot;archives&quot;/year/mon0/mday0/slug',
+'UserThemeHandler', 'display_post');
+$rule-&gt;insert();
+</pre>
+</div>
+<div title="Site Title" modifier="Khaled Abou Alfa" created="200703132345" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200703132345">
 <pre>Khaled Abou Alfa</pre>
 </div>
-<div title="SiteSubtitle" modifier="Khaled Abou Alfa" modified="200704162057" created="200703132345">
+<div title="SiteSubtitle" modifier="Khaled Abou Alfa" modified="200704162057" created="200703132345" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200704162057">
 <pre>| User Manual</pre>
 </div>
-<div title="SiteTitle" modifier="Khaled Abou Alfa" modified="200704162057" created="200703132346">
+<div title="SiteTitle" modifier="Khaled Abou Alfa" modified="200704162057" created="200703132346" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200704162057">
 <pre>Habari</pre>
 </div>
-<div title="StyleSheet" modifier="miklb" modified="200707302047" created="200701122350" tags="BlackicityTheme" changecount="4">
+<div title="Stack Class" modifier="miklb" modified="200710132111" created="200710132110" tags="MediaWikiFormat" changecount="4">
+<pre>The Stack class allows a developer to create a &quot;stack&quot; of items for later output.  This can be useful for creating a stack of scripts or CSS file references that should be added to the page output.  Using the naming feature of the Stack class, a developer can ensure that only one script is added to the stack for a specific purpose.
+
+== Output a Stack ==
+
+There are a few ways to generate output using the Stack class.  Like many classes in Habari, Stack has ::get() and ::out() methods.
+
+The ::get() method returns the values generated for a stack, and the ::out() method outputs the same values that would be returned by ::get().
+
+To output a specific stack:
+
+ &lt;pre&gt;Stack::out('stack_name');&lt;/pre&gt;
+
+This causes all elements of the stack named &lt;tt&gt;stack_name&lt;/tt&gt; to be output to the page in sequence.  The values are not formatted.
+
+To use a simple format of the values, this syntax is useful:
+
+ &lt;pre&gt;Stack::out('stack_name', '&lt;link rel=&quot;stylesheet&quot; href=&quot;%s&quot; type=&quot;text/css&quot;&gt;');&lt;/pre&gt;
+
+This outputs each element of the stack as if it was called as a parameter to PHP's sprintf() function.  The string supplied as the second parameter to Stack::out() is the formatting string that is used to format each element.
+
+The most complex formatting technique allows callback functions as formatting functions:
+
+ &lt;pre&gt;function myformatter($text){
+   return strrev($text) 
+ }
+ Stack::out('stack_name', 'myformatter');&lt;/pre&gt;
+
+The second parameter to Stack:out() in this example is the name of a callback function.  The function is called for each element of the stack, and the return value of that function is used for the stack output.  In this case, the text of every element of the stack is reversed before it is output.
+
+Note that the callback function returns, and does not echo, regardless of whether the call to Stack is ::get() or ::out().  Also, the second parameter can call a class method by using the &lt;tt&gt;array('class_name', 'function_name')&lt;/tt&gt; callback syntax, which may be useful for calling simple functions on the Format class.
+
+== Alter a Stack ==
+
+When you know the name of a stack, it is easy to queue values to it:
+
+ &lt;pre&gt;Stack::add('stack_name', $value);&lt;/pre&gt;
+
+&lt;tt&gt;$value&lt;/tt&gt; is the value that you want to add to the stack.  Calling ::add() this way will not ensure uniqueness.
+
+To ensure that the element you are adding to the stack is unique for a purpose, use this:
+
+ &lt;pre&gt;Stack::add('stack_name', $value, 'element_name');&lt;/pre&gt;
+
+&lt;tt&gt;element_name&lt;/tt&gt; is a name for the element that is added to the stack.  Only one value can exist for each name in each stack.  The second call to ::add() with the same element name replaces the existing stack element with a new value.
+
+To remove an existing element from a stack:
+
+ &lt;pre&gt;Stack::remove('stack_name', 'element_name');&lt;/pre&gt;
+
+In this syntax, note that you are not able to remove values that have not been given names.
+</pre>
+</div>
+<div title="StyleSheet" modifier="YourName" modified="200710131728" created="200701122350" tags="BlackicityTheme" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200707302047" changecount="1">
 <pre>/*{{{*/
 /*Blackicity Theme for TiddlyWiki*/
 /*Design and CSS by Saq Imtiaz*/
@@ -1076,7 +3304,7 @@ h2 {font-size:16px;}
 h3 {font-size: 14px;}
 /*}}}*/</pre>
 </div>
-<div title="Supported Hosts" modifier="miklb" modified="200707302043" created="200707302040" tags="MediaWikiFormat" changecount="4">
+<div title="Supported Hosts" modifier="miklb" modified="200707302043" created="200707302040" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200707302043">
 <pre>== Hosts Supporting Habari requirements==
 
 * [http://dreamhost.com/ Dreamhost]
@@ -1094,7 +3322,110 @@ This should be added just above the habari rules.
 Also note, that ASO doesn't provide users with shell access by default.  You must request this feature via their excellent support team.
 </pre>
 </div>
-<div title="Upgrading" modifier="miklb" modified="200708032046" created="200708031912" changecount="3">
+<div title="Template File Hierarchy" modifier="miklb" created="200710131836" tags="MediaWikiFormat" changecount="1">
+<pre>Themes in Habari are constructed from several template files.  Each template potentially corresponds to a type of data and the amount of data that is displayed.
+
+A &quot;post&quot; refers to an atomic published unit.  There are different types of posts in the core Habari software.  These types are called &quot;content-types&quot;.
+
+== Filenames ==
+
+Habari supports different template engines.  Out of the box, the only engine provided is the RawPHPEngine.  This template engine is a basic engine that executes native PHP, using PHP itself as a template language.  An alternative engine might support the Smarty template language.
+
+Because different engines will require different file extensions (PHP needs &quot;.php&quot; and Smarty needs &quot;.tpl&quot;, for example) template files are always referred to in Habari without file extension.  It is the job of the engine to apply the appropriate extension to the template name.
+
+== Content-Types ==
+
+&quot;entry&quot; is post content-type that indicates that the post flows chronologically with other entries.  An &quot;entry&quot; would make up the bulk of daily blog posts.  
+
+&quot;page&quot; is a post content-type that indicates that the post is separate from the chronological flow.  
+
+Additional content-types may be defined in the database or in plugins for different purposes.  The style of the output page may be affected by the content-type of the post.  A theme should accommodate these additional content-types by providing distinct templates for those content-types or by providing generic templates that are not specific to any single content type.
+
+=== Use in Themes ===
+
+The use of content-types in themes allows templates to exist for each content-type.
+
+A post of content-type &quot;entry&quot; will be displayed using the &lt;tt&gt;entry.single&lt;/tt&gt; template.  Likewise, a post of content-type &quot;page&quot; will be displayed using the &lt;tt&gt;page.single&lt;/tt&gt; template.
+
+== Post Counts ==
+
+Any request to display output will either be attributed to a single post or multiple posts.  When requesting &quot;posts with a certain tag&quot;, multiple posts would be returned (even if only one post exists with that tag).  When requesting a specific post, a single post would be returned.
+
+A template file containing the text &quot;single&quot; is used to display a single post.  The template will be provided with only a single post item for display.
+
+A template file containing the text &quot;multiple&quot; is used to display multiple posts.  This template should expect to receive a collection of post items for display.  It is possible that this collection will contain only a single post; but since it's a (one-member) collection it will use the &quot;multiple&quot; template file.
+
+=== Use in Themes ===
+
+When a request is made for a group of posts, Habari will attempt to find the best matching template name using a &quot;multiple&quot; template.  For example, when displaying multiple posts of content-type &quot;entry&quot;, Habari will look for the &lt;tt&gt;entry.multiple&lt;/tt&gt; template.
+
+If only one post of content-type &quot;entry&quot; is requested, Habari will look for the &lt;tt&gt;entry.single&lt;/tt&gt; template.
+
+If multiple posts are requested, but only one post exists to fill the request, Habari should still use the &lt;tt&gt;entry.multiple&lt;/tt&gt; template, because that was the request.  It should not use &lt;tt&gt;entry.single&lt;/tt&gt; unless only a single post was specifically requested.
+
+== Special Pages ==
+
+A couple of requests have unique templates that Habari can display specifically for those requests.
+
+=== 404 ===
+
+404 Error will cause Habari to display results using the &lt;tt&gt;404&lt;/tt&gt; template.  Put something meaning for visitors when URL can't be reached.
+
+=== Search ===
+
+The request of a search page will cause Habari to display results using the &lt;tt&gt;search&lt;/tt&gt; template.  The search template should act like a &quot;multiple&quot; template: it should expect to receive a collection of items, possibly of different content-types.  The collection of items to display in the search template may contain zero, one, or more items.
+
+=== Home ===
+
+The request of the home page will cause Habari to display results using the &lt;tt&gt;home&lt;/tt&gt; template.  The home template can be configured to display zero, one, or more items of any content-type, as you see fit.
+
+=== Post-specific ===
+
+When requesting any specific post, 
+
+1. Habari will either check for a template that is specific to that post's id, using the content-type of the post.  For example, when requesting an entry with the id #35, Habari will attempt to display that single post's content using the &lt;tt&gt;entry.35&lt;/tt&gt; template.  For a page with id #36, Habari would attempt to use &lt;tt&gt;page.36&lt;/tt&gt; template.
+
+2. Or Habari will check for a template that is specific to that post's slug, using the content-type of the post.  For example, when requesting an entry with the slug &quot;foo&quot;, Habari will attempt to display that single post's content using the &lt;tt&gt;entry.foo&lt;/tt&gt; template.  For a page with slug &quot;bar&quot;, Habari would attempt to use &lt;tt&gt;page.bar&lt;/tt&gt; template.
+
+=== Tag-specific ===
+
+When requesting any post with a specific tag, Habari will check for a template that is specific to that tag, using the content-type of the post.  For example, when requesting an entry with tag &quot;foo&quot;, Habari will attempt to display that post's content using the &lt;tt&gt;entry.tag.foo&lt;/tt&gt; template.  For a page with tag &quot;bar&quot;, Habari would attempt to use &lt;tt&gt;page.tag.bar&lt;/tt&gt; template.
+
+== Failover ==
+
+When Habari fails to find the most specific template needed to display content for a request, it searches for the next less-specific template that could display that content.
+
+For example, when failing to find an explicit template for entry #35 (&lt;tt&gt;entry.35&lt;/tt&gt;), Habari would then look for a &quot;single&quot; type template for that content type.  In this case, the &lt;tt&gt;entry.single&lt;/tt&gt; template.
+
+Each request has a chain of templates that it tries, getting more generic as the possible templates fail to exist.  Eventually, Habari attempts to display the content using the &lt;tt&gt;home&lt;/tt&gt; template.  The &lt;tt&gt;home&lt;/tt&gt; template is the minimum required template for a functioning theme.  (That is to say, a theme may have ''only'' a &lt;tt&gt;home&lt;/tt&gt; template file, which will be used to display all content.)
+
+The failover order for any request is determined in the core system Theme class (not necessarily the user Theme class), and is specific to the type of request made.  The failover order can be overridden by using a custom Theme class, but this is not required for failover to work as described.
+</pre>
+</div>
+<div title="Themes" modifier="miklb" modified="200710132303" created="200710131832" tags="MediaWikiFormat" changecount="7">
+<pre>Currently, Habari only supports one theme engine, the rawphpengine.  Eventually, it will support additional engines (such as Smarty and PHPTAL).  
+
+A modified version of the popular, [http://getk2.com/ k2] theme currently comes as the default theme upon installation, however, the goal is to offer several themes with the download.  A few publicly [http://wiki.habariproject.org/en/Available_Themes available themes] are currently available, with many more on the horizon.
+
+==Intstallation==
+Additional themes can be uploaded to your /user/themes directory.  Themes must include a theme.xml file in order to be activated in /admin/themes.  See [[Creating a Custom Theme]] for details about this file.
+
+===Additional Information about themes and customization:===
+
+* [[Template File Hierarchy]]
+
+* [[Customizing Theme Behavior]]
+
+* [[Using Excerpts]]
+
+* Show [[Recent Comments]]
+
+* [[Asides]]
+
+* Show [[Pingbacks]]
+</pre>
+</div>
+<div title="Upgrading" modifier="miklb" modified="200710131819" created="200708031912" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708032046" changecount="2">
 <pre>This upgrade process is intended for those upgrading from the first developer release.  If you are using SVN, you //should// be able to SVN up the install.  If you are using an older version, you //may// need to follow the step regarding re-running your rewrite_rules sql.
 
 
@@ -1118,6 +3449,101 @@ You will not be able to access any of your site at this point, due to the change
 Next, you will need to copy the contents of the upgrade.sql file and run the sql commands.  If you are using PHPMyAdmin, you should be able to click the SQL tab, which should provide you with a text box which you can paste the code and simply click 'go'.  This should populate your rewrite_rules table with the updated rows, and your site should now be working.
 
 If you were running a custom theme, you will now need to visit admin-&gt;Themes in your administration area.  Activate K2 for now, and your site should be up and working.  If you had any problems, you can post to the [[habari user group|http://groups.google.com/group/habari-users]].  Be sure to provide as many details as possible, including version of PHP, MySQL, and server config.
+</pre>
+</div>
+<div title="User Documentation" modifier="miklb" modified="200710131828" created="200710131727" tags="MediaWikiFormat" changecount="3">
+<pre>==Intallation and Configuration==
+* [[Installation]]: what we know so far
+* [[Upgrading]]
+* [[Multisite|Multisite configuration]]: how to drive many sites from a single '''Habari''' installation
+==Content==
+* [[Desktop Blogging]]
+
+==Extending and Customizing==
+* [[Themes]]: how themers can use '''Habari'''
+* [[Plugins]]: how plugin authors can use '''Habari'''</pre>
+</div>
+<div title="User Overrides" modifier="miklb" created="200710132105" changecount="2">
+<pre>The core files used by Habari reside in /system/classes. In general, each file represents a single class: post.php defined the Post object, posts.php defines the Posts object, etc. In order to make Habari as flexible as possible, the developers have made it possible to easily override the default classes. Any file placed in /user/classes will override the system file of the same name.
+
+So, if you wanted to redesign the way the Post object operates internally, while still preserving the external interfaces, you could create your own Post class in /user/classes/post.php. Habari will detect the presence of your file, and will load it in place of the system file.
+
+This is a terrific way to test changes to the core Habari code without trouncing the system: you can copy the file(s) you want to modify from /system/classes to /user/classes and make whatever changes you need. When you're finished, you can delete your local files and Habari will automatically use the system classes! </pre>
+</div>
+<div title="Using Excerpts" modifier="miklb" modified="200710131839" created="200710131838" tags="MediaWikiFormat" changecount="2">
+<pre>By default, the k2 theme will &quot;summarize&quot; all posts.  This is controlled via the theme.php file in the theme directory.  The three parameters in the default code are 'more', 100, 1. 'more' is the text you want on the page to link to the full post, 100 is the number of characters, and 1 is the number of paragraphs.  Which ever the function sees first (either 100 characters, or 1 paragraph), it will invoke the 'more' link.  So if you want longer excerpts, you would change that to something like 500, 3, or what ever you were comfortable with.  Conversely, you can drop the number of characters and paragraphs in function, and simply manually add &lt;code&gt;&lt;!--more--&gt;&lt;/code&gt; inside the post.
+
+''Note, there may be formatting issues with custom themes'' 
+
+The first, is to simply comment out the line in your theme.php file that applies the summarize function to the posts.  Line 22 of k2's theme.php file reads:
+&lt;pre&gt;Format::apply_with_hook_params( 'more', 'post_content_out', 'more', 100, 1 );&lt;/pre&gt;
+
+Simply change that to:
+&lt;pre&gt;// Format::apply_with_hook_params( 'more', 'post_content_out', 'more', 100, 1 );&lt;/pre&gt;
+
+Commenting out versus removing would be best, if for no other reason than it would make it easier to add back later.  Now all of your posts should be full posts, not the truncated &quot;excerpts&quot;.
+
+A second, and more versatile method of using this function, would be to change how the summarize function is applied, there by giving you both excerpts, and full post output.  It might be best to make a backup of this file before making changes, just in case you make any errors, or decide to revert to the default file.
+
+In line 22 in the above example, we simply commented out the entire thing.  Now we are going to change how the function is applied, so that you can have both full length and excerpt posts.
+
+change line 22 to:
+&lt;pre&gt;Format::apply_with_hook_params( 'more', 'post_content_excerpt', 'more', 100, 1 );&lt;/pre&gt;
+
+''note, you can use excerpt, summary, what ever you care to call it, you just need to be sure that you make the necessary changes in the following code''
+
+Now, if you notice in your home.php file (or entry.multiple.php), the content is being called using:
+
+&lt;pre&gt;&lt;?php echo $post-&gt;content_out; ?&gt;&lt;/pre&gt;
+
+If you have made the previous change, your posts should now be full length.  Now suppose you have somewhere you want to have excerpts.  You can simply call:
+&lt;pre&gt;&lt;?php echo $post-&gt;content_excerpt; ?&gt;&lt;/pre&gt;
+and your posts will be excerpts.
+
+</pre>
+</div>
+<div title="XHTML_vs_HTML" modifier="miklb" created="200710132022" tags="MediaWikiFormat" changecount="1">
+<pre>This page has been created to house points relating to the XHTML vs HTML debate. In the context of this page, we're talking about REAL XHTML, served with the correct mime-type and all the fun and problems that come with it.
+
+Let's start it off with a lovely quote from a post to the Habari-dev mailing list by Mark Pilgram:
+
+&quot;If you want to produce application/xhtml+xml, you are free to do so. If you get it right, no one will notice.  If you get it wrong, no one will forgive you.&quot;
+
+'''Faux XHTML:''' &quot;XHTML&quot; sent as text/html. It may look like XHTML, it may even validate (unlikely, but possible), but it's parsed as HTML by browsers. It conveys none of the advantages for which XHTML was invented. Since it's usually not well-formed, it cannot easily be converted to &quot;real&quot; XHTML.
+
+'''Real XHTML:''' XHTML sent as application/xhtml+xml to compatible browsers (and, perhaps, as text/html to Internet Explorer). Parsed as XML, it must be well-formed, or the user receives a fatal parsing error. Its XML nature allows, among other things, extensions by other XML dialects, like SVG and MathML.
+
+To focus the discussion, let us look at some blogs which actually ''do'' use real XHTML.
+
+1. [http://intertwingly.net/blog/ Sam Ruby's blog]. Software is home-grown, written in python. Extensively uses inline SVG.
+
+2. [http://golem.ph.utexas.edu/~distler/blog/ Musings], [http://golem.ph.utexas.edu/category/ the n-Category Cafe] and [http://golem.ph.utexas.edu/string/ the String Coffee Table]. Software is a heavily-modified version of MovableType. Extensively use inline MathML and the odd bit of SVG.
+
+You'll note two things
+
+a) Both have a use-case which justifies the extra effort of producing '''real''' XHTML.
+
+b) Both assemble their pages by string concatenation.
+
+c) Both go to extraordinary lengths to ensure well-formedness, in software. 
+
+If you are going to build your pages by concatenating strings, achieving well-formedness is '''difficult'''. And it's ''fragile''. A misbehaving plugin, or a simple failure to properly sanitize user input and ... boom! ... visitors are staring at a Yellow Screen of Death.
+
+If you are going to produce real XHTML in a tool usable by ordinary users, then you '''cannot''' do it by string concatenation. You need to assemble your content by serializing an XML DOM tree.
+
+If you want to allow plugins, then your plugin API ''cannot'' allow plugin authors to stick arbitrary strings in the output. Rather, they should be allowed to add nodes to the DOM tree, or to manipulate existing ones.
+
+And so forth... It requires a programming discipline entirely different from that employed in the Habari project heretofore.
+
+I don't have any examples of blog software constructed this way.
+
+I can, however, point to some [http://golem.ph.utexas.edu/instiki/show/HomePage Wiki software] that assembles its content that way. It's written in Ruby-on-Rails, and so it still uses templates (i.e., string concatenation) for its output. But the content is assembled by serializing an XML tree using REXML.
+
+Again, there's a compelling use-case -- the ability to freely write equations in LaTeX, rendered to MathML -- for going to the extra trouble software-wise. But, more relevant, it's much ''less fragile,'' and was much easier to implement, than the previous examples, which used string concatenation.
+
+It seems to me that, if you are going to produce XHTML, that's what you need to do. If you are going to produce faux XHTML (served as text/html) by crappy old string-concatenation techniques, then you might as well produce HTML4. Browser are going to consume it as malformed HTML4 anyway.
+
+Probably, there are too few potential users who are interested in MathML or SVG (or whatever) to make the extra effort required to produce real XHML worth it. (Personally, I think there's a chicken-or-egg aspect to that question: the only way to find out how many people would like having SVG on their blog is to provide a blogging tool which allows them to do it.)
 </pre>
 </div>
 </div>
