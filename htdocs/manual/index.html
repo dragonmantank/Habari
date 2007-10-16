@@ -496,7 +496,7 @@ Also see AdvancedOptions</pre>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="Asides" modifier="miklb" modified="200710131845" created="200710131844" tags="MediaWikiFormat" changecount="4">
+<div title="Asides" modifier="habari" modified="200710161722" created="200710131844" tags="MediaWikiFormat" changecount="5">
 <pre>Asides, or short posts, are a common feature in blogs.  These are generally a few lines, and intended to be outside the loop of larger posts.  It's quite common it show these in a sidebar or big footer.
 
 To accomplish this with Habari, you will employ the use of tags.  Your first order is to determine what tag you want to use.  In this example &quot;aside&quot; will be used.
@@ -539,18 +539,6 @@ You may also want to read over [[Using Excerpts]] if you want to have full lengt
 
 Here is [http://www.chrisjdavis.org/asides-with-habari another tutorial] for doing inline asides.  That is, asides listed along with primary posts, however with the ability to format them differently.</pre>
 </div>
-<div title="Available Themes" modifier="miklb" created="200710131833" tags="MediaWikiFormat" changecount="1">
-<pre>== [http://www.morydd.net/ Sean T Evans (a.k.a. Morydd)] ==
-[http://www.morydd.net/aidens-theme-for-habari-011 Aiden's Theme for Habari]
-''A simple blue and brown theme''
-* Current Version: 0.1
-* Tested on Habari Versions: DR 0.1
-
-== Mzingi ==
-[http://bloggingmeta.com/mzingi Mzingi Theme for Habari]
-* Current Version: 0.1alpha
-* Tested on r845 (post DR 0.2)</pre>
-</div>
 <div title="Choosing a Custom Theme" modifier="miklb" created="200710131835" tags="MediaWikiFormat" changecount="1">
 <pre>Habari now supports a basic way to change themes.  The first step is to create a new directory in /user/themes/ for your new theme.  Either copy your k2 theme over, or start from scratch.
 
@@ -587,7 +575,7 @@ This file should be uploaded the new theme's directory if it's not there already
 You can now visit your Admin -&gt; Themes page, and should have the option to &quot;active&quot; your new theme.  Note, you must have at least a home.php file in your theme directory, however Habari currently supports numerous templates (see [[Template_File_Hierarchy]]), and at this point, you should also have the theme.php  file (see the example in k2).
 </pre>
 </div>
-<div title="Code Submisson" modifier="miklb" created="200710132030" tags="MediaWikiFormat" changecount="1">
+<div title="Code Submisson" modifier="habari" modified="200710161723" created="200710132030" tags="MediaWikiFormat" changecount="2">
 <pre>== Editing the Code ==
 First, you must [[Installation#Downloading_Habari|download the source code]] from SVN.
 
@@ -601,7 +589,7 @@ Then, attach your .diff file to the appropriate issue in the gcode issue tracker
 Other users will then be able to apply your patch to test its compatibility with other configurations, and once tested and approved a comitter will then be able to apply your patch to the code to become a part of '''Habari'''
 </pre>
 </div>
-<div title="Coding Standards" modifier="miklb" modified="200710132029" created="200710132028" tags="MediaWikiFormat" changecount="3">
+<div title="Coding Standards" modifier="habari" modified="200710161723" created="200710132028" tags="MediaWikiFormat" changecount="4">
 <pre>These are the Coding Standards for Habari:
 
 * Use tabs instead of spaces for indentation
@@ -613,7 +601,7 @@ Other users will then be able to apply your patch to test its compatibility with
 * no space before assignment, space after: &lt;code&gt;$foo= bar&lt;/code&gt;
 </pre>
 </div>
-<div title="Creating_A_Plugin" modifier="miklb" created="200710132108" tags="MediaWikiFormat" changecount="1">
+<div title="Creating_A_Plugin" modifier="habari" modified="200710161723" created="200710132108" tags="MediaWikiFormat" changecount="2">
 <pre>Writing a plugin in Habari is dirt-simple.
 
 First, have in mind the idea for your plugin, and what you might like to call it, then proceed with the steps below.
@@ -792,7 +780,7 @@ To set the priority of one of your hooks, add the method &lt;tt&gt;set_prioritie
 Habari will process this function for priorities, and use them to order the execution of plugin hooks.
 </pre>
 </div>
-<div title="Customizing Theme Behavior" modifier="miklb" created="200710132019" tags="MediaWikiFormat" changecount="2">
+<div title="Customizing Theme Behavior" modifier="habari" modified="200710161723" created="200710132019" tags="MediaWikiFormat" changecount="3">
 <pre>In addition to the ability of using custom templates to display output for particular requests, Habari allows customization of the code that controls which templates are called for display and what values are passed to them.
 
 To accomplish this, Habari attempts to load a &lt;tt&gt;theme.php&lt;/tt&gt; file located in the theme directory.  If this file is present, is it included in the code before the theme is rendered for any incoming request.
@@ -839,7 +827,7 @@ This class defines two custom functions for output.  Both of these functions wou
 
 </pre>
 </div>
-<div title="Desktop Blogging" modifier="miklb" created="200710131830" tags="MediaWikiFormat" changecount="1">
+<div title="Desktop Blogging" modifier="habari" modified="200710161723" created="200710131830" tags="MediaWikiFormat" changecount="2">
 <pre>Many clients exist to allow you to edit your blog and post new content from your desktop without having to interact with the admin interface.
 
 Habari supports Atom Publishing Protocol by default, and with a MetaWeblog plugin, most desktop blogging clients should be able to post to Habari.  Consult the following chart to determine which clients will work best.
@@ -925,7 +913,7 @@ Habari supports Atom Publishing Protocol by default, and with a MetaWeblog plugi
 |}
 </pre>
 </div>
-<div title="Developer Documentation" modifier="miklb" modified="200710132305" created="200710132024" tags="MediaWikiFormat" changecount="2">
+<div title="Developer Documentation" modifier="habari" modified="200710161737" created="200710132024" tags="MediaWikiFormat" changecount="4">
 <pre>This page should be the main index to learning about '''Habari''' internals, plugin development, etc.
 
 * [[QueryRecord]]: the building block of Habari
@@ -937,9 +925,11 @@ Habari supports Atom Publishing Protocol by default, and with a MetaWeblog plugi
 * [[Creating_A_Plugin|Creating A Plugin]] : tutorial on Habari Plugin architecture
 * [[Rewrite Tutorial]] : How to construct rewrite rules for '''Habari'''
 * [[Stack Class]] The Stack class allows a developer to create a &quot;stack&quot; of items for later output.
+
+Additionally, as development is still in a state of rapid growth, you can consult the online wiki to learn more about [http://wiki.habariproject.org/en/Habari_Classes classes] and [http://wiki.habariproject.org/en/Plugin_Hooks plugin hooks].
 </pre>
 </div>
-<div title="FAQ" modifier="miklb" modified="200710160038" created="200704162101" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708031911" changecount="2">
+<div title="FAQ" modifier="habari" modified="200710161721" created="200704162101" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708031911" changecount="3">
 <pre>==What does &quot;habari&quot; mean?==
 &quot;Habari&quot; is a Swahili word that means &quot;what's the news?&quot;  It's similar to the English &quot;What's up?&quot; or the Spanish &quot;¿Qué pasa?&quot;  The typical response is &quot;mzuri sana&quot;, which means &quot;very good.&quot;
 
@@ -1011,7 +1001,7 @@ As you prepare your changes, ask for review on the development mailing list as o
 When your changes are complete, file code changes as a diff in the issue that you're tracking, and attach any associated files.  Be sure to mention how the files are to be applied if there are any special considerations.  Your issue will be reviewed, and if suitable, will be applied in the code repository.
 </pre>
 </div>
-<div title="Formatting" modifier="Khaled Abou Alfa" created="200704162110" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200704162110">
+<div title="Formatting" modifier="habari" modified="200710161724" created="200704162110" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200704162110" changecount="1">
 <pre>Like most wikis, TiddlyWiki supports a range of simplified character formatting:
 | !To get | !Type this |h
 | ''Bold'' | {{{''Bold''}}} |
@@ -1034,10 +1024,10 @@ The highlight can also accept CSS syntax to directly style the text:
 }}}
 @@bgcolor(#ff0000):color(#ffffff):red coloured@@</pre>
 </div>
-<div title="Habari Classes" modifier="miklb" modified="200710132105" created="200710132032" tags="MediaWikiFormat" changecount="2">
+<div title="Habari Classes" modifier="habari" modified="200710161724" created="200710132032" tags="MediaWikiFormat" changecount="3">
 <pre></pre>
 </div>
-<div title="Habari Workflow" modifier="miklb" created="200710132029" tags="MediaWikiFormat" changecount="1">
+<div title="Habari Workflow" modifier="habari" modified="200710161724" created="200710132029" tags="MediaWikiFormat" changecount="2">
 <pre>''Workflow'' might be the wrong term.  This page will attempt to describe in general terms what happens when '''Habari''' receives a request from a user.  The process is basically the same for visitors (anonymous or otherwise) and users (administrators or otherwise), but each will be explained in detail for your benefit.
 
 For the purposes of this document, we will assume that a client somewhere on the internet is accessing an instance of '''Habari''' at &lt;code&gt;&lt;nowiki&gt;http://habariproject.org/en/&lt;/nowiki&gt;&lt;/code&gt;.
@@ -1104,7 +1094,7 @@ The very last thing that &lt;code&gt;index.php&lt;/code&gt; does is to flush the
 ==Administrative Workflow==
 </pre>
 </div>
-<div title="Installation" modifier="miklb" modified="200710131818" created="200707290741" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708031903" changecount="5">
+<div title="Installation" modifier="habari" modified="200710161721" created="200707290741" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708031903" changecount="6">
 <pre>==Before You Install==
 
 === Server Requirements ===
@@ -1247,7 +1237,7 @@ This will allow a fully automated installation, without any prompts being displa
 At the moment, it's a convenience for those who are constantly re-installing Habari and who don't want to waste a bunch of time keying in the same values over and over.  It's also the basis of an automagic deployment tool for hosting providers.
 </pre>
 </div>
-<div title="Introduction" modifier="miklb" modified="200710131749" created="200707302035" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708032058" changecount="10">
+<div title="Introduction" modifier="habari" modified="200710161719" created="200707302035" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708032058" changecount="11">
 <pre>These documents are intended for basic information on installing, upgrading and base use. As development continues, additional information will be added. For more
 comprehensive documentation, visit the [http://wiki.habariproject.org/en/Main_Page main Habari wiki].
 
@@ -1299,7 +1289,7 @@ are not required to have the same license as Habari itself.
 You can find our license included in the source, and in our [http://habari.googlecode.com/svn/trunk/LICENSE code repository].
 </pre>
 </div>
-<div title="MainMenu" modifier="miklb" modified="200709160129" created="200703132343" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200709160129">
+<div title="MainMenu" modifier="habari" modified="200710161724" created="200703132343" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200709160129" changecount="1">
 <pre>[[Introduction]]
 [[Installation]]
 [[Upgrading]]
@@ -1307,16 +1297,16 @@ You can find our license included in the source, and in our [http://habari.googl
 [[User Documentation]]
 [[Developer Documentation]]</pre>
 </div>
-<div title="MediaWikiFormatterPlugin" modifier="miklb" modified="200710131809" created="200610020000" tags="systemConfig" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200709192148" changecount="4">
+<div title="MediaWikiFormatterPlugin" modifier="miklb" modified="200710161648" created="200610020000" tags="systemConfig" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200709192148" changecount="5">
 <pre>/***
 |''Name:''|MediaWikiFormatterPlugin|
 |''Description:''|Allows Tiddlers to use [[MediaWiki|http://meta.wikimedia.org/wiki/Help:Wikitext]] ([[WikiPedia|http://meta.wikipedia.org/]]) text formatting|
-|''Source:''|http://martinswiki.com/prereleases.html#MediaWikiFormatterPlugin|
 |''Author:''|Martin Budden (mjbudden (at) gmail (dot) com)|
-|''Version:''|0.3.8|
-|''Status:''|alpha pre-release|
-|''Date:''|Oct 21, 2006|
-|''Comments:''|Please make comments at http://groups.google.co.uk/group/TiddlyWikiDev|
+|''Source:''|http://www.martinswiki.com/#MediaWikiFormatterPlugin |
+|''CodeRepository:''|http://svn.tiddlywiki.org/Trunk/contributors/MartinBudden/formatters/MediaWikiFormatterPlugin.js |
+|''Version:''|0.4.3|
+|''Date:''|Jul 27, 2007|
+|''Comments:''|Please make comments at http://groups.google.co.uk/group/TiddlyWikiDev |
 |''License:''|[[Apache Software License 2.0|http://www.apache.org/licenses/LICENSE-2.0.html]]|
 |''~CoreVersion:''|2.1.0|
 
@@ -1324,29 +1314,28 @@ You can find our license included in the source, and in our [http://habari.googl
 |''Display empty template links:''|&lt;&lt;option chkMediaWikiDisplayEmptyTemplateLinks&gt;&gt;|
 |''Allow zooming of thumbnail images''|&lt;&lt;option chkMediaWikiDisplayEnableThumbZoom&gt;&gt;|
 |''List references''|&lt;&lt;option chkMediaWikiListReferences&gt;&gt;|
+|''Display unsupported magic words''|&lt;&lt;option chkDisplayMediaWikiMagicWords&gt;&gt;|
 
-This is an early release of the MediaWikiFormatterPlugin, which allows you to insert MediaWiki
-formated text into a TiddlyWiki.
+This is the MediaWikiFormatterPlugin, which allows you to insert MediaWiki formated text into a TiddlyWiki.
 
-The aim is not to fully emulate MediaWiki, but to allow you to create MediaWiki content off-line
-and then paste the content into your MediaWiki later on, with the expectation that only minor
-edits will be required.
+The aim is not to fully emulate MediaWiki, but to allow you to work with MediaWiki content off-line and then resync the content with your MediaWiki later on, with the expectation that only minor edits will be required.
 
-To use MediaWiki format in a Tiddler, tag the Tiddler with MediaWikiFormat. See [[testMediaWikiFormat]]
-for an example.
+To use MediaWiki format in a Tiddler, tag the Tiddler with MediaWikiFormat or set the tiddler's {{{wikiformat}}} extended field to {{{mediawiki}}}.
 
 !!!Issues
-This is an early alpha release, with (at least) the following known issues:
+There are (at least) the following known issues:
 # Not all styles from http://meta.wikimedia.org/wiki/MediaWiki:Common.css incorporated
 ## Styles for tables don't yet match Wikipedia styles.
 ## Styles for image galleries don't yet match Wikipedia styles.
 # Anchors not yet supported.
 
 !!!Not supported
-# Magic words and variables http://meta.wikimedia.org/wiki/Help:Magic_words
-# Template substitution http://meta.wikimedia.org/wiki/Help:Substitution
-# Template colon functions http://meta.wikimedia.org/wiki/Help:Colon_function
-# Template parser functions (eg #if) http://meta.wikimedia.org/wiki/ParserFunctions
+# Template parser functions (also called colon functions) http://meta.wikimedia.org/wiki/ParserFunctions eg &amp;#123;&amp;#123; #functionname: argument 1 | argument 2 | argument 3... &amp;#125;&amp;#125;
+# Magic words and variables http://meta.wikimedia.org/wiki/Help:Magic_words eg {{{__TOC__}}}, &amp;#123;&amp;#123;CURRENTDAY&amp;#125;&amp;#125;, &amp;#123;&amp;#123;PAGENAME&amp;#125;&amp;#125;
+# {{{^''}}} (italic at start of line) indents, makes italic and quotes with guilmot quote
+
+!!!No plans to support
+# Template substitution on save http://meta.wikimedia.org/wiki/Help:Substitution eg &amp;#123;&amp;#123; subst: templatename &amp;#125;&amp;#125;
 
 ***/
 
@@ -1356,7 +1345,7 @@ if(!version.extensions.MediaWikiFormatterPlugin) {
 version.extensions.MediaWikiFormatterPlugin = {installed:true};
 
 if(version.major &lt; 2 || (version.major == 2 &amp;&amp; version.minor &lt; 1))
-	{alertAndThrow(&quot;MediaWikiFormatterPlugin requires TiddlyWiki 2.1 or later.&quot;);}
+	{alertAndThrow('MediaWikiFormatterPlugin requires TiddlyWiki 2.1 or later.');}
 
 if(config.options.chkDisplayInstrumentation == undefined)
 	{config.options.chkDisplayInstrumentation = false;}
@@ -1367,50 +1356,193 @@ if(config.options.chkMediaWikiDisplayEnableThumbZoom == undefined)
 	{config.options.chkMediaWikiDisplayEnableThumbZoom = false;}
 if(config.options.chkMediaWikiListReferences == undefined)
 	{config.options.chkMediaWikiListReferences = false;}
+if(config.options.chkDisplayMediaWikiMagicWords == undefined)
+	{config.options.chkDisplayMediaWikiMagicWords = false;}
 
-MediaWikiFormatter = {}; // &quot;namespace&quot; for local functions
+//#config.textPrimitives.urlPattern = &quot;(([a-zA-Z][0-9a-zA-Z+\\-\\.]*:)?/{0,2}[0-9a-zA-Z;/?:@&amp;=+$\\.\\-_!~*'()%]+)?(#[0-9a-zA-Z;/?:@&amp;=+$\\.\\-_!~*'()%]+)?&quot;;
+//#config.textPrimitives.urlPattern = &quot;[a-z]{3,8}:/{0,2}[^\\s:/&lt;&gt;'\&quot;][^\\s/&lt;&gt;'\&quot;]*(?:/|\\b)&quot;;
+
+//&lt;div class='viewer' macro='view text wikified'&gt;&lt;/div&gt;;
+
+config.macros.include = {};
+config.macros.include.handler = function(place,macroName,params,wikifier,paramString,tiddler)
+{
+	if((tiddler instanceof Tiddler) &amp;&amp; params[0]) {
+		var host = store.getValue(tiddler,'server.host');
+		if(host &amp;&amp; host.indexOf('wikipedia')!=-1) {
+			var t = store.fetchTiddler(params[0]);
+			var text = store.getValue(t,'text');
+			wikify(text,place,highlightHack,tiddler);
+		}
+	}
+};
+
+
+MediaWikiFormatter = {}; // 'namespace' for local functions
 
 mwDebug = function(out,str)
 {
-	createTiddlyText(out,str.replace(/\n/mg,&quot;\\n&quot;).replace(/\r/mg,&quot;RR&quot;));
-	createTiddlyElement(out,&quot;br&quot;);
+	createTiddlyText(out,str.replace(/\n/mg,'\\n').replace(/\r/mg,'RR'));
+	createTiddlyElement2(out,'br');
+};
+
+MediaWikiFormatter.Tiddler_changed = Tiddler.prototype.changed;
+Tiddler.prototype.changed = function()
+{
+	if((this.fields.wikiformat==config.parsers.mediawikiFormatter.format) || this.isTagged(config.parsers.mediawikiFormatter.formatTag)) {
+		//# update the links array, by checking for MediaWiki format links
+		this.links = [];
+//#lookaheadRegExp: /\[\[(?:([a-z]{2,3}:)?)(#?)([^\|\]]*?)(?:(\]\](\w*))|(\|(.*?)\]\]))/mg,
+		var tiddlerLinkRegExp = /\[\[(?::?([A-Za-z]{2,}:)?)(#?)([^\|\]]*?)(?:(\]\])|(\|(.*?)\]\]))/mg;
+		tiddlerLinkRegExp.lastIndex = 0;
+		var match = tiddlerLinkRegExp.exec(this.text);
+		while(match) {
+			if(!match[1] &amp;&amp; !match[2])
+				this.links.pushUnique(match[3]);
+			match = tiddlerLinkRegExp.exec(this.text);
+		}
+	} else if(!this.isTagged('systemConfig')) {
+		MediaWikiFormatter.Tiddler_changed.apply(this,arguments);
+		return;
+	}
+	this.linksUpdated = true;
+};
+
+TiddlyWiki.prototype.getMediaWikiPagesInNamespace = function(namespace)
+{
+	var results = [];
+	this.forEachTiddler(function(title,tiddler) {
+		if(tiddler.title.indexOf(namespace)==0)
+			results.push(tiddler);
+		});
+	results.sort(function(a,b) {return a.title &lt; b.title ? -1 : +1;});
+	return results;
+};
+
+TiddlyWiki.prototype.getMediaWikiPages = function()
+{
+	var results = [];
+	this.forEachTiddler(function(title,tiddler) {
+		if(!tiddler.isTagged('excludeLists') &amp;&amp; tiddler.title.indexOf(':')==-1)
+			results.push(tiddler);
+		});
+	results.sort(function(a,b) {return a.title &lt; b.title ? -1 : +1;});
+	return results;
+};
+
+TiddlyWiki.prototype.getMediaWikiOtherPages = function()
+{
+	var results = [];
+	this.forEachTiddler(function(title,tiddler) {
+		if(!tiddler.isTagged('excludeLists') &amp;&amp; tiddler.title.indexOf(':')!=-1)
+			results.push(tiddler);
+		});
+	results.sort(function(a,b) {return a.title &lt; b.title ? -1 : +1;});
+	return results;
+};
+
+config.macros.list.otherpages = {};
+config.macros.list.otherpages.handler = function(params)
+{
+	return store.getMediaWikiOtherPages();
+};
+
+config.macros.list.templates = {};
+config.macros.list.templates.handler = function(params)
+{
+	return store.getMediaWikiPagesInNamespace('Template:');
+};
+
+config.macros.list.categories = {};
+config.macros.list.categories.handler = function(params)
+{
+	return store.getMediaWikiPagesInNamespace('Category:');
 };
 
 wikify = function(source,output,highlightRegExp,tiddler)
 {
-	if(source &amp;&amp; source != &quot;&quot;) {
+	if(source &amp;&amp; source != '') {
 		var w = new Wikifier(source,getParser(tiddler),highlightRegExp,tiddler);
 		w.linkCount = 0;
 		w.tableDepth = 0;
-		w.output = tiddler==null ? output : createTiddlyElement(output,&quot;p&quot;);
-		var time1,time0 = new Date();
+		w.output = tiddler==null ? output : createTiddlyElement2(output,'p');
+		var t1,t0 = new Date();
 		w.subWikifyUnterm(w.output);
 		if(tiddler &amp;&amp; config.options.chkDisplayInstrumentation) {
-			time1 = new Date();
+			t1 = new Date();
 			var t = tiddler ? tiddler.title : source.substr(0,10);
-			displayMessage(&quot;Wikify '&quot;+t+&quot;' in &quot; + (time1-time0) + &quot; ms&quot;);
+			displayMessage('Wikify &quot;'+t+'&quot; in ' + (t1-t0) + ' ms');
 		}
 	}
 //#at point of usage can use:
-//#var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName==&quot;P&quot; ? w.output.parentNode : w.output;
+//#var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName=='P' ? w.output.parentNode : w.output;
 };
 
-MediaWikiFormatter.getTemplateParams = function(w)
+function createTiddlyElement2(parent,element)
+{
+	var e = document.createElement(element);
+	parent.appendChild(e);
+	return e;
+}
+
+config.formatterHelpers.createElementAndWikify = function(w)
+{
+	w.subWikifyTerm(createTiddlyElement2(w.output,this.element),this.termRegExp);
+};
+
+MediaWikiFormatter.hijackListAll = function ()
+{
+	MediaWikiFormatter.oldListAll = config.macros.list.all.handler;
+	config.macros.list.all.handler = function(params) {
+		return store.getMediaWikiPages();
+	};
+};
+MediaWikiFormatter.hijackListAll();
+
+MediaWikiFormatter.normalizedTitle = function(title)
+{
+	title = title.trim();
+	var n = title.charAt(0).toUpperCase() + title.substr(1);
+	return n.replace(/\s/g,'_');
+};
+
+//# see http://meta.wikimedia.org/wiki/Help:Variable
+MediaWikiFormatter.expandVariable = function(w,variable)
+{
+	switch(variable) {
+	case 'PAGENAME':
+		createTiddlyText(w.output,w.tiddler.title);
+		break;
+	case 'PAGENAMEE':
+		createTiddlyText(w.output,MediaWikiFormatter.normalizedTitle(w.tiddler.title));
+		break;
+	case 'REVISIONID':
+		var text = w.tiddler.fields['server.revision'];
+		if(text)
+			createTiddlyText(w.output,text);
+		break;
+	default:
+		return false;
+	}
+	return true;
+};
+
+MediaWikiFormatter.getTemplateParams = function(text)
 {
 //#{{test|a|b}}
 //#{{test|n=a|m=b}}
 	var params = {};
 
-	var i = 1;
-	var text = w.source + &quot;|&quot;;
+	text += '|';
 	var pRegExp = /(?:([^\|]*)=)?([^\|]*)\|/mg;
 	var match = pRegExp.exec(text);
 	if(match) {
-		// skip template name
+		//# skip template name
 		match = pRegExp.exec(text);
 	}
+	var i = 1;
 	while(match) {
-		//params[match[1] ? match[1] : i++] = match[2];
+		//#params[match[1] ? match[1] : i++] = match[2];
 		if(match[1]) {
 			params[match[1]] = match[2];
 		} else {
@@ -1422,65 +1554,143 @@ MediaWikiFormatter.getTemplateParams = function(w)
 	return params;
 };
 
-MediaWikiFormatter.expandTemplate = function(w,tiddler,params)
-// see http://meta.wikimedia.org/wiki/Help:Template
+//#The #if function is an if-then-else construct. The syntax is:
+//#	{{#if: &lt;condition&gt; | &lt;then text&gt; | &lt;else text&gt; }}
+//#	{{#if: &lt;condition&gt; | &lt;then text&gt; }}
+
+//#If the condition is an empty string or consists only of whitespace, then it is considered false, and the ''else text'' is returned. Otherwise, the ''then text'' is returned. The ''else text'' may be omitted, in which case the result will be blank if the condition is false.
+
+//#An example:
+//#	{{#if| {{{parameter|}}} | Parameter is defined. | Parameter is undefined, or empty}}
+
+//#Note that the {{#if}} function does '''not''' support &quot;=&quot; signs or mathematical expressions.
+//#	{{#if|1 = 2 | yes | no}} will return &quot;yes&quot;, because the string &quot;1 = 2&quot; is not blank.
+//#	It is intended as an ''&quot;if not empty&quot;'' structure.
+
+//# {{#if:{{{param1|}}} | param1value:{{{param1}}} }}
+//# include {{testTpf|param1=hello}}
+//# becomes:
+//# {{#if:hello | param1value:hello }}
+//# becomes:
+//# param1value:hello
+
+//# include {{testTpf}}
+//# becomes:
+//# {{#if: | param1value: }}
+//# becomes:
+//# &lt;nothing&gt;
+
+
+//# see:
+//# http://meta.wikimedia.org/wiki/ParserFunctions
+//# http://www.mediawiki.org/wiki/Extension:Parser_function_extensions
+//# http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/ParserFunctions/ParserFunctions.php?view=markup
+//# http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/includes/Parser.php?view=markup
+MediaWikiFormatter.evaluateTemplateParserFunctions = function(text)
 {
-	var text = tiddler.text;
-	text = text.replace(/&lt;noinclude&gt;((?:.|\n)*?)&lt;\/noinclude&gt;/mg,&quot;&quot;);// remove text between noinclude tags
-	var ioRegExp = /&lt;includeonly&gt;((?:.|\n)*?)&lt;\/includeonly&gt;/mg;
-	var t = &quot;&quot;;
-	var match = ioRegExp.exec(text);
+//#displayMessage(&quot;evtpf:&quot;+text);
+//#if(text==&quot;{{#if:hello | param1value=hello }}&quot;)
+//#	return &quot;param1value=hello&quot;;
+//#	return text;
+	var fnRegExp = /\{\{#if:([^\|]*?)\|([^\|]*?)(?:\|(.*?))?\}\}/mg;
+	var t = '';
+	var fi = 0;
+	match = fnRegExp.exec(text);
+	while(match) {
+//#displayMessage(&quot;m:&quot;+match);
+//#displayMessage(&quot;m0:&quot;+match[0]);
+//#displayMessage(&quot;m1:&quot;+match[1]);
+//#displayMessage(&quot;m2:&quot;+match[2]);
+//#displayMessage(&quot;m3:&quot;+match[3]);
+//#displayMessage(&quot;ss:&quot;+text.substring(fi,match.index));
+		t += text.substring(fi,match.index);
+		var m = match[1] ? match[1].trim() : null;
+		if(m)
+			t += match[2];
+		else if(match[3])
+			t += match[3].trim();
+		fi = fnRegExp.lastIndex;
+		match = fnRegExp.exec(text);
+	}
+	t += text.substring(fi);
+	text = t == '' ? text : t;
+//#displayMessage(&quot;text:&quot;+text);
+	return text;
+};
+
+MediaWikiFormatter.expandTemplate = function(w,templateText,params)
+//# Expand the template by dealing with &lt;noinclude&gt;, &lt;includeonly&gt; and substituting parameters with their values
+//# see http://meta.wikimedia.org/wiki/Help:Template
+{
+//#mwDebug(w.output,'et:'+templateText);
+//#displayMessage(&quot;expandTemplate:&quot;+templateText);
+	var text = templateText;
+	text = text.replace(/&lt;noinclude&gt;((?:.|\n)*?)&lt;\/noinclude&gt;/mg,'');// remove text between noinclude tags
+	var includeOnlyRegExp = /&lt;includeonly&gt;((?:.|\n)*?)&lt;\/includeonly&gt;/mg;
+	var t = '';
+	var match = includeOnlyRegExp.exec(text);
 	while(match) {
 		t += match[1];
-		match = ioRegExp.exec(text);
+		match = includeOnlyRegExp.exec(text);
 	}
-	text = t == &quot;&quot; ? text : t;
+	text = t == '' ? text : t;
 
 	var paramsRegExp = /\{\{\{(.*?)(?:\|(.*?))?\}\}\}/mg;
-	t = &quot;&quot;;
+	t = '';
 	var pi = 0;
 	match = paramsRegExp.exec(text);
 	while(match) {
 		var name = match[1];
-		var def = match[2];
 		var val = params[name];
 		if(!val) {
-			val = def;
+			//# use default
+			val = match[2];
 		}
 		if(!val) {
-			val = match[0];
+			//# if no value or default, parameter evaluates to name
+			val = '';//val = match[0];
 		}
 		t += text.substring(pi,match.index) + val;
 		pi = paramsRegExp.lastIndex;
 		match = paramsRegExp.exec(text);
 	}
-	return t == &quot;&quot; ? text : t;
+	return t == '' ? text : t;
+/*	//displayMessage(&quot;ss:&quot;+text.substring(pi));
+	t += text.substring(pi);
+	t = MediaWikiFormatter.evaluateTemplateParserFunctions(t);
+	//{{#if: {{{perihelion|}}} | &lt;tr&gt;&lt;th&gt;[[Perihelion|Perihelion distance]]:&lt;/th&gt;&lt;td&gt;{{{perihelion}}}&lt;/td&gt;&lt;/tr&gt;}}
+	//{{#if:{{{symbol|}}} | {{{symbol}}} | }}
+	text = t == '' ? text : t;
+	displayMessage(&quot;t2:&quot;+text);
+	return text;
+*/
 };
 
 MediaWikiFormatter.endOfParams = function(w,text)
 {
 	var p = 0;
-	var i = text.indexOf(&quot;|&quot;);
+	var i = text.indexOf('|');
 	if(i==-1) {return -1;}
-	var n = text.indexOf(&quot;\n&quot;);
+	var n = text.indexOf('\n');
 	if(n!=-1 &amp;&amp; n&lt;i) {return -1;}
-	var b = text.indexOf(&quot;[[&quot;);
-	if(b!=-1 &amp;&amp; b&lt;i) {return -1;}// can't have [[ in parameters
+	var b = text.indexOf('[[');
+	//# can't have [[ in parameters
+	if(b!=-1 &amp;&amp; b&lt;i) {return -1;}
 	
-	b = text.indexOf(&quot;{{&quot;);
+	b = text.indexOf('{{');
 	while(b!=-1 &amp;&amp; b&lt;i) {
-		// have {{ before |, so need to find first &quot;|&quot; after &quot;{{..}}&quot; pairs
-		//cut off the ..{{, find the }} cut off and repeat
+		//# have {{ before |, so need to find first '|' after '{{..}}' pairs
+		//# cut off the ..{{, find the }} cut off and repeat
 		p += b;
 		text = text.substr(b);
-		var c = text.indexOf(&quot;}}&quot;);
+		var c = text.indexOf('}}');
 		p += c;
 		text = text.substr(c);
-		i = text.indexOf(&quot;|&quot;);
+		i = text.indexOf('|');
 		if(i==-1) {return -1;}
-		n = text.indexOf(&quot;\n&quot;);
+		n = text.indexOf('\n');
 		if(n!=-1 &amp;&amp; n&lt;i) {return -1;}
-		b = text.indexOf(&quot;{{&quot;);
+		b = text.indexOf('{{');
 		i = -1;
 	}
 	return i;
@@ -1501,27 +1711,27 @@ MediaWikiFormatter.readToDelim = function(w)
 	tRegExp.lastIndex = w.startMatch;
 	var tMatch = tRegExp.exec(w.source);
 	if(!tMatch) {
-		//mwDebug(w.output,&quot;ERROR1&quot;);
+		//#mwDebug(w.output,'ERROR1');
 		return false;
 	}
 
 	while(sMatch &amp;&amp; sMatch.index&lt;tMatch.index) {
 		if(dMatch &amp;&amp; dMatch.index&lt;sMatch.index) {
 			//# delim is before startBracket, so return it
-//mwDebug(w.output,&quot;di:&quot;+dMatch.index+&quot; dl:&quot;+sRegExp.lastIndex);
+//#mwDebug(w.output,'di:'+dMatch.index+' dl:'+sRegExp.lastIndex);
 			w.nextMatch = dRegExp.lastIndex;
 			w.matchLength = dMatch.index - w.startMatch;
 			return true;
 		}
-//mwDebug(w.output,&quot;si:&quot;+sMatch.index+&quot; sl:&quot;+sRegExp.lastIndex);
-//mwDebug(w.output,&quot;ti:&quot;+tMatch.index+&quot; tl:&quot;+tRegExp.lastIndex);
+//#mwDebug(w.output,'si:'+sMatch.index+' sl:'+sRegExp.lastIndex);
+//#mwDebug(w.output,'ti:'+tMatch.index+' tl:'+tRegExp.lastIndex);
 		//# startBracket before termBracket, so skip over bracket pairs
-		// found eg [[, so look for ]]
+		//# found eg [[, so look for ]]
 		tRegExp.lastIndex = sRegExp.lastIndex;
 		tMatch = tRegExp.exec(w.source);
-//mwDebug(w.output,&quot;xti:&quot;+tMatch.index+&quot; tl:&quot;+tRegExp.lastIndex);
+//#mwDebug(w.output,'xti:'+tMatch.index+' tl:'+tRegExp.lastIndex);
 		
-		// and look for another [[
+		//# and look for another [[
 		w.nextMatch = tRegExp.lastIndex;
 		dRegExp.lastIndex = w.nextMatch;
 		dMatch = dRegExp.exec(w.source);
@@ -1533,19 +1743,19 @@ MediaWikiFormatter.readToDelim = function(w)
 		
 	if(dMatch &amp;&amp; dMatch.index&lt;tMatch.index) {
 		//# delim is before term, so return it
-//mwDebug(w.output,&quot;2di:&quot;+dMatch.index+&quot; dl:&quot;+sRegExp.lastIndex);
+//#mwDebug(w.output,'2di:'+dMatch.index+' dl:'+sRegExp.lastIndex);
 		w.nextMatch = dRegExp.lastIndex;
 		w.matchLength = dMatch.index - w.startMatch;
 		return true;
 	}
 	if(tMatch) {
 		//# delim is before term, so return it
-//mwDebug(w.output,&quot;2ti:&quot;+tMatch.index+&quot; tl:&quot;+tRegExp.lastIndex);
+//#mwDebug(w.output,'2ti:'+tMatch.index+' tl:'+tRegExp.lastIndex);
 		w.nextMatch = tRegExp.lastIndex;
 		w.matchLength = tMatch.index - w.startMatch;
 		return false;
 	}
-	//mwDebug(w.output,&quot;ERROR2&quot;);
+	//#mwDebug(w.output,'ERROR2');
 	//# return term
 	w.nextMatch = tRegExp.lastIndex;
 	w.matchLength = -1;
@@ -1598,8 +1808,8 @@ MediaWikiFormatter.setAttributesFromParams = function(e,p)
 	var match = re.exec(p);
 	while(match) {
 		var s = match[1].unDash();
-		if(s == &quot;bgcolor&quot;) {
-			s = &quot;backgroundColor&quot;;
+		if(s == 'bgcolor') {
+			s = 'backgroundColor';
 		}
 		try {
 			if(match[2]) {
@@ -1615,31 +1825,34 @@ MediaWikiFormatter.setAttributesFromParams = function(e,p)
 	}
 };
 
-config.mediaWikiFormatters = [
+config.mediawiki = {};
+config.mediawiki.formatters = [
 {
-	name: &quot;mediaWikiHeading&quot;,
-	match: &quot;^={2,6}(?!=)\\n?&quot;,
-	termRegExp: /(={2,6}\n?)/mg,
+	name: 'mediaWikiHeading',
+	match: '^={1,6}(?!=)\\n?',
+	termRegExp: /(={1,6}\n?)/mg,
 	handler: function(w)
 	{
-		var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName==&quot;P&quot; ? w.output.parentNode : w.output;
-		var e = createTiddlyElement(output,&quot;h&quot; + w.matchLength);
-		var a = createTiddlyElement(e,&quot;a&quot;);// drop anchor
-		var t = w.tiddler ? w.tiddler.title + &quot;:&quot; : &quot;&quot;;
-		var len = w.source.substr(w.nextMatch).indexOf(&quot;=&quot;);
-		a.setAttribute(&quot;name&quot;,t+w.source.substr(w.nextMatch,len));
+		//#var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName=='P' ? w.output.parentNode : w.output;
+		var output = w.output;
+		var e = createTiddlyElement2(output,'h' + w.matchLength);
+		//# drop anchor
+		var a = createTiddlyElement2(e,'a');
+		var t = w.tiddler ? MediaWikiFormatter.normalizedTitle(w.tiddler.title) + ':' : '';
+		var len = w.source.substr(w.nextMatch).indexOf('=');
+		a.setAttribute('name',t+MediaWikiFormatter.normalizedTitle(w.source.substr(w.nextMatch,len)));
 		w.subWikifyTerm(e,this.termRegExp);
-		w.output = createTiddlyElement(output,&quot;p&quot;);
+		//#w.output = createTiddlyElement2(output,'p');
 	}
 },
 
 {
-	name: &quot;mediaWikiTable&quot;,
-	match: &quot;^\\{\\|&quot;, // ^{|
-	tableTerm: &quot;\\n\\|\\}&quot;, // |}
-	rowStart: &quot;\\n\\|\\-&quot;, // \n|-
-	cellStart: &quot;\\n!|!!|\\|\\||\\n\\|&quot;, //\n! or !! or || or \n|
-	caption: &quot;\\n\\|\\+&quot;,
+	name: 'mediaWikiTable',
+	match: '^\\{\\|', // ^{|
+	tableTerm: '\\n\\|\\}', // |}
+	rowStart: '\\n\\|\\-', // \n|-
+	cellStart: '\\n!|!!|\\|\\||\\n\\|', //\n! or !! or || or \n|
+	caption: '\\n\\|\\+',
 	rowTerm: null,
 	cellTerm: null,
 	inCellTerm: null,
@@ -1649,28 +1862,28 @@ config.mediaWikiFormatters = [
 	handler: function(w)
 	{
 		if(!this.rowTermRegExp) {
-			this.rowTerm = &quot;(&quot; + this.tableTerm +&quot;)|(&quot; + this.rowStart + &quot;)&quot;;
-			this.cellTerm = this.rowTerm + &quot;|(&quot; + this.cellStart + &quot;)&quot;;
-			this.inCellTerm = &quot;(&quot; + this.match + &quot;)|&quot; + this.rowTerm + &quot;|(&quot; + this.cellStart + &quot;)&quot;;
-			this.caption = &quot;(&quot; + this.caption + &quot;)|&quot; + this.cellTerm;
+			this.rowTerm = '(' + this.tableTerm +')|(' + this.rowStart + ')';
+			this.cellTerm = this.rowTerm + '|(' + this.cellStart + ')';
+			this.inCellTerm = '(' + this.match + ')|' + this.rowTerm + '|(' + this.cellStart + ')';
+			this.caption = '(' + this.caption + ')|' + this.cellTerm;
 
-			this.rowTermRegExp = new RegExp(this.rowTerm,&quot;mg&quot;);
-			this.cellTermRegExp = new RegExp(this.cellTerm,&quot;mg&quot;);
-			this.inCellTermRegExp = new RegExp(this.inCellTerm,&quot;mg&quot;);
-			this.captionRegExp = new RegExp(this.caption,&quot;mg&quot;);
+			this.rowTermRegExp = new RegExp(this.rowTerm,'mg');
+			this.cellTermRegExp = new RegExp(this.cellTerm,'mg');
+			this.inCellTermRegExp = new RegExp(this.inCellTerm,'mg');
+			this.captionRegExp = new RegExp(this.caption,'mg');
 		}
-//this.debug = createTiddlyElement(w.output,&quot;p&quot;);
-//mwDebug(this.debug,&quot;start table&quot;);
+//#this.debug = createTiddlyElement2(w.output,'p');
+//#mwDebug(this.debug,'start table');
 		this.captionRegExp.lastIndex = w.nextMatch;
 		var match = this.captionRegExp.exec(w.source);
 		if(!match) {return;}
-		//var inPara = w.output.nodeType==1 &amp;&amp; w.output.nodeName==&quot;P&quot; ? true : false;
-		//var output = inPara ? w.output.parentNode : w.output;
+		//#var inPara = w.output.nodeType==1 &amp;&amp; w.output.nodeName=='P' ? true : false;
+		//#var output = inPara ? w.output.parentNode : w.output;
 		var output = w.output;
-		var table = createTiddlyElement(output,&quot;table&quot;);
+		var table = createTiddlyElement2(output,'table');
 		var rowContainer = table;
 
-		var i = w.source.indexOf(&quot;\n&quot;,w.nextMatch);
+		var i = w.source.indexOf('\n',w.nextMatch);
 		if(i&gt;w.nextMatch) {
 			MediaWikiFormatter.setAttributesFromParams(table,w.source.substring(w.nextMatch,i));
 			w.nextMatch = i;
@@ -1679,40 +1892,43 @@ config.mediaWikiFormatters = [
 		var rowCount = 0;
 		var eot = false;
 		if(match[1]) {
-			// caption
-			var caption = createTiddlyElement(table,&quot;caption&quot;);
+			//# caption
+			var caption = createTiddlyElement2(table,'caption');
 			w.nextMatch = this.captionRegExp.lastIndex;
 			var captionText = w.source.substring(w.nextMatch);
-			var n = captionText.indexOf(&quot;\n&quot;);
+			var n = captionText.indexOf('\n');
 			captionText = captionText.substr(0,n);
 			i = MediaWikiFormatter.endOfParams(w,captionText);
 			if(i!=-1) {
 				captionText = w.source.substr(w.nextMatch,i);
-				//captionText = captionText.replace(/^\+/mg,&quot;&quot;)//!!hack until I fix this properly
-				//MediaWikiFormatter.setAttributesFromParams(caption,captionText);
+				//#captionText = captionText.replace(/^\+/mg,'')//!!hack until I fix this properly
+				//#MediaWikiFormatter.setAttributesFromParams(caption,captionText);
 				w.nextMatch += i+1;
 			}
 			if(caption != table.firstChild) {
 				table.insertBefore(caption,table.firstChild);
 			}
 			w.subWikify(caption,this.cellTerm);
-			w.nextMatch -= w.matchLength;// rewind to before the match
+			//# rewind to before the match
+			w.nextMatch -= w.matchLength;
 			this.cellTermRegExp.lastIndex = w.nextMatch;
 			var match2 = this.cellTermRegExp.exec(w.source);
 			if(match2) {
 				if(match2[3]) {
-					// no first row marker
-					eot = this.rowHandler(w,createTiddlyElement(rowContainer,&quot;tr&quot;));
+					//# no first row marker
+					eot = this.rowHandler(w,createTiddlyElement2(rowContainer,'tr'));
 					rowCount++;
 				}
 			}
 		} else if(match[3]) {
-			// row
-			w.nextMatch = this.captionRegExp.lastIndex-match[3].length;// rewind to before the match
+			//# row
+			//# rewind to before the match
+			w.nextMatch = this.captionRegExp.lastIndex-match[3].length;
 		} else if(match[4]) {
-			// cell, no first row marker in table
-			w.nextMatch = this.captionRegExp.lastIndex-match[4].length;// rewind to before the match
-			eot = this.rowHandler(w,createTiddlyElement(rowContainer,&quot;tr&quot;));
+			//# cell, no first row marker in table
+			//# rewind to before the match
+			w.nextMatch = this.captionRegExp.lastIndex-match[4].length;
+			eot = this.rowHandler(w,createTiddlyElement2(rowContainer,'tr'));
 			rowCount++;
 		}
 
@@ -1720,16 +1936,17 @@ config.mediaWikiFormatters = [
 		match = this.rowTermRegExp.exec(w.source);
 		while(match &amp;&amp; eot==false) {
 			if(match[1]) {
-				// end table
+				//# end table
 				w.nextMatch = this.rowTermRegExp.lastIndex;
 				if(w.tableDepth==0) {
 					return;
 				}
 			} else if(match[2]) {
-				// row
-				var rowElement = createTiddlyElement(rowContainer,&quot;tr&quot;);
-				w.nextMatch += match[2].length;// skip over the match
-				i = w.source.indexOf(&quot;\n&quot;,w.nextMatch);
+				//# row
+				var rowElement = createTiddlyElement2(rowContainer,'tr');
+				//# skip over the match
+				w.nextMatch += match[2].length;
+				i = w.source.indexOf('\n',w.nextMatch);
 				if(i&gt;w.nextMatch) {
 					MediaWikiFormatter.setAttributesFromParams(rowElement,w.source.substring(w.nextMatch,i));
 					w.nextMatch = i;
@@ -1741,20 +1958,22 @@ config.mediaWikiFormatters = [
 			match = this.rowTermRegExp.exec(w.source);
 		}//# end while
 		if(w.tableDepth==0) {
-			w.nextMatch +=3;// skip over tableterm, \n|}
+			//# skip over tableterm, \n|}
+			w.nextMatch +=3;
 		}
-		//if(inPara)
-		//	w.output = createTiddlyElement(output,&quot;p&quot;);
+		//#if(inPara)
+		//#	w.output = createTiddlyElement2(output,'p');
 	},//# end handler
 
 	rowHandler: function(w,e)
-	{// assumes w.nextMatch points to first cell terminator, returns false if any improperly terminated element
+	{
+		//# assumes w.nextMatch points to first cell terminator, returns false if any improperly terminated element
 		var cell;
 		this.inCellTermRegExp.lastIndex = w.nextMatch;
 		var match = this.inCellTermRegExp.exec(w.source);
 		while(match) {
-			if(match[1])
-				{// nested table
+			if(match[1]) {
+				//# nested table
 				w.tableDepth++;
 				w.subWikify(cell,this.tableTerm);
 				w.nextMatch = this.tt;
@@ -1770,23 +1989,26 @@ config.mediaWikiFormatters = [
 			} else if(match[4]) {
 				//# cell
 				var len = match[4].length;
-				cell = createTiddlyElement(e,match[4].substr(len-1)==&quot;!&quot;?&quot;th&quot;:&quot;td&quot;);
-				w.nextMatch += len;//skip over the match
+				cell = createTiddlyElement2(e,match[4].substr(len-1)=='!'?'th':'td');
+				//# skip over the match
+				w.nextMatch += len;
 
 				this.inCellTermRegExp.lastIndex = w.nextMatch;
 				var lookahead = this.inCellTermRegExp.exec(w.source);
 				if(!lookahead) {
-					return false;// improperly terminated table
+					//# improperly terminated table
+					return false;
 				}
 				var cellText = w.source.substr(w.nextMatch,lookahead.index-w.nextMatch);
 				var oldSource = w.source;
-				var i = MediaWikiFormatter.endOfParams(w,cellText);//cellText.indexOf(&quot;|&quot;);
+				var i = MediaWikiFormatter.endOfParams(w,cellText);//cellText.indexOf('|');
 				if(i!=-1) {
-					cellText = cellText.replace(/^\+/mg,&quot;&quot;);  //!!hack until I fix this properly
+					cellText = cellText.replace(/^\+/mg,'');  //!!hack until I fix this properly
 					MediaWikiFormatter.setAttributesFromParams(cell,cellText.substr(0,i-1));
 					cellText = cellText.substring(i+1);
 				}
-				cellText = cellText.replace(/^\s*/mg,&quot;&quot;); //# remove leading spaces so not treated as preformatted
+				//# remove leading spaces so not treated as preformatted
+				cellText = cellText.replace(/^\s*/mg,'');
 				w.source = cellText;
 				w.nextMatch = 0;
 				w.subWikifyUnterm(cell);
@@ -1801,45 +2023,39 @@ config.mediaWikiFormatters = [
 },
 
 {
-	name: &quot;mediaWikiList&quot;,
-	match: &quot;^[\\*#;:]+ &quot;,
-	lookaheadRegExp: /^([\*#;:])+ /mg,
+	name: 'mediaWikiList',
+	match: '^[\\*#;:]+',
+	lookaheadRegExp: /(?:(?:(\*)|(#)|(;)|(:))+)(?: ?)/mg,
 	termRegExp: /(\n)/mg,
 	handler: function(w)
 	{
-		var output = w.output.parentNode;
-		var stack = [output];
+//#this.debug = createTiddlyElement2(w.output,'p');
+//#mwDebug(this.debug,'start list');
+		var stack = [w.output];
 		var currLevel = 0, currType = null;
 		var listType, itemType;
 		w.nextMatch = w.matchStart;
 		this.lookaheadRegExp.lastIndex = w.nextMatch;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		while(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.nextMatch) {
-			switch(lookaheadMatch[1]) {
-			case &quot;*&quot;:
-				listType = &quot;ul&quot;;
-				itemType = &quot;li&quot;;
-				break;
-			case &quot;#&quot;:
-				listType = &quot;ol&quot;;
-				itemType = &quot;li&quot;;
-				break;
-			case &quot;;&quot;:
-				listType = &quot;dl&quot;;
-				itemType = &quot;dt&quot;;
-				break;
-			case &quot;:&quot;:
-				listType = &quot;dl&quot;;
-				itemType = &quot;dd&quot;;
-				break;
-			default:
-				break;
+			if(lookaheadMatch[1]) {
+				listType = 'ul';
+				itemType = 'li';
+			} else if(lookaheadMatch[2]) {
+				listType = 'ol';
+				itemType = 'li';
+			} else if(lookaheadMatch[3]) {
+				listType = 'dl';
+				itemType = 'dt';
+			} else if(lookaheadMatch[4]) {
+				listType = 'dl';
+				itemType = 'dd';
 			}
 			var listLevel = lookaheadMatch[0].length;
 			w.nextMatch += listLevel;
 			if(listLevel &gt; currLevel) {
 				for(var i=currLevel; i&lt;listLevel; i++) {
-					stack.push(createTiddlyElement(stack[stack.length-1],listType));
+					stack.push(createTiddlyElement2(stack[stack.length-1],listType));
 				}
 			} else if(listLevel &lt; currLevel) {
 				for(i=currLevel; i&gt;listLevel; i--) {
@@ -1847,41 +2063,49 @@ config.mediaWikiFormatters = [
 				}
 			} else if(listLevel == currLevel &amp;&amp; listType != currType) {
 				stack.pop();
-				stack.push(createTiddlyElement(stack[stack.length-1],listType));
+				stack.push(createTiddlyElement2(stack[stack.length-1],listType));
 			}
+//#mwDebug(this.debug,&quot;b:&quot;+w.source.substr(w.nextMatch,30));
 			currLevel = listLevel;
 			currType = listType;
-			var e = createTiddlyElement(stack[stack.length-1],itemType);
-			w.subWikifyTerm(e,this.termRegExp);
+			var e = createTiddlyElement2(stack[stack.length-1],itemType);
+			var ci = w.source.indexOf(':',w.nextMatch);
+			var ni = w.source.indexOf('\n',w.nextMatch);
+			if(itemType=='dt' &amp;&amp; (ni==-1 || (ci!=-1 &amp;&amp; ci&lt;ni))) {
+				//# deal with ':' on same line as ';'
+				w.subWikifyTerm(e,/(:)/mg);
+				w.nextMatch--;
+			} else {
+				w.subWikifyTerm(e,this.termRegExp);
+			}
 			this.lookaheadRegExp.lastIndex = w.nextMatch;
 			lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		}
-		w.output = createTiddlyElement(output,&quot;p&quot;);
 	}
 },
 
 {
-	name: &quot;mediaWikiRule&quot;,
-	match: &quot;^----+$\\n?&quot;,
+	name: 'mediaWikiRule',
+	match: '^----+$\\n?',
 	handler: function(w)
 	{
-		var output = w.output.parentNode;
-		createTiddlyElement(output,&quot;hr&quot;);
-		w.output = createTiddlyElement(output,&quot;p&quot;);
+		//#var output = w.output.parentNode;
+		createTiddlyElement2(w.output,'hr');
+		//#w.output = createTiddlyElement2(output,'p');
 	}
 },
 
 {
-	name: &quot;mediaWikiLeadingSpaces&quot;,
-	match: &quot;^ &quot;,
+	name: 'mediaWikiLeadingSpaces',
+	match: '^ ',
 	lookaheadRegExp: /^ /mg,
 	termRegExp: /(\n)/mg,
 	handler: function(w)
 	{
-		var e = createTiddlyElement(w.output,&quot;pre&quot;);
+		var e = createTiddlyElement2(w.output,'pre');
 		while(true) {
 			w.subWikifyTerm(e,this.termRegExp);
-			createTiddlyElement(e,&quot;br&quot;);
+			createTiddlyElement2(e,'br');
 			this.lookaheadRegExp.lastIndex = w.nextMatch;
 			var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 			if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.nextMatch) {
@@ -1893,35 +2117,32 @@ config.mediaWikiFormatters = [
 	}
 },
 
-/*
-[[Image:Westminstpalace.jpg|frame|none|caption text]]
-//http://en.wikipedia.org/wiki/Image:Westminstpalace.jpg
-&lt;a href=&quot;/wiki/Image:Westminstpalace.jpg&quot; class=&quot;internal&quot; title=&quot;caption text&quot;&gt;
-&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/3/39/Westminstpalace.jpg&quot;
- alt=&quot;caption text&quot; width=&quot;400&quot; height=&quot;300&quot; longdesc=&quot;/wiki/Image:Westminstpalace.jpg&quot; /&gt;
-&lt;/a&gt;
+//# [[Image:Westminstpalace.jpg|frame|none|caption text]]
+//# //http://en.wikipedia.org/wiki/Image:Westminstpalace.jpg
+//# &lt;a href=&quot;/wiki/Image:Westminstpalace.jpg&quot; class=&quot;internal&quot; title=&quot;caption text&quot;&gt;
+//# &lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/3/39/Westminstpalace.jpg&quot;
+//#  alt=&quot;caption text&quot; width=&quot;400&quot; height=&quot;300&quot; longdesc=&quot;/wiki/Image:Westminstpalace.jpg&quot; /&gt;
+//# &lt;/a&gt;
 
-[[image:Stockholm.jpg|right|350px|thumb|Stockholm panorama from the City Hall]]
-&lt;div class=&quot;thumb tright&quot;&gt;
-	&lt;div style=&quot;width:352px;&quot;&gt;
-		&lt;a href=&quot;/wiki/Image:Stockholm.jpg&quot; class=&quot;internal&quot; title=&quot;Stockholm panorama from the City Hall&quot;&gt;
-			&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Stockholm.jpg/350px-Stockholm.jpg&quot; alt=&quot;Stockholm panorama from the City Hall&quot; width=&quot;350&quot; height=&quot;84&quot; longdesc=&quot;/wiki/Image:Stockholm.jpg&quot; /&gt;
-		&lt;/a&gt;
-		&lt;div class=&quot;thumbcaption&quot;&gt;
-			&lt;div class=&quot;magnify&quot; style=&quot;float:right&quot;&gt;
-				&lt;a href=&quot;/wiki/Image:Stockholm.jpg&quot; class=&quot;internal&quot; title=&quot;Enlarge&quot;&gt;
-				&lt;img src=&quot;/skins-1.5/common/images/magnify-clip.png&quot; width=&quot;15&quot; height=&quot;11&quot; alt=&quot;Enlarge&quot; /&gt;
-				&lt;/a&gt;
-			&lt;/div&gt;
-			Stockholm panorama from the City Hall
-		&lt;/div&gt;
-	&lt;/div&gt;
-&lt;/div&gt;
-*/
-
+//# [[image:Stockholm.jpg|right|350px|thumb|Stockholm panorama from the City Hall]]
+//# &lt;div class=&quot;thumb tright&quot;&gt;
+//# 	&lt;div style=&quot;width:352px;&quot;&gt;
+//# 		&lt;a href=&quot;/wiki/Image:Stockholm.jpg&quot; class=&quot;internal&quot; title=&quot;Stockholm panorama from the City Hall&quot;&gt;
+//# 			&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Stockholm.jpg/350px-Stockholm.jpg&quot; alt=&quot;Stockholm panorama from the City Hall&quot; width=&quot;350&quot; height=&quot;84&quot; longdesc=&quot;/wiki/Image:Stockholm.jpg&quot; /&gt;
+//# 		&lt;/a&gt;
+//# 		&lt;div class=&quot;thumbcaption&quot;&gt;
+//# 			&lt;div class=&quot;magnify&quot; style=&quot;float:right&quot;&gt;
+//# 				&lt;a href=&quot;/wiki/Image:Stockholm.jpg&quot; class=&quot;internal&quot; title=&quot;Enlarge&quot;&gt;
+//# 				&lt;img src=&quot;/skins-1.5/common/images/magnify-clip.png&quot; width=&quot;15&quot; height=&quot;11&quot; alt=&quot;Enlarge&quot; /&gt;
+//# 				&lt;/a&gt;
+//# 			&lt;/div&gt;
+//# 			Stockholm panorama from the City Hall
+//# 		&lt;/div&gt;
+//# 	&lt;/div&gt;
+//# &lt;/div&gt;
 {
-	name: &quot;mediaWikiImage&quot;,
-	match: &quot;\\[\\[(?:[Ii]mage|Bild):&quot;,
+	name: 'mediaWikiImage',
+	match: '\\[\\[(?:[Ii]mage|Bild):',
 	lookaheadRegExp: /\[\[(?:[Ii]mage|Bild):/mg,
 	defaultPx: 180,
 	handler: function(w)
@@ -1931,7 +2152,7 @@ config.mediaWikiFormatters = [
 		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
 			var params = MediaWikiFormatter.getParams(w);
 			var src = params[1];
-			src = src.trim().replace(/ /mg,&quot;_&quot;);
+			src = src.trim().replace(/ /mg,'_');
 			src = src.substr(0,1).toUpperCase() + src.substring(1);
 			var palign = null;
 			var ptitle = null;
@@ -1942,11 +2163,11 @@ config.mediaWikiFormatters = [
 			for(var i=2;i&lt;params.length;i++) {
 				//# right, left, center, none, sizepx, thumbnail (thumb), frame, and alternate (caption) text.
 				var p = params[i];
-				if(p==&quot;right&quot;||p==&quot;left&quot;||p==&quot;center&quot;||p==&quot;none&quot;) {
+				if(p=='right'||p=='left'||p=='center'||p=='none') {
 					palign = p;
-				} else if(p==&quot;thumbnail&quot;||p==&quot;thumb&quot;) {
+				} else if(p=='thumbnail'||p=='thumb') {
 					pthumb = true;
-				} else if(p==&quot;framed&quot;) {
+				} else if(p=='framed') {
 					pframed = true;
 				} else if(/\d{1,4} ?px/.exec(p)) {
 					px = p.substr(0,p.length-2).trim();
@@ -1955,51 +2176,54 @@ config.mediaWikiFormatters = [
 				}
 			}//#end for
 			if(pthumb) {
-				var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName==&quot;P&quot; ? w.output.parentNode : w.output;
+				//#var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName=='P' ? w.output.parentNode : w.output;
+				var output = w.output;
 				if(!palign) {
-					palign = &quot;right&quot;;
+					palign = 'right';
 				}
 				if(!px) {
 					px = 180;
 				}
-				psrc = px + &quot;px-&quot; + src;
-				var t = createTiddlyElement(output,&quot;div&quot;,null,&quot;thumb&quot;+(palign?&quot; t&quot;+palign:&quot;&quot;));
-				var s = createTiddlyElement(t,&quot;div&quot;);
-				s.style[&quot;width&quot;] = Number(px) + 2 + &quot;px&quot;;
-				var a = createTiddlyElement(s,&quot;a&quot;,null,&quot;internal&quot;);
+				psrc = px + 'px-' + src;
+				var t = createTiddlyElement(output,'div',null,'thumb'+(palign?' t'+palign:''));
+				var s = createTiddlyElement2(t,'div');
+				s.style['width'] = Number(px) + 2 + 'px';
+				var a = createTiddlyElement(s,'a',null,'internal');
 				if(config.options.chkMediaWikiDisplayEnableThumbZoom) {
 					a.href = src;
 				}
 				a.title = ptitle;
-				var img = createTiddlyElement(a,&quot;img&quot;);
-				img.src = psrc;
+				var img = createTiddlyElement2(a,'img');
+				img.src = 'images/' + psrc;
+//#mwDebug(w.output,'s1:'+img.src);
 				img.width = px;
-				img.longdesc = &quot;Image:&quot; + src;
+				img.longdesc = 'Image:' + src;
 				img.alt = ptitle;
 
-				var tc = createTiddlyElement(s,&quot;div&quot;,null,&quot;thumbcaption&quot;);
+				var tc = createTiddlyElement(s,'div',null,'thumbcaption');
 				var oldSource = w.source; var oldMatch = w.nextMatch;
 				w.source = ptitle; w.nextMatch = 0;
 				w.subWikifyUnterm(tc);
 				w.source = oldSource; w.nextMatch = oldMatch;
 
 				if(config.options.chkMediaWikiDisplayEnableThumbZoom) {
-					var tm = createTiddlyElement(tc,&quot;div&quot;,null,&quot;magnify&quot;);
-					tm.style[&quot;float&quot;] = &quot;right&quot;;
-					var ta = createTiddlyElement(tm,&quot;a&quot;,null,&quot;internal&quot;);
-					ta.title = &quot;Enlarge&quot;;
-					timg = createTiddlyElement(ta,&quot;img&quot;); timg.src = &quot;magnify-clip.png&quot;; timg.alt = &quot;Enlarge&quot;; timg.width = &quot;15&quot;; timg.height = &quot;11&quot;;
+					var tm = createTiddlyElement(tc,'div',null,'magnify');
+					tm.style['float'] = 'right';
+					var ta = createTiddlyElement(tm,'a',null,'internal');
+					ta.title = 'Enlarge';
+					timg = createTiddlyElement2(ta,'img'); timg.src = 'magnify-clip.png'; timg.alt = 'Enlarge'; timg.width = '15'; timg.height = '11';
 					ta.href = src;
 				}
 			} else {
-				// not pthumb
-				a = createTiddlyElement(w.output,&quot;a&quot;,null,&quot;image&quot;);
+				//# not pthumb
+				a = createTiddlyElement(w.output,'a',null,'image');
 				a.title = ptitle;
-				img = createTiddlyElement(a,&quot;img&quot;);
+				img = createTiddlyElement2(a,'img');
 				if(palign) {img.align = palign;}
-				img.src = px ? px + &quot;px-&quot; + src : src;
+				img.src = px ? 'images/' + px + 'px-' + src : 'images/' + src;
+//#mwDebug(w.output,'s2:'+img.src);
 				if(px) {img.width = px;}
-				img.longdesc = &quot;Image:&quot; + src;
+				img.longdesc = 'Image:' + src;
 				img.alt = ptitle;
 			}
 		}
@@ -2007,39 +2231,50 @@ config.mediaWikiFormatters = [
 },
 
 {
-	name: &quot;mediaWikiExplicitLink&quot;,
-	match: &quot;\\[\\[&quot;,
-	lookaheadRegExp: /\[\[(?:([a-z]{2,3}:)?)(#?)([^\|\]]*?)(?:(\]\](\w)*)|(\|(.*?)\]\]))/mg,
+	name: 'mediaWikiExplicitLink',
+	match: '\\[\\[',
+	lookaheadRegExp: /\[\[(?:([a-z]{2,3}:)?)(#?)([^\|\]]*?)(?:(\]\](\w*))|(\|(.*?)\]\]))/mg,
 	handler: function(w)
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
 			if(!lookaheadMatch[1]) {
-				// not (eg) [[en:...]]
+				//# not (eg) [[en:...]]
 				var e;
 				var link = lookaheadMatch[3];
 				var text = link;
+				//#var link2 = link;
 				link = link.substr(0,1).toUpperCase() + link.substring(1);
 				if(lookaheadMatch[4]) {
-					// Simple bracketted link
+					//# Simple bracketted link
 					if(lookaheadMatch[2]) {
-						var a = createTiddlyElement(e,&quot;a&quot;);// drop anchor
-						a.setAttribute(&quot;name&quot;,link);
+						//# link to anchor
+						var a = createTiddlyElement(w.output,'a');
+						var t = w.tiddler ? MediaWikiFormatter.normalizedTitle(w.tiddler.title) + ':' : '';
+						t = '#' + t + MediaWikiFormatter.normalizedTitle(link);
+						a.setAttribute('href',t);
+						a.title = '#' + MediaWikiFormatter.normalizedTitle(link);
+						createTiddlyText(a,'#'+link);
 					} else {
-						e = createTiddlyLink(w.output,link,false,null,w.isStatic);
+					//#mwDebug(w.output,'fm1:'+w.tiddler.title);
+						e = createTiddlyLink(w.output,link,false,null,w.isStatic,w.tiddler);
 						if(lookaheadMatch[5]) {
-							text += lookaheadMatch[5];//add any non-space after the ]]
+							//# add any non-space after the ]]
+							text += lookaheadMatch[5];
 						}
 						createTiddlyText(e,text);
 					}
 				} else if(lookaheadMatch[6]) {
-					// Piped link
-					if(config.formatterHelpers.isExternalLink(link)) {
-						e = createExternalLink(w.output,link);
-					} else {
-						e = createTiddlyLink(w.output,link,false,null,w.isStatic);
-					}
+					//# Piped link
+					if(link.charAt(0)==':')
+						link = link.substring(1);
+					//#if(config.formatterHelpers.isExternalLink(link)) {
+					//#	e = createExternalLink(w.output,link);
+					//#} else {
+					//#mwDebug(w.output,'fm2:'+w.tiddler.title);
+						e = createTiddlyLink(w.output,link,false,null,w.isStatic,w.tiddler);
+					//#}
 					var oldSource = w.source; var oldMatch = w.nextMatch;
 					w.source = lookaheadMatch[7].trim(); w.nextMatch = 0;
 					w.subWikifyUnterm(e);
@@ -2052,49 +2287,46 @@ config.mediaWikiFormatters = [
 },
 
 //#{{Audio|sv-Stockholm.ogg|Stockholm}}
-//**tem//
 {
-	name: &quot;mediaWikiTemplate&quot;,
-	match: &quot;\\{\\{[^\\{]&quot;,
+	name: 'mediaWikiTemplate',
+	match: '\\{\\{[^\\{]',
 	lookaheadRegExp: /\{\{((?:.|\n)*?)\}\}/mg,
 	handler: function(w)
 	{
-//mwDebug(w.output,&quot;wt:&quot;+w.matchText+&quot; ws:&quot;+w.matchStart+&quot; wn:&quot;+w.nextMatch+&quot; wl:&quot;+w.matchLength);
+//# mwDebug(w.output,'wt:'+w.matchText+' ws:'+w.matchStart+' wn:'+w.nextMatch+' wl:'+w.matchLength);
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
-//mwDebug(w.output,&quot;lm:&quot;+lookaheadMatch);
-//mwDebug(w.output,&quot;lmi:&quot;+lookaheadMatch.index+&quot; lI:&quot;+this.lookaheadRegExp.lastIndex);
-//mwDebug(w.output,&quot;lm1:&quot;+lookaheadMatch[1]);
-//mwDebug(w.output,&quot;lm2:&quot;+lookaheadMatch[2]);
+//# mwDebug(w.output,'lm:'+lookaheadMatch);
+//# mwDebug(w.output,'lmi:'+lookaheadMatch.index+' lI:'+this.lookaheadRegExp.lastIndex);
+//# mwDebug(w.output,'lm1:'+lookaheadMatch[1]);
+//# mwDebug(w.output,'lm2:'+lookaheadMatch[2]);
 			var lastIndex = this.lookaheadRegExp.lastIndex;
 			var contents = lookaheadMatch[1];
-			// see http://meta.wikimedia.org/wiki/Help:Variable
-			if(contents==&quot;PAGENAME&quot;) {
-				createTiddlyText(w.output,w.tiddler.title);
+			if(MediaWikiFormatter.expandVariable(w,contents)) {
 				w.nextMatch = lastIndex;
 				return;
 			}
-			var i = contents.indexOf(&quot;|&quot;);
+			var i = contents.indexOf('|');
 			var title = i==-1 ? contents : contents.substr(0,i);
-			title = title.trim().replace(/_/mg,&quot; &quot;);// Underscore in template name is equivalent to space
-			title = &quot;Template:&quot; + title.substr(0,1).toUpperCase() + title.substring(1);
+			//# normalize title
+			title = title.trim().replace(/_/mg,' ');
+			title = 'Template:' + title.substr(0,1).toUpperCase() + title.substring(1);
 			var tiddler = store.fetchTiddler(title);
 			var oldSource = w.source;
 			if(tiddler) {
 				params = {};
-				w.source = lookaheadMatch[1];
 				if(i!=-1) {
-					w.nextMatch = 0;
-					params = MediaWikiFormatter.getTemplateParams(w);
+					//#w.nextMatch = 0;
+					params = MediaWikiFormatter.getTemplateParams(lookaheadMatch[1]);
 				}
-				w.source = MediaWikiFormatter.expandTemplate(w,tiddler,params);
+				w.source = MediaWikiFormatter.expandTemplate(w,tiddler.text,params);
 				w.nextMatch = 0;
 				w.subWikifyUnterm(w.output);
 			} else {
 				if(config.options.chkMediaWikiDisplayEmptyTemplateLinks) {
-					// for conveniece, output the name of the template so can click on it and create tiddler
-					w.source = &quot;[[&quot;+title+&quot;]]&quot;;
+					//# for conveniece, output the name of the template so can click on it and create tiddler
+					w.source = '[['+title+']]';
 					w.nextMatch = 0;
 					w.subWikifyUnterm(w.output);
 				}
@@ -2106,35 +2338,35 @@ config.mediaWikiFormatters = [
 },
 
 {
-	name: &quot;mediaWikiParagraph&quot;,
-	match: &quot;\\n{2,}&quot;,
+	name: 'mediaWikiParagraph',
+	match: '\\n{2,}',
 	handler: function(w)
 	{
-		var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName==&quot;P&quot; ? w.output.parentNode : w.output;
-		w.output = createTiddlyElement(output,&quot;p&quot;);
+		//#var output = w.output.nodeType==1 &amp;&amp; w.output.nodeName=='P' ? w.output.parentNode : w.output;
+		w.output = createTiddlyElement2(w.output,'p');
 	}
 },
 
 {
-	name: &quot;mediaWikiExplicitLineBreak&quot;,
-	match: &quot;&lt;br ?/?&gt;&quot;,
+	name: 'mediaWikiExplicitLineBreak',
+	match: '&lt;br ?/?&gt;',
 	handler: function(w)
 	{
-		createTiddlyElement(w.output,&quot;br&quot;);
+		createTiddlyElement2(w.output,'br');
 	}
 },
 
 {
-	name: &quot;mediaWikiExplicitLineBreakWithParams&quot;,
+	name: 'mediaWikiExplicitLineBreakWithParams',
 	match: &quot;&lt;br(?:\\s*(?:(?:.*?)=[\&quot;']?(?:.*?)[\&quot;']?))*?\\s*/?&gt;&quot;,
 	lookaheadRegExp: /&lt;br((?:\s+(?:.*?)=[&quot;']?(?:.*?)[&quot;']?)*?)?\s*\/?&gt;/mg,
 	handler: function(w)
 	{
-		//# copes with erroneous &lt;br clear=&quot;right&quot;&gt;
+		//# copes with erroneous &lt;br clear='right'&gt;
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
-			var e =createTiddlyElement(w.output,&quot;br&quot;);
+			var e =createTiddlyElement2(w.output,'br');
 			if(lookaheadMatch[1]) {
 				MediaWikiFormatter.setAttributesFromParams(e,lookaheadMatch[1]);
 			}
@@ -2144,27 +2376,27 @@ config.mediaWikiFormatters = [
 },
 
 {
-	name: &quot;mediaWikiTitledUrlLink&quot;,
-	match: &quot;\\[&quot; + config.textPrimitives.urlPattern + &quot;(?:\\s+[^\\]]+)?&quot; + &quot;\\]&quot;,
+	name: 'mediaWikiTitledUrlLink',
+	match: '\\[' + config.textPrimitives.urlPattern + '(?:\\s+[^\\]]+)?' + '\\]',
 	//# eg [http://www.nupedia.com] or [http://www.nupedia.com Nupedia]
-	//# &lt;sup id=&quot;_ref-1&quot; class=&quot;reference&quot;&gt;&lt;a href=&quot;#_note-1&quot; title=&quot;&quot;&gt;[2]&lt;/a&gt;
+	//# &lt;sup id='_ref-1' class='reference'&gt;&lt;a href='#_note-1' title=''&gt;[2]&lt;/a&gt;
 	handler: function(w)
 	{
-		var lookaheadRegExp = new RegExp(&quot;\\[(&quot; + config.textPrimitives.urlPattern + &quot;)(?:\\s+([^\[]+))?&quot; + &quot;\\]&quot;,&quot;mg&quot;);
+		var lookaheadRegExp = new RegExp('\\[(' + config.textPrimitives.urlPattern + ')(?:\\s+([^\[]+))?' + '\\]','mg');
 		lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = lookaheadRegExp.exec(w.source);
 		if(lookaheadMatch &amp;&amp; lookaheadMatch.index==w.matchStart) {
 			var link = lookaheadMatch[1];
-			var s = createTiddlyElement(w.output);
-			var e = createExternalLink(s,link);
 			if(lookaheadMatch[2]) {
+				var e = createExternalLink(w.output,link);
 				var oldSource = w.source; var oldMatch = w.nextMatch;
 				w.source = lookaheadMatch[2].trim(); w.nextMatch = 0;
 				w.subWikifyUnterm(e);
 				w.source = oldSource; w.nextMatch = oldMatch;
 			} else {
+				e = createExternalLink(createTiddlyElement2(w.output,'sup'),link);
 				w.linkCount++;
-				createTiddlyText(e,&quot;[&quot;+w.linkCount+&quot;]&quot;);
+				createTiddlyText(e,'['+w.linkCount+']');
 			}
 			w.nextMatch = lookaheadRegExp.lastIndex;
 		}
@@ -2172,7 +2404,7 @@ config.mediaWikiFormatters = [
 },
 
 {
-	name: &quot;mediaWikiUrlLink&quot;,
+	name: 'mediaWikiUrlLink',
 	match: config.textPrimitives.urlPattern,
 	handler: function(w)
 	{
@@ -2181,121 +2413,155 @@ config.mediaWikiFormatters = [
 },
 
 {
-	name: &quot;mediaWikiBold&quot;,
+	name: 'mediaWikiBoldItalic',
+	match: &quot;'''''&quot;,
+	termRegExp: /('''''|(?=\n))/mg,
+	element: 'strong',
+	handler: function(w)
+	{
+		var e = createTiddlyElement(w.output,this.element);
+		w.subWikifyTerm(createTiddlyElement(e,'em'),this.termRegExp);
+	}
+},
+
+{
+	name: 'mediaWikiBold',
 	match: &quot;'''&quot;,
-	termRegExp: /('''|\n)/mg,
-	element: &quot;strong&quot;,
+	termRegExp: /('''|(?=\n))/mg,
+	element: 'strong',
 	handler: config.formatterHelpers.createElementAndWikify
 },
 
 {
-	name: &quot;mediaWikiItalic&quot;,
-	match: &quot;''(?!')&quot;,
-	termRegExp: /(''(?!')|\n)/mg,
-	element: &quot;em&quot;,
+	name: 'mediaWikiItalic',
+	match: &quot;''&quot;,
+	termRegExp: /((?:''(?!'))|(?=\n))/mg,
+	element: 'em',
 	handler: config.formatterHelpers.createElementAndWikify
 },
 
 {
-	name: &quot;mediaWikiUnderline&quot;,
-	match: &quot;&lt;u&gt;&quot;,
-	termRegExp: /(&lt;\/u&gt;|\n)/mg,
-	element: &quot;u&quot;,
+	name: 'mediaWikiUnderline',
+	match: '&lt;u&gt;',
+	termRegExp: /(&lt;\/u&gt;|(?=\n))/mg,
+	element: 'u',
 	handler: config.formatterHelpers.createElementAndWikify
 },
 
 {
-	name: &quot;mediaWikiStrike&quot;,
-	match: &quot;&lt;s&gt;&quot;,
-	termRegExp: /(&lt;\/s&gt;|\n)/mg,
-	element: &quot;strike&quot;,
+	name: 'mediaWikiStrike',
+	match: '&lt;s&gt;',
+	termRegExp: /(&lt;\/s&gt;|(?=\n))/mg,
+	element: 'strike',
 	handler: config.formatterHelpers.createElementAndWikify
 },
 
 {
-	name: &quot;mediaWikiBoldTag&quot;,
-	match: &quot;&lt;b&gt;&quot;,
-	termRegExp: /(&lt;\/b&gt;|\n)/mg,
-	element: &quot;b&quot;,
+	name: 'mediaWikiBoldTag',
+	match: '&lt;b&gt;',
+	termRegExp: /(&lt;\/b&gt;|(?=\n))/mg,
+	element: 'b',
 	handler: config.formatterHelpers.createElementAndWikify
 },
 
 {
-	name: &quot;mediaWikiTemplateParam&quot;,// note, this only gets invoked when viewing the template
-	match: &quot;\\{\\{\\{&quot;,
+	name: 'mediaWikiItalicTag',
+	match: '&lt;i&gt;',
+	termRegExp: /(&lt;\/i&gt;|(?=\n))/mg,
+	element: 'i',
+	handler: config.formatterHelpers.createElementAndWikify
+},
+
+{
+	//# note, this only gets invoked when viewing the template
+	name: 'mediaWikiTemplateParam',
+	match: '\\{\\{\\{',
 	lookaheadRegExp: /(\{\{\{(?:.|\n)*?\}\}\})/mg,
-	element: &quot;span&quot;,
+	element: 'span',
 	handler: config.formatterHelpers.enclosedTextHelper
 },
 
 //# See http://en.wikipedia.org/wiki/Wikipedia:Footnotes
 //# for an explanation of how to generate footnotes using the &lt;ref(erences/)&gt; tags
 {
-	name: &quot;mediaWikiInsertReference&quot;,
-	match: &quot;&lt;ref[^/]*&gt;&quot;,
+	name: 'mediaWikiInsertReference',
+	match: '&lt;ref[^/]*&gt;',
 	lookaheadRegExp: /&lt;ref(\s+(?:.*?)=[&quot;']?(?:.*?)[&quot;']?)?&gt;([^&lt;]*?)&lt;\/ref&gt;/mg,
+	//#lookaheadRegExp: /&lt;ref(\s+(?:.*?)=[&quot;']?(?:.*?)[&quot;']?)?&gt;([.\n]*?)&lt;\/ref&gt;/mg,
 	handler: function(w)
 	{
+		if(config.browser.isIE) {
+			refRegExp = /&lt;ref[^\/]*&gt;((?:.|\n)*?)&lt;\/ref&gt;/mg;
+			refRegExp.lastIndex = w.matchStart;
+			var refMatch = refRegExp.exec(w.source);
+			if(refMatch &amp;&amp; refMatch.index == w.matchStart) {
+				w.nextMatch = refRegExp.lastIndex;
+				return;
+			}
+		}
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
-			var x = {id:&quot;&quot;,value:&quot;&quot;};
+			var x = {id:'',value:''};
 			w.nextMatch = this.lookaheadRegExp.lastIndex;
 			if(!w.referenceCount) {
 				w.referenceCount = 0;
 				w.references = {};
 			}
-			var s = createTiddlyElement(w.output,&quot;sup&quot;,null,&quot;reference&quot;);
-			var a = createTiddlyElement(s,&quot;a&quot;);
-			var prefix = w.tiddler ? w.tiddler.title + &quot;:&quot; : &quot;&quot;;
+			var s = createTiddlyElement(w.output,'sup',null,'reference');
+			var a = createTiddlyElement2(s,'a');
+			var prefix = w.tiddler ? w.tiddler.title + ':' : '';
+			var name;
 			if(lookaheadMatch[1]) {
-				var r = {};
-				r = MediaWikiFormatter.setFromParams(w,lookaheadMatch[1]);
-				var name = r.name ? r.name.trim() : &quot;&quot;;
-				name = name.replace(/ /g,&quot;_&quot;);
-				s.id = prefix + &quot;_ref-&quot; + name;// + &quot;_&quot; + nameCount;(w.referenceCount+1);
+				//# &lt;ref params&gt;
+				//#var r = {};
+				var r = MediaWikiFormatter.setFromParams(w,lookaheadMatch[1]);
+				name = r.name ? r.name.trim() : '';
+				name = name.replace(/ /g,'_');
+				s.id = prefix + '_ref-' + name;// + '_' + nameCount;(w.referenceCount+1);
 				if(!w.references[name]) {
 					w.references[name] = x;
 					w.references[name].id = w.referenceCount;
 					w.references[name].value = lookaheadMatch[2].trim();
 				}
 			} else {
+				//# &lt;ref&gt;, repeat reference
 				w.references[w.referenceCount] = x;
 				w.references[w.referenceCount].id = w.referenceCount;
 				w.references[w.referenceCount].value = lookaheadMatch[2].trim();
 				name = w.referenceCount;
-				s.id = prefix + &quot;_ref-&quot; + w.referenceCount;
+				s.id = prefix + '_ref-' + w.referenceCount;
 			}
 			w.referenceCount++;
 			a.title = lookaheadMatch[2].trim();//mb, extra to wikipedia
-			a.href = &quot;#&quot; + prefix + &quot;_note-&quot; + name;
-			a.innerHTML = &quot;[&quot;+w.referenceCount+&quot;]&quot;;
-//#&lt;sup id=&quot;_ref-0&quot; class=&quot;reference&quot;&gt;&lt;a href=&quot;#_note-0&quot; title=&quot;&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt;
-//#&lt;sup id=&quot;_ref-foreign_ministry_0&quot; class=&quot;reference&quot;&gt;&lt;a href=&quot;#_note-foreign_ministry&quot; title=&quot;&quot;&gt;[2]&lt;/a&gt;&lt;/sup&gt;
+			a.href = '#' + prefix + '_note-' + name;
+			a.innerHTML = '['+w.referenceCount+']';
+//#&lt;sup id='_ref-0' class='reference'&gt;&lt;a href='#_note-0' title=''&gt;[1]&lt;/a&gt;&lt;/sup&gt;
+//#&lt;sup id='_ref-foreign_ministry_0' class='reference'&gt;&lt;a href='#_note-foreign_ministry' title=''&gt;[2]&lt;/a&gt;&lt;/sup&gt;
 		}
 	}
 },
 
 {
-	name: &quot;mediaWikiListReferences&quot;,
-	match: &quot;&lt;references ?/&gt;&quot;,
+	name: 'mediaWikiListReferences',
+	match: '&lt;references ?/&gt;',
 	lookaheadRegExp: /&lt;references ?\/&gt;/mg,
 	handler: function(w)
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		if(config.options.chkMediaWikiListReferences &amp;&amp; w.referenceCount) {
-			var ol = createTiddlyElement(w.output,&quot;ol&quot;,null,&quot;references&quot;);
+			var ol = createTiddlyElement(w.output,'ol',null,'references');
 			var oldSource = w.source;
 			if(w.referenceCount&gt;0) {
 				for(var i in w.references) {
-					var li = createTiddlyElement(ol,&quot;li&quot;);
-					var prefix = w.tiddler ? w.tiddler.title + &quot;:&quot; : &quot;&quot;;
-					var b = createTiddlyElement(li,&quot;b&quot;);
-					var a = createTiddlyElement(b,&quot;a&quot;);
-					li.id = prefix + &quot;_note-&quot; + i;
-					a.href = &quot;#&quot; + prefix + &quot;_ref-&quot; + i;
-					a.innerHTML = &quot;^&quot;;
+					var li = createTiddlyElement2(ol,'li');
+					var prefix = w.tiddler ? w.tiddler.title + ':' : '';
+					var b = createTiddlyElement2(li,'b');
+					var a = createTiddlyElement2(b,'a');
+					li.id = prefix + '_note-' + i;
+					a.href = '#' + prefix + '_ref-' + i;
+					a.innerHTML = '^';
 					w.source = w.references[i].value;
 					w.nextMatch = 0;
 					w.subWikifyUnterm(li);
@@ -2308,49 +2574,60 @@ config.mediaWikiFormatters = [
 },
 
 {
-	name: &quot;mediaWikiRepeatReference&quot;,
-	match: &quot;&lt;ref[^/]*/&gt;&quot;,
-	lookaheadRegExp: /&lt;ref(\s+(?:.*?)=&quot;(?:.*?)&quot;)?\s*\/&gt;/mg,
+	name: 'mediaWikiRepeatReference',
+	match: '&lt;ref[^/]*/&gt;',
+	lookaheadRegExp: /&lt;ref(\s+(?:.*?)=[&quot;'](?:.*?)[&quot;'])?\s*\/&gt;/mg,
 	handler: function(w)
 	{
+		if(config.browser.isIE) {
+			refRegExp = /&lt;ref.*?\/&gt;/mg;
+			refRegExp.lastIndex = w.matchStart;
+			var refMatch = refRegExp.exec(w.source);
+			if(refMatch &amp;&amp; refMatch.index == w.matchStart) {
+				w.nextMatch = refRegExp.lastIndex;
+				return;
+			}
+		}
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
-			var x = {id:&quot;&quot;,value:&quot;&quot;};
+			var x = {id:'',value:''};
 			w.nextMatch = this.lookaheadRegExp.lastIndex;
 //#&lt;ref name=&quot;foreign ministry&quot;&gt;
 //#&lt;sup id=&quot;_ref-foreign_ministry_1&quot; class=&quot;reference&quot;&gt;&lt;a href=&quot;#_note-foreign_ministry&quot; title=&quot;&quot;&gt;[2]&lt;/a&gt;&lt;/sup&gt;
 			var s = createTiddlyElement(w.output,&quot;sup&quot;,null,&quot;reference&quot;);
-			var a = createTiddlyElement(s,&quot;a&quot;);
-			var prefix = w.tiddler ? w.tiddler.title : &quot;&quot;;
+			var a = createTiddlyElement2(s,&quot;a&quot;);
+			var prefix = w.tiddler ? w.tiddler.title : '';
 			if(lookaheadMatch[1]) {
 				var r = {};
 				r = MediaWikiFormatter.setFromParams(w,lookaheadMatch[1]);
-				var name = r.name ? r.name.trim() : &quot;&quot;;
-				name = name.replace(/ /g,&quot;_&quot;);
-				s.id = prefix + &quot;_ref-&quot; + name +&quot;_&quot; + (w.referenceCount+1);
-				var count = w.references &amp;&amp; w.references[name] ? (w.references[name].id+1) : &quot;?&quot;;
+				var name = r.name ? r.name.trim() : '';
+				name = name.replace(/ /g,'_');
+				s.id = prefix + '_ref-' + name +'_' + (w.referenceCount+1);
+				var count = w.references &amp;&amp; w.references[name] ? (w.references[name].id+1) : '?';
 			}
-			a.href = &quot;#&quot; + prefix + &quot;_note-&quot; + name;
-			a.innerHTML = &quot;[&quot;+count+&quot;]&quot;;
+			a.href = '#' + prefix + '_note-' + name;
+			a.innerHTML = '['+count+']';
 			a.title = name;
 		}
 	}//# end handler
 },
 
 {
-	name: &quot;mediaWikiHtmlEntitiesEncoding&quot;,
-	match: &quot;&amp;#?[a-zA-Z0-9]{2,8};&quot;,
+	name: 'mediaWikiHtmlEntitiesEncoding',
+	match: '&amp;#?[a-zA-Z0-9]{2,8};',
 	handler: function(w)
 	{
-		createTiddlyElement(w.output,&quot;span&quot;).innerHTML = w.matchText;
+		if(!config.browser.isIE)
+			createTiddlyElement(w.output,&quot;span&quot;).innerHTML = w.matchText;
 	}
 },
 
 {
-	name: &quot;mediaWikiComment&quot;,
-	match: &quot;&lt;!\\-\\-&quot;,
+	name: 'mediaWikiComment',
+	match: '&lt;!\\-\\-',
 	lookaheadRegExp: /&lt;!\-\-((?:.|\n)*?)\-\-&gt;/mg,
+	//#lookaheadRegExp: /&lt;!\-\-([.\n]*?)\-\-&gt;/mg,
 	handler: function(w)
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
@@ -2362,8 +2639,8 @@ config.mediaWikiFormatters = [
 },
 
 {
-	name: &quot;mediaWikiIncludeOnly&quot;,
-	match: &quot;&lt;includeonly&gt;&quot;,
+	name: 'mediaWikiIncludeOnly',
+	match: '&lt;includeonly&gt;',
 	lookaheadRegExp: /&lt;includeonly&gt;((?:.|\n)*?)&lt;\/includeonly&gt;/mg,
 	handler: function(w)
 	{
@@ -2376,32 +2653,54 @@ config.mediaWikiFormatters = [
 },
 
 {
-	name: &quot;mediaWikiNoWiki&quot;,
-	match: &quot;&lt;nowiki&gt;&quot;,
+	name: 'mediaWikiNoWiki',
+	match: '&lt;nowiki&gt;',
 	lookaheadRegExp: /&lt;nowiki&gt;((?:.|\n)*?)&lt;\/nowiki&gt;/mg,
-	element: &quot;span&quot;,
+	element: 'span',
 	handler: config.formatterHelpers.enclosedTextHelper
 },
 
 {
-	name: &quot;mediaWikiPreNoWiki&quot;,
-	match: &quot;&lt;pre&gt;\s*&lt;nowiki&gt;&quot;,
+	name: 'mediaWikiPreNoWiki',
+	match: '&lt;pre&gt;\s*&lt;nowiki&gt;',
 	lookaheadRegExp: /&lt;pre&gt;\s*&lt;nowiki&gt;((?:.|\n)*?)&lt;\/nowiki&gt;\s*&lt;\/pre&gt;/mg,
-	element: &quot;pre&quot;,
+	element: 'pre',
 	handler: config.formatterHelpers.enclosedTextHelper
 },
 
 {
-	name: &quot;mediaWikiPre&quot;,
-	match: &quot;&lt;pre&gt;&quot;,
+	name: 'mediaWikiPre',
+	match: '&lt;pre&gt;',
 	lookaheadRegExp: /&lt;pre&gt;((?:.|\n)*?)&lt;\/pre&gt;/mg,
-	element: &quot;pre&quot;,
+	element: 'pre',
 	handler: config.formatterHelpers.enclosedTextHelper
 },
 
 {
-	name: &quot;mediaWikiGallery&quot;,
-	match: &quot;&lt;gallery&gt;&quot;,
+	name: 'mediaWikiMagicWords',
+	match: '__',
+	lookaheadRegExp: /__([A-Z]*?)__/mg,
+	//# see http://meta.wikimedia.org/wiki/Help:Magic_words
+	handler: function(w)
+	{
+		this.lookaheadRegExp.lastIndex = w.matchStart;
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+			//# deal with variables by name here
+			if(lookaheadMatch[1]=='NOTOC') {
+				//# do nothing
+			} else if(config.options.chkDisplayMediaWikiMagicWords) {
+				//# just output the text of any variables that are not understood
+				w.outputText(w.output,w.matchStart,w.nextMatch);
+			}
+			w.nextMatch = this.lookaheadRegExp.lastIndex;
+		}
+	}
+},
+
+{
+	name: 'mediaWikiGallery',
+	match: '&lt;gallery&gt;',
 	lookaheadRegExp: /[Ii]mage:(.*?)\n/mg,
 	handler: function(w)
 	{
@@ -2410,17 +2709,17 @@ config.mediaWikiFormatters = [
 //#Image:Wiki.png
 //#Image:Wiki.png|Captioned
 //#Image:Wiki.png|[[Help:Contents/Links|Links]] can be put in captions.
-//#Image:Wiki.png|Full [[MediaWiki]]&lt;br /&gt;[[syntax]] may now be used…
+//#Image:Wiki.png|Full [[MediaWiki]]&lt;br /&gt;[[syntax]] may now be used�
 //#&lt;/gallery&gt;
 //#&lt;table class=&quot;gallery&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot;&gt;
 //#&lt;tr&gt;
 //#...
 //#&lt;/tr&gt;
 //#&lt;/table&gt;
-		var table = createTiddlyElement(w.output,&quot;table&quot;,null,&quot;gallery&quot;);
-		table.cellspacing = &quot;0&quot;;
-		table.cellpadding = &quot;0&quot;;
-		var rowElem = createTiddlyElement(table,&quot;tr&quot;);
+		var table = createTiddlyElement(w.output,'table',null,'gallery');
+		table.cellspacing = '0';
+		table.cellpadding = '0';
+		var rowElem = createTiddlyElement2(table,'tr');
 		var col = 0;
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var nM = w.nextMatch;
@@ -2428,27 +2727,27 @@ config.mediaWikiFormatters = [
 		var oldSource = w.source;
 		while(lookaheadMatch) {
 			nM += lookaheadMatch[1].length;
-			w.source = lookaheadMatch[1] +&quot;]]&quot;;//!! ]] is hack until getParams is working
+			w.source = lookaheadMatch[1] +']]';//!! ]] is hack until getParams is working
 			w.nextMatch = 0;
 			var params = MediaWikiFormatter.getParams(w);
 			var src = params[1];
-			src = src.trim().replace(/ /mg,&quot;_&quot;);
+			src = src.trim().replace(/ /mg,'_');
 			src = src.substr(0,1).toUpperCase() + src.substring(1);
-			var palign = &quot;right&quot;; 
-			var psrc = &quot;120px-&quot;+src;
+			var palign = 'right'; 
+			var psrc = '120px-'+src;
 			var px = 120;
 			var pframed = false;
 			ptitle = null;
 			for(var i=2;i&lt;params.length;i++) {
-				//right, left, center, none, sizepx, thumbnail (thumb), frame, and alternate (caption) text.
+				//# right, left, center, none, sizepx, thumbnail (thumb), frame, and alternate (caption) text.
 				var p = params[i];
-				if(p==&quot;right&quot;||p==&quot;left&quot;||p==&quot;center&quot;||p==&quot;none&quot;) {
+				if(p=='right'||p=='left'||p=='center'||p=='none') {
 					palign = p;
-				} else if(p==&quot;framed&quot;) {
+				} else if(p=='framed') {
 					pframed = true;
 				} else if(/\d{1,4}px/.exec(p)) {
 					px = p.substr(0,p.length-2).trim();
-					psrc = px + &quot;px-&quot; + src;
+					psrc = px + 'px-' + src;
 				} else {
 					ptitle = p;
 				}
@@ -2456,7 +2755,7 @@ config.mediaWikiFormatters = [
 //#&lt;td&gt;
 //#&lt;div class=&quot;gallerybox&quot;&gt;
 //#	&lt;div class=&quot;thumb&quot; style=&quot;padding: 26px 0;&quot;&gt;
-//#		&lt;a href=&quot;/wiki/Image:Paul_C%C3%A9zanne_184.jpg&quot; title=&quot;Image:Paul Cézanne 184.jpg&quot;&gt;
+//#		&lt;a href=&quot;/wiki/Image:Paul_C%C3%A9zanne_184.jpg&quot; title=&quot;Image:Paul C�zanne 184.jpg&quot;&gt;
 //#		&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Paul_C%C3%A9zanne_184.jpg/120px-Paul_C%C3%A9zanne_184.jpg&quot; width=&quot;120&quot; height=&quot;94&quot; alt=&quot;&quot; /&gt;
 //#		&lt;/a&gt;
 //#	&lt;/div&gt;
@@ -2465,23 +2764,24 @@ config.mediaWikiFormatters = [
 //#	&lt;/div&gt;
 //#&lt;/div&gt;
 //#&lt;/td&gt;
-			var td = createTiddlyElement(rowElem,&quot;td&quot;);
-			var gb = createTiddlyElement(td,&quot;div&quot;,null,&quot;gallerybox&quot;);
-			var t = createTiddlyElement(gb,&quot;div&quot;,null,&quot;thumb&quot;);
-			t.style[&quot;padding&quot;] = &quot;26px 0&quot;;
+			var td = createTiddlyElement2(rowElem,'td');
+			var gb = createTiddlyElement(td,'div',null,'gallerybox');
+			var t = createTiddlyElement(gb,'div',null,'thumb');
+			t.style['padding'] = '26px 0';
 
-			var a = createTiddlyElement(t,&quot;a&quot;);
+			var a = createTiddlyElement2(t,'a');
 			if(config.options.chkMediaWikiDisplayEnableThumbZoom) {
 				a.href = src;
 			}
 			a.title = ptitle;
-			var img = createTiddlyElement(a,&quot;img&quot;);
+			var img = createTiddlyElement2(a,'img');
 			img.src = psrc;
 			img.width = px;
-			img.alt = &quot;&quot;;//ptitle;
+			//#ptitle;
+			img.alt = '';
 
-			var gt = createTiddlyElement(gb,&quot;div&quot;,null,&quot;gallerytext&quot;);
-			p = createTiddlyElement(gt,&quot;p&quot;);
+			var gt = createTiddlyElement(gb,'div',null,'gallerytext');
+			p = createTiddlyElement2(gt,'p');
 			var oldSource2 = w.source; var oldMatch = w.nextMatch;
 			w.source = ptitle; w.nextMatch = 0;
 			w.subWikifyUnterm(p);
@@ -2489,18 +2789,18 @@ config.mediaWikiFormatters = [
 
 			col++;
 			if(col&gt;3) {
-				rowElem = createTiddlyElement(table,&quot;tr&quot;);
+				rowElem = createTiddlyElement2(table,'tr');
 				col = 0;
 			}
 			w.source = oldSource;
 			lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		}
-		w.nextMatch = nM + &quot;&lt;gallery&gt;&quot;.length*2+1+&quot;Image:&quot;.length;//!! hack
+		w.nextMatch = nM + '&lt;gallery&gt;'.length*2+1+'Image:'.length;//!! hack
 	}
 },
 
 {
-	name: &quot;mediaWikiHtmlTag&quot;,
+	name: 'mediaWikiHtmlTag',
 	match: &quot;&lt;[a-zA-Z]{2,}(?:\\s*(?:(?:.*?)=[\&quot;']?(?:.*?)[\&quot;']?))*?&gt;&quot;,
 	lookaheadRegExp: /&lt;([a-zA-Z]{2,})((?:\s+(?:.*?)=[&quot;']?(?:.*?)[&quot;']?)*?)?\s*(\/)?&gt;/mg,
 	handler: function(w)
@@ -2508,27 +2808,29 @@ config.mediaWikiFormatters = [
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
-			var e =createTiddlyElement(w.output,lookaheadMatch[1]);
+			var e =createTiddlyElement2(w.output,lookaheadMatch[1]);
 			if(lookaheadMatch[2]) {
 				MediaWikiFormatter.setAttributesFromParams(e,lookaheadMatch[2]);
 			}
 			if(lookaheadMatch[3]) {
-				w.nextMatch = this.lookaheadRegExp.lastIndex;// empty tag
+				//# empty tag
+				w.nextMatch = this.lookaheadRegExp.lastIndex;
 			} else {
-				w.subWikify(e,&quot;&lt;/&quot;+lookaheadMatch[1]+&quot;&gt;&quot;);
+				w.subWikify(e,'&lt;/'+lookaheadMatch[1]+'&gt;');
 			}
 		}
 	}
 }
 ];
 
-config.parsers.mediaWikiFormatter = new Formatter(config.mediaWikiFormatters);
-config.parsers.mediaWikiFormatter.formatTag = &quot;MediaWikiFormat&quot;;
-} // end of &quot;install only once&quot;
+config.parsers.mediawikiFormatter = new Formatter(config.mediawiki.formatters);
+config.parsers.mediawikiFormatter.format = 'mediawiki';
+config.parsers.mediawikiFormatter.formatTag = 'MediaWikiFormat';
+} //# end of 'install only once'
 //}}}
 </pre>
 </div>
-<div title="Multi-site Installation" modifier="miklb" created="200707302048" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200707302048">
+<div title="Multi-site Installation" modifier="habari" modified="200710161724" created="200707302048" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200707302048" changecount="1">
 <pre>A single installation of the '''Habari''' source code can power multiple, independent sites.
 
 If you have only a single site, then '''Habari''' will use the config.php file that resides in the same directory as index.php.  This is the default configuration file, and will be used if no site-specific configuration can be found.
@@ -2586,12 +2888,12 @@ Each '''Habari''' site can use its own themes and plugins, as well as the themes
 # In order for the installation routine to work for a site other than the default site, there '''must''' be a &lt;code&gt;config.php&lt;/code&gt; in that site's directory.
 </pre>
 </div>
-<div title="PageTemplate" modifier="YourName" modified="200701122313" created="200701122350" tags="BlackicityTheme" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200701122313">
+<div title="PageTemplate" modifier="habari" modified="200710161730" created="200701122350" tags="BlackicityTheme" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200701122313" changecount="3">
 <pre>&lt;!--{{{--&gt;
 
 &lt;div id='topMenu' refresh='content' tiddler='MainMenu'&gt;&lt;/div&gt;
 &lt;div id='sidebar'&gt;
-&lt;div id='sidebarOptions' refresh='content' tiddler='SideBarOptions'&gt;&lt;/div&gt;
+&lt;!--&lt;div id='sidebarOptions' refresh='content' tiddler='SideBarOptions'&gt;&lt;/div&gt;--&gt;
 &lt;div id='sidebarTabs' refresh='content' force='true' tiddler='SideBarTabs'&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div id='displayArea'&gt;
@@ -2600,7 +2902,7 @@ Each '''Habari''' site can use its own themes and plugins, as well as the themes
 &lt;/div&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
-<div title="Pingbacks" modifier="miklb" created="200710131847" tags="MediaWikiFormat" changecount="1">
+<div title="Pingbacks" modifier="habari" modified="200710161731" created="200710131847" tags="MediaWikiFormat" changecount="2">
 <pre>As of revision 756 Habari now supports the sending and recieving of Pingbacks.  That is all well and good, but how do we display them on our sites?
 
 Quite simple actually.  Let's go over the code you will need to add to your comments template.
@@ -2638,7 +2940,7 @@ Fairly straightforward I would think.
 Note, to only call your comments, you need to use &lt;pre&gt;$post-&gt;comments-&gt;comments-&gt;approved-&gt;count;&lt;/pre&gt;, otherwise, the default comments.php in k2 will show both pingbacks and pingbacks as comments with the above  pingback code.
 </pre>
 </div>
-<div title="Plugins" modifier="miklb" modified="200710132246" created="200710132018" tags="MediaWikiFormat" changecount="2">
+<div title="Plugins" modifier="habari" modified="200710161731" created="200710132018" tags="MediaWikiFormat" changecount="3">
 <pre>Plugins are intended to be extensions of the core functionality of Habari.  Your installation will come with several, community developed plugins, or you may download other, community and individually developed plugins.  Eventually, a repository on the official site will house freely available plugins, until then, you can check out the [http://wiki.habariproject.org/en/Available_Plugins Available Plugins].
 
 ==Installation &amp; Activation==
@@ -2650,7 +2952,7 @@ Navigate to your /admin/plugins in your dashboard, and a list of all plugins in 
 Some plugins will provide features that do not require anything else to implement.  However, some plugins will require adding a line of code to your active theme to output some data.  Generally speaking, the plugin author should provide documentation for this, however, the basics of how they work is that the plugin sets a variable using your theme.php file, and then within the template where you want your data to be outputted, you simply echo that variable.  This is done so that in the future, when other theme engines are added, specific PHP code isn't required for the plugin to work with that theme.  So if a plugin had the variable $my_twitter, in the raw php engine you would add &lt;code&gt;&lt;?php echo $my_twitter; ?&gt;&lt;/code&gt; to the template you wanted to show the data.  As other engines are added, this will be updated to reflect those as well.
 </pre>
 </div>
-<div title="QueryRecord" modifier="miklb" modified="200710160035" created="200710132025" tags="MediaWikiFormat" changecount="6">
+<div title="QueryRecord" modifier="habari" modified="200710161731" created="200710132025" tags="MediaWikiFormat" changecount="7">
 <pre>A single instance of QueryRecord represents a single query result row.  QueryRecord also serves as the base class for derivative classes that provide row-level data access.  QueryRecord is, in many ways, the fundamental building block of Habari.
 
 ==Using QueryRecord==
@@ -2766,7 +3068,7 @@ QueryRecord provides the following:
 * delete(), for deleting an item from the database
 </pre>
 </div>
-<div title="Recent Comments" modifier="miklb" modified="200710131842" created="200710131840" tags="MediaWikiFormat" changecount="7">
+<div title="Recent Comments" modifier="habari" modified="200710161732" created="200710131840" tags="MediaWikiFormat" changecount="9">
 <pre>It's really simple to get a listing of recent comments to output in your Habari theme.  It's just two steps.
 
 First, add this line to your custom &lt;tt&gt;theme.php&lt;/tt&gt; file for your theme inside the &lt;tt&gt;add_template_vars&lt;/tt&gt; function:
@@ -2774,9 +3076,7 @@ First, add this line to your custom &lt;tt&gt;theme.php&lt;/tt&gt; file for your
 &lt;pre&gt;$this-&gt;assign('recent_comments', Comments::get( array('limit'=&gt;25, 'status'=&gt;Comment::STATUS_APPROVED, 'orderby'=&gt;'date DESC' ) ) );&lt;/pre&gt;
 
 If you are using the Pingback plugin, and want to remove those from your recent comments, you can use:
-&lt;pre&gt;
-$this-&gt;assign('recent_comments', Comments::get( array('limit'=&gt;25, 'status'=&gt;Comment::STATUS_APPROVED, 'type'=&gt;Comment::COMMENT, 'orderby'=&gt;'date DESC' ) ) );
-&lt;/pre&gt;
+&lt;pre&gt;$this-&gt;assign('recent_comments', Comments::get( array('limit'=&gt;25, 'status'=&gt;Comment::STATUS_APPROVED, 'type'=&gt;Comment::COMMENT, 'orderby'=&gt;'date DESC' ) ) );&lt;/pre&gt;
 
 note the addition of 'type'.  You could in theory separately list 5 most recent pingbacks with a modification of code.
 
@@ -2784,14 +3084,12 @@ This tells Habari to store the 25 most recent approved comments into a variable 
 
 Second, add this to your theme's template where you want the comment listing to appear:
 
-&lt;pre&gt;
-&lt;h3&gt;Recent Comments&lt;/h3&gt;
+&lt;pre&gt;&lt;h3&gt;Recent Comments&lt;/h3&gt;
 &lt;ul&gt;
 &lt;?php foreach($recent_comments as $comment): ?&gt;
 &lt;li&gt;&lt;a href=&quot;&lt;?php echo $comment-&gt;url ?&gt;&quot;&gt;&lt;?php echo $comment-&gt;name ?&gt;&lt;/a&gt; on &lt;a href=&quot;&lt;?php echo $comment-&gt;post-&gt;permalink; ?&gt;&quot;&gt;&lt;?php echo $comment-&gt;post-&gt;title; ?&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;?php endforeach; ?&gt;
-&lt;/ul&gt;
-&lt;/pre&gt;
+&lt;/ul&gt;&lt;/pre&gt;
 
 Note that there's a bunch of HTML in there that you can change without affecting the basic output of comments.
 
@@ -2807,10 +3105,7 @@ You could even use &lt;code&gt;$comment-&gt;content&lt;/code&gt; to output the c
 
 </pre>
 </div>
-<div title="Recent_Posts" modifier="miklb" created="200710131843" changecount="1">
-<pre>Type the text for 'Recent_Posts'</pre>
-</div>
-<div title="Rewrite Tutorial" modifier="miklb" created="200710132109" tags="MediaWikiFormat" changecount="2">
+<div title="Rewrite Tutorial" modifier="habari" modified="200710161732" created="200710132109" tags="MediaWikiFormat" changecount="3">
 <pre>==Parts of a rewrite rule==
 Rewrite rules are made up of several parts conforming to the fields in
 the rewrite_rules table, all with a distinct purpose.
@@ -3031,7 +3326,7 @@ To remove an existing element from a stack:
 In this syntax, note that you are not able to remove values that have not been given names.
 </pre>
 </div>
-<div title="StyleSheet" modifier="YourName" modified="200710131728" created="200701122350" tags="BlackicityTheme" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200707302047" changecount="1">
+<div title="StyleSheet" modifier="habari" modified="200710161735" created="200701122350" tags="BlackicityTheme" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200707302047" changecount="3">
 <pre>/*{{{*/
 /*Blackicity Theme for TiddlyWiki*/
 /*Design and CSS by Saq Imtiaz*/
@@ -3078,6 +3373,10 @@ border-color: #333;
 .title {color:#222; border-bottom:1px solid#222; font-family:'Lucida Grande', Verdana, Sans-Serif; font-size:1.5em;}
 .subtitle, .subtitle a { color: #999999; font-size: 0.95em;margin:0.2em;}
 .shadow .title{color:#999;}
+
+.tiddler .subtitle {display: none}
+
+.tagged {display: none}
 
 .toolbar {font-size:90%;}
 .selected .toolbar a {color:#999999;}
@@ -3402,7 +3701,7 @@ Each request has a chain of templates that it tries, getting more generic as the
 The failover order for any request is determined in the core system Theme class (not necessarily the user Theme class), and is specific to the type of request made.  The failover order can be overridden by using a custom Theme class, but this is not required for failover to work as described.
 </pre>
 </div>
-<div title="Themes" modifier="miklb" modified="200710132303" created="200710131832" tags="MediaWikiFormat" changecount="7">
+<div title="Themes" modifier="habari" modified="200710161722" created="200710131832" tags="MediaWikiFormat" changecount="8">
 <pre>Currently, Habari only supports one theme engine, the rawphpengine.  Eventually, it will support additional engines (such as Smarty and PHPTAL).  
 
 A modified version of the popular, [http://getk2.com/ k2] theme currently comes as the default theme upon installation, however, the goal is to offer several themes with the download.  A few publicly [http://wiki.habariproject.org/en/Available_Themes available themes] are currently available, with many more on the horizon.
@@ -3425,7 +3724,7 @@ Additional themes can be uploaded to your /user/themes directory.  Themes must i
 * Show [[Pingbacks]]
 </pre>
 </div>
-<div title="Upgrading" modifier="miklb" modified="200710131819" created="200708031912" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708032046" changecount="2">
+<div title="Upgrading" modifier="habari" modified="200710161721" created="200708031912" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708032046" changecount="3">
 <pre>This upgrade process is intended for those upgrading from the first developer release.  If you are using SVN, you //should// be able to SVN up the install.  If you are using an older version, you //may// need to follow the step regarding re-running your rewrite_rules sql.
 
 
@@ -3451,7 +3750,7 @@ Next, you will need to copy the contents of the upgrade.sql file and run the sql
 If you were running a custom theme, you will now need to visit admin-&gt;Themes in your administration area.  Activate K2 for now, and your site should be up and working.  If you had any problems, you can post to the [[habari user group|http://groups.google.com/group/habari-users]].  Be sure to provide as many details as possible, including version of PHP, MySQL, and server config.
 </pre>
 </div>
-<div title="User Documentation" modifier="miklb" modified="200710131828" created="200710131727" tags="MediaWikiFormat" changecount="3">
+<div title="User Documentation" modifier="habari" modified="200710161722" created="200710131727" tags="MediaWikiFormat" changecount="4">
 <pre>==Intallation and Configuration==
 * [[Installation]]: what we know so far
 * [[Upgrading]]
