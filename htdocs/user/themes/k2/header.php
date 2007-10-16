@@ -6,8 +6,8 @@
  <meta http-equiv="Content-Type" content="text/html">
  <meta name="generator" content="Habari">
 
- <link rel="edit" type="application/atom+xml" title="<?php Options::out( 'blog_title' ); ?>" href="<?php URL::out( 'introspection' ); ?>">
- <link rel="alternate" type="application/atom+xml" title="Atom" href="<?php URL::out( 'collection', array( 'index' => '1' ) ); ?>">
+ <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="<?php URL::out( 'collection', array( 'index' => '1' ) ); ?>">
+ <link rel="edit" type="application/atom+xml" title="Atom Publishing Protocol" href="<?php URL::out( 'introspection' ); ?>">
  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="<?php URL::out( 'rsd' ); ?>">
 
  <link rel="stylesheet" type="text/css" media="screen" href="<?php Site::out_url( 'theme' ); ?>/style.css">
