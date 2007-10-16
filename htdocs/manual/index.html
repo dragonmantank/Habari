@@ -939,7 +939,7 @@ Habari supports Atom Publishing Protocol by default, and with a MetaWeblog plugi
 * [[Stack Class]] The Stack class allows a developer to create a &quot;stack&quot; of items for later output.
 </pre>
 </div>
-<div title="FAQ" modifier="miklb" modified="200710132021" created="200704162101" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708031911" changecount="1">
+<div title="FAQ" modifier="miklb" modified="200710160038" created="200704162101" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708031911" changecount="2">
 <pre>==What does &quot;habari&quot; mean?==
 &quot;Habari&quot; is a Swahili word that means &quot;what's the news?&quot;  It's similar to the English &quot;What's up?&quot; or the Spanish &quot;¿Qué pasa?&quot;  The typical response is &quot;mzuri sana&quot;, which means &quot;very good.&quot;
 
@@ -956,14 +956,14 @@ Habari has been successfully tested on Etch, the stable version of [http://www.d
 ==Will Habari work with my web host?==
 Habari should work with any web host that support the above requirement, the below hosts were successfully tested to run Habari:
 
-*[http://dreamhost.com/ Dreamhost]
-*[http://www.site5.com/ Site5]
-*[http://www.mediatemple.net/webhosting/gs/ (mt) Media Temple - (gs) Grid-Server]
-*[http://www.asmallorange.com/ A Small Orange] (servers Claire, Epsilon, Libby, Nu, Pickett)
-*[http://www.celeonet.fr/ Celeonet]
-*[http://www.1and1.fr 1and1 France]
-*[http://www.nearlyfreespeech.net NearlyFreeSpeech (with PHP5 requested)]
-*[http://slicehost.com/ Slicehost ''(running apache 2, php5, mysql5 or sqlite3)'']
+* [http://dreamhost.com/ Dreamhost]
+* [http://www.site5.com/ Site5]
+* [http://www.mediatemple.net/webhosting/gs/ (mt) Media Temple - (gs) Grid-Server]
+* [http://www.asmallorange.com/ A Small Orange] (servers Claire, Epsilon, Libby, Nu, Pickett)
+* [http://www.celeonet.fr/ Celeonet]
+* [http://www.1and1.fr 1and1 France]
+* [http://www.nearlyfreespeech.net NearlyFreeSpeech (with PHP5 requested)]
+* [http://slicehost.com/ Slicehost ''(running apache 2, php5, mysql5 or sqlite3)'']
 
 ==How is this different from the eleventy billion other blog packages?==
 It's true that there are tons of blogging software solutions from which to choose.  Each has their place, and their legion of ardent followers.
@@ -2650,7 +2650,7 @@ Navigate to your /admin/plugins in your dashboard, and a list of all plugins in 
 Some plugins will provide features that do not require anything else to implement.  However, some plugins will require adding a line of code to your active theme to output some data.  Generally speaking, the plugin author should provide documentation for this, however, the basics of how they work is that the plugin sets a variable using your theme.php file, and then within the template where you want your data to be outputted, you simply echo that variable.  This is done so that in the future, when other theme engines are added, specific PHP code isn't required for the plugin to work with that theme.  So if a plugin had the variable $my_twitter, in the raw php engine you would add &lt;code&gt;&lt;?php echo $my_twitter; ?&gt;&lt;/code&gt; to the template you wanted to show the data.  As other engines are added, this will be updated to reflect those as well.
 </pre>
 </div>
-<div title="QueryRecord" modifier="miklb" modified="200710132027" created="200710132025" tags="MediaWikiFormat" changecount="4">
+<div title="QueryRecord" modifier="miklb" modified="200710160035" created="200710132025" tags="MediaWikiFormat" changecount="6">
 <pre>A single instance of QueryRecord represents a single query result row.  QueryRecord also serves as the base class for derivative classes that provide row-level data access.  QueryRecord is, in many ways, the fundamental building block of Habari.
 
 ==Using QueryRecord==
@@ -2658,8 +2658,8 @@ Some plugins will provide features that do not require anything else to implemen
 QueryRecord provides basic functions that allow Habari to interact with the single row of data.  The properties of a QueryRecord object represent the field values of the row.  
 
 To obtain an instance of QueryRecord with data, call one of these static methods on the DB class:
-;get_row():Returns a single QueryRecord instance for the single row retrieved
-;get_results():Returns an array of QueryRecord instances, one per row returned in the query
+; get_row():Returns a single QueryRecord instance for the single row retrieved
+; get_results():Returns an array of QueryRecord instances, one per row returned in the query
 
 For example:
 &lt;pre&gt;$record = DB::get_row('SELECT id, bar FROM foo WHERE id = 1');
@@ -2715,12 +2715,12 @@ As part of Habari's Object-Oriented approach, other classes can extend the Query
 In most cases, a QueryRecord is not the class of a row.  A row is usually requested as one of QueryRecord's descendant classes.
 
 Many classes extend the QueryRecord class.  The following classes all inherit from QueryRecord:
-;Post: Represents a single post
-;Comment: Represents a single comment
-;LogEntry: Represents a single entry in the event log
-;CronJob: Represents a single periodically executed task
-;RewriteRule: Represents a single rewrite rule
-;User: Represents a single user
+; Post: Represents a single post
+; Comment: Represents a single comment
+; LogEntry: Represents a single entry in the event log
+; CronJob: Represents a single periodically executed task
+; RewriteRule: Represents a single rewrite rule
+; User: Represents a single user
 
 The classes above represent wildly different functionality and and data representations; yet they each extend the base QueryRecord class.  By providing this core functionality for descendant classes, extended classes don't need to duplicate code.  
 
