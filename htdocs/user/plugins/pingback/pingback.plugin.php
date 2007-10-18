@@ -93,79 +93,83 @@ class Pingback extends Plugin {
 	 * @return string The success state of the pingback
 	 */	 	 
 	public function xmlrpc_pingback__ping( $params ) {
-		list( $source_uri, $target_uri )= $params;
+		try {
+			list( $source_uri, $target_uri )= $params;
 	
-		// This should really be done by an Habari core function
-		$target_parse= InputFilter::parse_url( $target_uri );
-		$target_stub= $target_parse['path'];
-		$base_url= Site::get_path( 'base', TRUE );
+			// This should really be done by an Habari core function
+			$target_parse= InputFilter::parse_url( $target_uri );
+			$target_stub= $target_parse['path'];
+			$base_url= Site::get_path( 'base', TRUE );
 		
-		if ( '/' != $base_url) {
-			$target_stub= str_replace( $base_url, '', $target_stub );
-		}
+			if ( '/' != $base_url) {
+				$target_stub= str_replace( $base_url, '', $target_stub );
+			}
 
-		$target_stub= trim( $target_stub, '/' );
+			$target_stub= trim( $target_stub, '/' );
 
-		if ( strpos( $target_stub, '?' ) !== FALSE ) {
-			list($target_stub, $query_string)= explode('?', $target_stub);
-		}
+			if ( strpos( $target_stub, '?' ) !== FALSE ) {
+				list($target_stub, $query_string)= explode('?', $target_stub);
+			}
 
-		// Can this be used as a target?
-		$target_slug= URL::parse( $target_stub )->named_arg_values['slug'];
+			// Can this be used as a target?
+			$target_slug= URL::parse( $target_stub )->named_arg_values['slug'];
 		
-		if ( $target_slug === FALSE ) {
-			throw new XMLRPCException( 33 );
-		}
+			if ( $target_slug === FALSE ) {
+				throw new XMLRPCException( 33 );
+			}
 		
-		// Does the target exist?
-		$target_post= Post::get( array( 'slug' => $target_slug ) );
+			// Does the target exist?
+			$target_post= Post::get( array( 'slug' => $target_slug ) );
 
-		if ( $target_post === FALSE ) {
-			throw new XMLRPCException( 32 );
-		}
+			if ( $target_post === FALSE ) {
+				throw new XMLRPCException( 32 );
+			}
 		
-		// Is this Pingback already registered?
-		if ( Comments::get( array( 'post_id' => $target_post->id, 'url' => $source_uri, 'type' => Comment::PINGBACK ) )->count() > 0 ) {
-			throw new XMLRPCException( 48 );
-		}
+			// Is this Pingback already registered?
+			if ( Comments::get( array( 'post_id' => $target_post->id, 'url' => $source_uri, 'type' => Comment::PINGBACK ) )->count() > 0 ) {
+				throw new XMLRPCException( 48 );
+			}
 			
-		// Retrieve source contents
-		$rr= new RemoteRequest( $source_uri );
-		if ( ! $rr->execute() ) {
-			throw new XMLRPCException( 16 );
+			// Retrieve source contents
+			$rr= new RemoteRequest( $source_uri );
+			if ( ! $rr->execute() ) {
+				throw new XMLRPCException( 16 );
+			}
+			$source_contents= $rr->get_response_body();
+
+			// Find the page's title
+			preg_match( '/<title>(.*)<\/title>/is', $source_contents, $matches );
+			$source_title= $matches[1];
+
+			// Find the reciprocal links and their context
+			preg_match( '/<body[^>]*>(.+)<\/body>/is', $source_contents, $matches );
+			$source_contents_filtered= preg_replace( '/\s{2,}/is', ' ', strip_tags( $matches[1], '<a>' ) );
+		
+			if ( !preg_match( '%.{0,100}?<a[^>]*?href\\s*=\\s*("|\'|)' . $target_uri . '\\1[^>]*?'.'>(.+?)</a>.{0,100}%s', $source_contents_filtered, $source_excerpt ) ) {
+				throw new XMLRPCException( 17 );
+			}
+		
+			$source_excerpt= '...' . InputFilter::filter( $source_excerpt[0] ) . '...';
+
+			// Add a new pingback comment
+			$pingback= new Comment( array(
+				'post_id'	=>	$target_post->id,
+				'name'		=>	$source_title,
+				'email'		=>	'',
+				'url'		=>	$source_uri,
+				'ip'		=>	'',
+				'content'	=>	$source_excerpt,
+				'status'	=>	Comment::STATUS_APPROVED,
+				'date'		=>	date( 'Y-m-d H:i:s' ),
+				'type' 		=> 	Comment::PINGBACK,
+				) );
+			$pingback->insert();
+		
+			// Respond to the Pingback
+			return 'The pingback has been registered';
+		} catch (XMLRPCException $e) {
+			$e->output_fault_xml();
 		}
-		$source_contents= $rr->get_response_body();
-
-		// Find the page's title
-		preg_match( '/<title>(.*)<\/title>/is', $source_contents, $matches );
-		$source_title= $matches[1];
-
-		// Find the reciprocal links and their context
-		preg_match( '/<body[^>]*>(.+)<\/body>/is', $source_contents, $matches );
-		$source_contents_filtered= preg_replace( '/\s{2,}/is', ' ', strip_tags( $matches[1], '<a>' ) );
-		
-		if ( !preg_match( '%.{0,100}?<a[^>]*?href\\s*=\\s*("|\'|)' . $target_uri . '\\1[^>]*?'.'>(.+?)</a>.{0,100}%s', $source_contents_filtered, $source_excerpt ) ) {
-			throw new XMLRPCException( 17 );
-		}
-		
-		$source_excerpt= '...' . InputFilter::filter( $source_excerpt[0] ) . '...';
-
-		// Add a new pingback comment
-		$pingback= new Comment( array(
-			'post_id'	=>	$target_post->id,
-			'name'		=>	$source_title,
-			'email'		=>	'',
-			'url'		=>	$source_uri,
-			'ip'		=>	'',
-			'content'	=>	$source_excerpt,
-			'status'	=>	Comment::STATUS_APPROVED,
-			'date'		=>	date( 'Y-m-d H:i:s' ),
-			'type' 		=> 	Comment::PINGBACK,
-			) );
-		$pingback->insert();
-		
-		// Respond to the Pingback
-		return 'The pingback has been registered';
 	}	
 	
 	/**
