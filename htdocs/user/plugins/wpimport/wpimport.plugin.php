@@ -231,8 +231,10 @@ WP_IMPORT_STAGE2;
 
 		$wpdb= $this->wp_connect( $db_host, $db_name, $db_user, $db_pass, $db_prefix );
 		if( $wpdb ) {
+			$has_taxonomy= count($wpdb->get_column( "SHOW TABLES LIKE '{$db_prefix}term_taxonomy';" ));
+			
 			$postcount= $wpdb->get_value( "SELECT count( id ) FROM {$db_prefix}posts;" );
-			 $min= $postindex * IMPORT_BATCH + ( $postindex == 0 ? 0 : 1 );
+			$min= $postindex * IMPORT_BATCH + ( $postindex == 0 ? 0 : 1 );
 			$max= min( ( $postindex + 1 ) * IMPORT_BATCH, $postcount );
 
 			echo "<p>Importing posts {$min}-{$max} of {$postcount}.</p>";
@@ -258,13 +260,26 @@ WP_IMPORT_STAGE2;
 
 				// Import WP category as tags
 				if ( $category_import == 1 ) {
-					$tags= $wpdb->get_column( 
-						"SELECT category_nicename
-						FROM {$db_prefix}post2cat
-						INNER JOIN {$db_prefix}categories
-						ON ( {$db_prefix}categories.cat_ID= {$db_prefix}post2cat.category_id )
-						WHERE post_id= {$post->id}"
-					 );
+					if($has_taxonomy) {
+						$tags= $wpdb->get_column( 
+							"SELECT slug
+							FROM {$db_prefix}terms
+							INNER JOIN {$db_prefix}term_taxonomy
+							ON ( {$db_prefix}terms.term_id = {$db_prefix}term_taxonomy.term_id AND {$db_prefix}term_taxonomy.taxonomy = 'category')
+							INNER JOIN {$db_prefix}term_relationships
+							ON ({$db_prefix}term_taxonomy.term_taxonomy_id = {$db_prefix}term_relationships.term_taxonomy_id)
+							WHERE {$db_prefix}term_relationships.object_id= {$post->id}"
+						 );
+					}
+					else {
+						$tags= $wpdb->get_column( 
+							"SELECT category_nicename
+							FROM {$db_prefix}post2cat
+							INNER JOIN {$db_prefix}categories
+							ON ( {$db_prefix}categories.cat_ID= {$db_prefix}post2cat.category_id )
+							WHERE post_id= {$post->id}"
+						 );
+					}
 				} else {
 					$tags= array();
 				}
