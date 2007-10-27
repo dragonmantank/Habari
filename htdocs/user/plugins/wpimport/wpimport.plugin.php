@@ -162,6 +162,8 @@ WP_IMPORT_STAGE1;
 			$utw_import= 0;
 		}
 		$ajax_url= URL::get( 'auth_ajax', array( 'context' => 'wp_import_posts' ) );
+		EventLog::log(sprintf(_t('Starting import from "%s"'), $db_name));
+		Options::set('import_errors', array());
 
 		$output= <<< WP_IMPORT_STAGE2
 			<p>Import In Progress</p>
@@ -335,7 +337,10 @@ WP_IMPORT_STAGE2;
 					$p->insert();
 				}
 				catch( Exception $e ) {
-					Utils::debug( $p );
+					EventLog::log($e->getMessage(), 'err', null, null, print_r(array($p, $e), 1));
+					$errors = Options::get('import_errors');
+					$errors[] = $p->title . ' : ' . $e->getMessage();
+					Options::set('import_errors', $errors);
 				}
 			}
 			if( $max < $postcount ) {
@@ -386,6 +391,7 @@ WP_IMPORT_AJAX2;
 			}
 		}
 		else {
+			EventLog::log(sprintf(_t('Failed to import from "%s"'), $db_name), 'crit');
 			echo '<p>'._t( 'The database connection details have failed to connect.' ).'</p>';
 		}
 	}
@@ -463,7 +469,15 @@ WP_IMPORT_AJAX2;
 
 					$c= new Comment( $carray );
 					//Utils::debug( $c );
-					$c->insert();
+					try{
+						$c->insert();
+					}
+					catch( Exception $e ) {
+						EventLog::log($e->getMessage(), 'err', null, null, print_r(array($c, $e), 1));
+						$errors = Options::get('import_errors');
+						$errors[] = $e->getMessage();
+						Options::set('import_errors', $errors);
+					}
 				}
 			}
 
@@ -491,10 +505,24 @@ WP_IMPORT_AJAX2;
 WP_IMPORT_AJAX1;
 			}
 			else {
+				EventLog::log('Import complete from "'. $db_name .'"');
 				echo _t( '<p>Import is complete.</p>' );
+
+				$errors = Options::get('import_errors');
+				if(count($errors) > 0 ) {
+					_e( '<p>There were errors during import:</p>' );
+					
+					echo '<ul>';
+					foreach($errors as $error) {
+						echo '<li>' . $error . '</li>';
+					}
+					echo '</ul>';
+				}
+
 			}
 		}
 		else {
+			EventLog::log(sprintf(_t('Failed to import from "%s"'), $db_name), 'crit');
 			echo '<p>'._t( 'Failed to connect using the given database connection details.' ).'</p>';
 		}
 	}
