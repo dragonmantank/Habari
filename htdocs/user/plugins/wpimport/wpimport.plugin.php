@@ -161,7 +161,7 @@ WP_IMPORT_STAGE1;
 		if ( ! isset( $utw_import ) ) {
 			$utw_import= 0;
 		}
-		$ajax_url= URL::get( 'auth_ajax', array( 'context' => 'wp_import_posts' ) );
+		$ajax_url= URL::get( 'auth_ajax', array( 'context' => 'wp_import_users' ) );
 		EventLog::log(sprintf(_t('Starting import from "%s"'), $db_name));
 		Options::set('import_errors', array());
 
@@ -238,6 +238,13 @@ WP_IMPORT_STAGE2;
 			$postcount= $wpdb->get_value( "SELECT count( id ) FROM {$db_prefix}posts;" );
 			$min= $postindex * IMPORT_BATCH + ( $postindex == 0 ? 0 : 1 );
 			$max= min( ( $postindex + 1 ) * IMPORT_BATCH, $postcount );
+
+			$user_map = array();
+			$userinfo= DB::table( 'userinfo' );
+			$user_info= DB::get_results( "SELECT user_id, value FROM {$userinfo} WHERE name= 'wp_id';" );
+			foreach( $user_info as $info ) {
+				$user_map[$info->value]= $info->user_id;
+			}
 
 			echo "<p>Importing posts {$min}-{$max} of {$postcount}.</p>";
 			$posts= $wpdb->get_results( "
@@ -328,6 +335,7 @@ WP_IMPORT_STAGE2;
 
 				$p= new Post( $post_array );
 				$p->slug= $post->slug;
+				$p->user_id = $user_map[$p->user_id];
 				$p->guid= $p->guid; // Looks fishy, but actually causes the guid to be set.
 				$p->tags= $tags;
 				
@@ -393,6 +401,85 @@ WP_IMPORT_AJAX2;
 		else {
 			EventLog::log(sprintf(_t('Failed to import from "%s"'), $db_name), 'crit');
 			echo '<p>'._t( 'The database connection details have failed to connect.' ).'</p>';
+		}
+	}
+	
+	/**
+	 * The plugin sink for the auth_ajax_wp_import_posts hook.
+	 * Responds via authenticated ajax to requests for post importing.
+	 * 
+	 * @param mixed $handler
+	 * @return 
+	 */
+	public function action_auth_ajax_wp_import_users( $handler )
+	{
+		$valid_fields= array( 'db_name','db_host','db_user','db_pass','db_prefix','userindex', 'category_import', 'utw_import' );
+		$inputs= array_intersect_key( $_POST, array_flip( $valid_fields ) );
+		extract( $inputs );
+		$wpdb= $this->wp_connect( $db_host, $db_name, $db_user, $db_pass, $db_prefix );
+		if( $wpdb ) {
+			$wp_users = $wpdb->get_results(
+				"
+					SELECT 
+						user_login as username,
+						user_pass as password,
+						user_email as email,
+						user_url as wp_url,
+						{$db_prefix}users.id as wp_id 
+					FROM {$db_prefix}users
+					INNER JOIN {$db_prefix}posts ON {$db_prefix}posts.post_author = {$db_prefix}users.id
+					GROUP BY {$db_prefix}users.id
+				", 
+				array(),
+				'User'
+			);
+			$usercount = 0;
+			_e('<p>Importing users...</p>');
+			foreach($wp_users as $user) {
+				try {
+					$user->info->wp_id = $user->wp_id;
+					if($user->wp_url != '') {
+						$user->info->url = $user->wp_url;
+					}
+					// This should probably remain commented until we implement ACL more, 
+					// or any imported user will be able to log in and edit stuff
+					//$user->password = '{MD5}' . $user->password; 
+					$user->exclude_fields(array('wp_id', 'wp_url'));
+					$user->insert();
+					$usercount++;
+				}
+				catch( Exception $e ) {
+					EventLog::log($e->getMessage(), 'err', null, null, print_r(array($user, $e), 1));
+					$errors = Options::get('import_errors');
+					$errors[] = $user->username . ' : ' . $e->getMessage();
+					Options::set('import_errors', $errors);
+				}
+			}
+			$ajax_url= URL::get( 'auth_ajax', array( 'context' => 'wp_import_posts' ) );
+			echo <<< WP_IMPORT_USERS1
+			<script type="text/javascript">
+			// A lot of ajax stuff goes here.
+			$( document ).ready( function(){
+				$( '#import_progress' ).load( 
+					"{$ajax_url}",
+					{
+						db_host: "{$db_host}",
+						db_name: "{$db_name}",
+						db_user: "{$db_user}",
+						db_pass: "{$db_pass}",
+						db_prefix: "{$db_prefix}",
+						category_import: "{$category_import}",
+						utw_import: "{$utw_import}",
+						postindex: 0
+					}
+				 );
+			} );
+			</script>
+WP_IMPORT_USERS1;
+		}
+		else {
+			EventLog::log(sprintf(_t('Failed to import from "%s"'), $db_name), 'crit');
+			echo '<p>'._t( 'Failed to connect using the given database connection details.' ).'</p>';
 		}
 	}
 
