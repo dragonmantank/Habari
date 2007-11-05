@@ -1094,6 +1094,22 @@ The very last thing that &lt;code&gt;index.php&lt;/code&gt; does is to flush the
 ==Administrative Workflow==
 </pre>
 </div>
+<div title="Importing Content" modifier="YourName" created="200711050104" tags="MediaWikiFormat" changecount="1">
+<pre>Habari currently ships with a plugin to import posts, comments, tags (including Ultimate Tag Warrior Tags) and users from WordPress (current version confirmed to work with 2.3.1, millage will vary with older versions).  Other importers are planned.
+
+You must fist activate the plugin before navigating to the admin/import page.  After activating the plugin, you will get a select box to choose what type of content you are importing (as mentioned, WordPress is the only importer currently available).
+
+You will then be prompted to fill in your WordPress database information, and choose your options for tag importation.
+
+It is suggested you set up a separate database for your Habari install from that of your WordPress installation, the import process will be much faster and less room for error.  WordPress pages *should* import as Habari pages, and everything else either an entry or draft.
+
+Approved and unapproved comments should also be imported.
+
+Note that WP permalinks and paths will be lost, and you should explore options with .htaccess if you are concerned with maintaining your previous links.  Andrew da Silva's [http://andrewdasilva.com/files/plugins/route301.zip Route 301] plugin may help in some cases.
+
+Feel free to post to [http://groups.google.com/group/habari-users Habari users] if you have any questions or problems with your migration.
+</pre>
+</div>
 <div title="Installation" modifier="habari" modified="200710161721" created="200707290741" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708031903" changecount="6">
 <pre>==Before You Install==
 
@@ -1289,8 +1305,9 @@ are not required to have the same license as Habari itself.
 You can find our license included in the source, and in our [http://habari.googlecode.com/svn/trunk/LICENSE code repository].
 </pre>
 </div>
-<div title="MainMenu" modifier="habari" modified="200710161724" created="200703132343" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200709160129" changecount="1">
+<div title="MainMenu" modifier="YourName" modified="200711050121" created="200703132343" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200709160129" changecount="2">
 <pre>[[Introduction]]
+[[What's New]]
 [[Installation]]
 [[Upgrading]]
 [[FAQ]]
@@ -3724,36 +3741,47 @@ Additional themes can be uploaded to your /user/themes directory.  Themes must i
 * Show [[Pingbacks]]
 </pre>
 </div>
-<div title="Upgrading" modifier="habari" modified="200710161721" created="200708031912" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708032046" changecount="3">
-<pre>This upgrade process is intended for those upgrading from the first developer release.  If you are using SVN, you //should// be able to SVN up the install.  If you are using an older version, you //may// need to follow the step regarding re-running your rewrite_rules sql.
+<div title="Upgrading" modifier="YourName" modified="200711050115" created="200708031912" tags="MediaWikiFormat" server.type="file" server.host="file:///Users/blogworks/Sites/MyHabari/Docs/Habari_Manual.20070916.0135310976.html" server.page.revision="200708032046" changecount="9">
+<pre>''Please note: We plan on releasing an export/import plugin for easier upgrading process with the 0.4 release.''
+
+==Before Upgrading==
+This upgrade process assumes you are somewhat familiar with accessing your database, via an admin interface like phpMyAdmin, if you are unfamiliar with this, you should contact your host and completely familiarize yourself with their database administration.
+
+Many things have changed code-wise between the two versions, however, from a user stand point, two major issues need to be addressed:
+
+#If you are using a custom theme, or customized K2, it is recommended that you rename your version of K2 if you are using that (change the name in the theme.xml file and the /user/themes directory).
+#*Any changes to your theme.php file should have been to your custom Class, so these ''should'' be easy to migrate.  From there, you might need to compare the changes in templates and template functions to those in the current K2.
+#There currently isn't a script to update the database, however, the only table that is effected by this upgrade is your rewrite_rules.  Outlined below is the steps necessary to upgrade that table.
+
+==Upgrading==
+It is safe to use the same database as 0.2, but if possible, the following actions should be taken:
+*Remove the `themes` table.
+*Clear the `rewrite_rules` table.
+
+===MySQL===
+The upgrading process with MySQL is transparent as of the 0.3 release.
+
+===SQLite===
+''Please note: If you need a web manager for SQLite dabases, [http://www.sqlitemanager.org/ SQLite Manager] looks like a sane solution.''
 
 
-!!A few notes about upgrading from DR1 to DR2
-This upgrade process assumes you are somewhat familiar with accessing your database, via an admin interface like PHPmyAdmin, if you are unfamiliar with this, you should contact your host and completely familiarize yourself their database administration.
 
-Many things have changed code wise between the two versions, however, from a user stand point, two major issues need to be addressed.  First, if you are using a custom theme, or customized K2, the template code and structure has greatly changed.  It is recommended that you rename your version of K2 if you are using that (change the name in the theme.xml file and the /user/themes directory).
+To upgrade to 0.3:
+#Move the database file to a different location.
+#Install Habari.
+#Overwrite the created database file with the one from step 1.
+#Create the tables: `groups`, `groups_permissions`, `permissions` and `users_groups`. Refer to the SQL schema files for the CREATE statements.
 
-Any changes to your theme.php file should have been to your custom Class, so these //should// be easy to migrate.  From there, you will need to compare the changes in templates and template functions.  You can read up on the changes to the [[template file hierarchy|http://wiki.habariproject.org/en/Template_File_Hierarchy]] in the wiki.
+The only difference left is the tables' structure. From 0.2 to 0.3 we modified column types, INT became SMALLINT and such. It should not affect your installation.
 
-Second, there currently isn't a script to update the database, however, the only table that is effected by this upgrade is your rewrite_rules.  Outlined below is the steps necessary to upgrade that table.
-
-!!Upgrading
-''These instructions are for MySQL only''
-It is ''strongly'' recommended that you backup your /user/themes directory if you've customized your theme, and your database.
-
-If you've followed along thus far, any customizations you've made to your theme have been renamed and backed up, so you can upload the new DR and overwrite the existing files.
-
-You will not be able to access any of your site at this point, due to the changes in the rewrite_rules.  The next step is to log into your DB admin, and empty your rewrite_rules table.  Be sure to empty the table, and not drop the entire thing.
-
-Next, you will need to copy the contents of the upgrade.sql file and run the sql commands.  If you are using PHPMyAdmin, you should be able to click the SQL tab, which should provide you with a text box which you can paste the code and simply click 'go'.  This should populate your rewrite_rules table with the updated rows, and your site should now be working.
-
-If you were running a custom theme, you will now need to visit admin-&gt;Themes in your administration area.  Activate K2 for now, and your site should be up and working.  If you had any problems, you can post to the [[habari user group|http://groups.google.com/group/habari-users]].  Be sure to provide as many details as possible, including version of PHP, MySQL, and server config.
+[[Category:Manual]]
 </pre>
 </div>
-<div title="User Documentation" modifier="habari" modified="200710161722" created="200710131727" tags="MediaWikiFormat" changecount="4">
+<div title="User Documentation" modifier="YourName" modified="200711050104" created="200710131727" tags="MediaWikiFormat" changecount="5">
 <pre>==Intallation and Configuration==
 * [[Installation]]: what we know so far
 * [[Upgrading]]
+* [[Importing Content]]
 * [[Multisite|Multisite configuration]]: how to drive many sites from a single '''Habari''' installation
 ==Content==
 * [[Desktop Blogging]]
@@ -3798,6 +3826,94 @@ Now, if you notice in your home.php file (or entry.multiple.php), the content is
 If you have made the previous change, your posts should now be full length.  Now suppose you have somewhere you want to have excerpts.  You can simply call:
 &lt;pre&gt;&lt;?php echo $post-&gt;content_excerpt; ?&gt;&lt;/pre&gt;
 and your posts will be excerpts.
+
+</pre>
+</div>
+<div title="What's New" modifier="YourName" modified="200711050124" created="200711050122" tags="MediaWikiFormat" changecount="2">
+<pre>==Introduction==
+Habari's third Developer Release represents a huge step forward. The Administration area has seen a major update and includes better filtering, a cleaner look (which will continue to be improved for the next release), and better control over the content of your site. Over 100 bugs have been closed, representing fixes, improvements and new features to make Habari one step closer to being the cutting-edge blogging platform it is destined to be. Everything from the installer to comment moderation has been improved, and documentation has been improved throughout the project. For a complete list of bugs closed, check the [http://wiki.habariproject.org/en/Releases/0.3/Issues_Fixed Issues Fixed] page in the wiki.
+
+==What's new for administrators==
+*We're revising the administration area's design and layout. You may experience issues, please report them.
+*Links in the footer are now functional and point to helpful resources.
+===Comments Management===
+*Comments can be searched, filtered and basic pagination was added.
+===Content Creation===
+*You can now specify a publish date, although we do not currently support scheduled posts.
+===Content Management===
+*Content can be searched, filtered and basic pagination was added.
+===Plugins Management===
+*Added new FormUI controls: select and textarea.
+*Added sandboxing, a plugin's synthax is tested prior to list it as manageable.
+
+==What's new for developers==
+===Comments===
+*Removed the function Comment::publish().
+*Made Comments work like Posts.
+*Made Comment work like Post.
+*Added new methods to Comment:
+**Comment::list_comment_types()
+**Comment::list_comment_statuses()
+**Comment::status()
+**Comment::status_name()
+**Comment::type()
+**Comment::type_name()
+*Added a new method to Comments:
+**Comments::delete_by_status()
+
+===Event Logging===
+*Made EventLog work like Posts.
+*Made LogEntry work like Post.
+*Renamed LogEntry::cache_types() to LogEntry::list_logentry_types().
+*Added new methods to LogEntry:
+**LogEntry::list_severities()
+**LogEntry::list_modules()
+**LogEntry::list_types()
+**LogEntry::severity_name()
+**LogEntry::get()
+**LogEntry::get_event_type()
+**LogEntry::get_event_module()
+**LogEntry::get_event_severity()
+**LogEntry::__get()
+**LogEntry::__set()
+*Added new methods to EventLog:
+**EventLog::__get()
+**EventLog::get()
+===Plugins===
+*Added tons of new [http://wiki.habariproject.org/en/Plugin_Hooks plugin hooks].
+*Added new methods to Plugins:
+**Plugins::extends_plugin()
+**Plugins::is_loaded()
+
+===Posts===
+*Added new methods to work with statuses and types:
+**Post::list_active_post_types()
+**Post::list_all_post_types()
+**Post::activate_post_type()
+**Post::deactivate_post_type()
+**Post::add_new_type()
+**Post::add_new_status()
+*Added a new property, $post-&gt;statusname, returns the a human-readable status.
+===Rewrite Rules===
+*Default rewrite rules are now stored in 'rewriterules.php' and can be overridden using the plugin hook 'default_rewrite_rules'.
+*Added a new method to RewriteRules:
+**RewriteRules::add_system_rules()
+
+===Theme Development===
+*Added Theme::header() and Theme::footer().
+*Updated jQuery to 1.2.1.
+*Updated Blueprint to 0.6, it was moved to /3rdparty.
+*Improved the Utils::page_selector() method.
+**If you omit the rewrite rule name, it will use the current match.
+**You can specify how many pages to display beside the current page with $settings['leftSide'] and $settings['rightSide'].
+
+==Known Bugs==
+*SQLite support is limited. Search and database upgrade is not possible at this time. The reason is quite simple, ALTER and CONCAT are not supported by SQLite, this will be fixed in the next release.
+
+==Credits==
+These release notes were compiled by the [http://wiki.habariproject.org/en/Habari_Project:Community_Portal Habari Community].
+
+On behalf of the community, we give our warmest thanks to the developers and contributors who made this Habari release possible.
 
 </pre>
 </div>
