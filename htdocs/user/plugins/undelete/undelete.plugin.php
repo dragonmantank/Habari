@@ -133,3 +133,5 @@ class Undelete extends Plugin
 		}
 	}
 }
+
+?>

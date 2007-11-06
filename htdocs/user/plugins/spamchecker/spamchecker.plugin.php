@@ -154,3 +154,5 @@ class SpamChecker extends Plugin
 		return;
 	}
 }
+
+?>
