@@ -6,7 +6,7 @@
  <meta http-equiv="Content-Type" content="text/html">
  <meta name="generator" content="Habari">
 
- <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="<?php echo $feed_alternative; ?>">
+ <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="<?php echo $feed_alternate; ?>">
  <link rel="edit" type="application/atom+xml" title="Atom Publishing Protocol" href="<?php URL::out( 'introspection' ); ?>">
  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="<?php URL::out( 'rsd' ); ?>">
 

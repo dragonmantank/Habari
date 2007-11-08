@@ -59,21 +59,21 @@ class MyTheme extends Theme
 		if( !$this->template_engine->assigned( 'page' ) ) {
 			$this->assign('page', isset( $page ) ? $page : 1 );
 		}
-		if( !$this->template_engine->assigned( 'feed_alternative' ) ) {
+		if( !$this->template_engine->assigned( 'feed_alternate' ) ) {
 			$matched_rule= URL::get_matched_rule();
 			switch ( $matched_rule->name ) {
 				case 'display_entry':
 				case 'display_page':
-					$feed_alternative= URL::get( 'entry', array( 'slug' => Controller::get_var('slug') ) );
+					$feed_alternate= URL::get( 'entry', array( 'slug' => Controller::get_var('slug') ) );
 					break;
 				case 'display_entries_by_tag':
-					$feed_alternative= URL::get( 'tag_collection', array( 'tag' => Controller::get_var('tag') ) );
+					$feed_alternate= URL::get( 'tag_collection', array( 'tag' => Controller::get_var('tag') ) );
 					break;
 				case 'index_page':
 				default:
-					$feed_alternative= URL::get( 'collection', array( 'index' => '1' ) );
+					$feed_alternate= URL::get( 'collection', array( 'index' => '1' ) );
 			}
-			$this->assign('feed_alternative', $feed_alternative);
+			$this->assign('feed_alternate', $feed_alternate);
 		}
 		parent::add_template_vars();
 	}
