@@ -43,12 +43,12 @@ function __autoload($class_name) {
 	static $files= null;
 
 	$success= false;
-	$class_file = strtolower($class_name) . '.php';	
+	$class_file = strtolower($class_name) . '.php';
 
-	if( empty($files) ) { 
+	if( empty($files) ) {
 		$files = array();
 		$dirs= array( HABARI_PATH . '/system', HABARI_PATH . '/user' );
-	
+
 		// For each directory, save the available files in the $files array.
 		foreach ($dirs as $dir) {
 			$glob = glob( $dir . '/classes/*.php' );
@@ -56,12 +56,12 @@ function __autoload($class_name) {
 			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
 			$files = array_merge($files, array_combine($fnames, $glob));
 		}
-		
+
 		// Load the Site class, a requirement to get files from a multisite directory.
 		if(isset($files['site.php'])) {
 			require_once $files['site.php'];
 		}
-		
+
 		// Verify if this Habari instance is a multisite.
 		if ( ($site_user_dir = Site::get_dir('user')) != HABARI_PATH . '/user' ) {
 			// We are dealing with a site defined in /user/sites/x.y.z
@@ -108,14 +108,14 @@ $config = Site::get_dir('config_file');
  */
 if ( file_exists($config) ) {
 	require_once $config;
-	
+
 	// Make sure we have a DSN string and database credentials.
 	// $db_connection is an array with necessary informations to connect to the database.
 	if ( ! isset($db_connection) ) {
 		$installer= new InstallHandler();
 		$installer->begin_install();
 	}
-	
+
 	// Try to connect to the database.
 	if (DB::connect()) {
 		// Make sure Habari is installed properly.
