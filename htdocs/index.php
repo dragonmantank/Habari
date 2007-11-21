@@ -154,6 +154,10 @@ header( 'Content-Type: text/html;charset=utf-8' );
 // Set the locale.
 Locale::set( 'en-us' );
 
+// Start the session.
+Session::init();
+$_SESSION['hitcount'] = isset($_SESSION['hitcount']) ? $_SESSION['hitcount'] + 1 : 1;
+
 /**
  * Include all the active plugins.
  * By loading them here they'll have global scope.
