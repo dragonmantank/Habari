@@ -156,7 +156,6 @@ Locale::set( 'en-us' );
 
 // Start the session.
 Session::init();
-$_SESSION['hitcount'] = isset($_SESSION['hitcount']) ? $_SESSION['hitcount'] + 1 : 1;
 
 /**
  * Include all the active plugins.
