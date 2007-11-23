@@ -154,9 +154,6 @@ header( 'Content-Type: text/html;charset=utf-8' );
 // Set the locale.
 Locale::set( 'en-us' );
 
-// Start the session.
-Session::init();
-
 /**
  * Include all the active plugins.
  * By loading them here they'll have global scope.
@@ -170,6 +167,9 @@ foreach ( Plugins::list_active() as $file )
 
 // All plugins loaded, tell the plugins.
 Plugins::act('plugins_loaded');
+
+// Start the session.
+Session::init();
 
 // Initiating request handling, tell the plugins.
 Plugins::act('init');
