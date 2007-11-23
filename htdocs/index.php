@@ -93,7 +93,7 @@ function __autoload($class_name) {
 error_reporting(E_ALL);
 
 // Use our own error reporting class.
-// Error::handle_errors();
+Error::handle_errors();
 
 /* Initiate install verifications */
 
