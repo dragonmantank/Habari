@@ -100,6 +100,9 @@ Error::handle_errors();
 // Retrieve the configuration file's path.
 $config = Site::get_dir('config_file');
 
+// Set the locale.
+Locale::set( 'en-us' );
+
 /**
  * We make sure the configuration file exist.
  * If it does, we load it and check it's validity.
@@ -150,9 +153,6 @@ if ( Version::requires_upgrade() ) {
 // Send the Content-Type HTTP header.
 // @todo Find a better place to put this.
 header( 'Content-Type: text/html;charset=utf-8' );
-
-// Set the locale.
-Locale::set( 'en-us' );
 
 /**
  * Include all the active plugins.
