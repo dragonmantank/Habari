@@ -90,7 +90,7 @@ function __autoload($class_name) {
 }
 
 // Increase the error reporting level, E_NOTICE will not be displayed.
-error_reporting(E_ALL);
+error_reporting( E_ALL );
 
 // Use our own error reporting class.
 Error::handle_errors();
@@ -98,7 +98,7 @@ Error::handle_errors();
 /* Initiate install verifications */
 
 // Retrieve the configuration file's path.
-$config = Site::get_dir('config_file');
+$config = Site::get_dir( 'config_file' );
 
 // Set the locale.
 Locale::set( 'en-us' );
@@ -109,8 +109,9 @@ Locale::set( 'en-us' );
  *
  * @todo Call the installer from the database classes.
  */
-if ( file_exists($config) ) {
+if ( file_exists( $config ) ) {
 	require_once $config;
+	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 
 	// Make sure we have a DSN string and database credentials.
 	// $db_connection is an array with necessary informations to connect to the database.
@@ -136,6 +137,7 @@ if ( file_exists($config) ) {
 }
 else
 {
+	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 	// The configuration file does not exist.
 	// Therefore we load the installer to create the configuration file and install a base database.
 	$installer= new InstallHandler();
