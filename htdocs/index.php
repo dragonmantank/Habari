@@ -13,6 +13,8 @@
  * @package Habari
  */
 
+define('DEBUG', true);
+
 // Compares PHP version against our requirement.
 if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 	die ( 'Habari needs PHP 5.2.x or higher to run. You are currently running PHP ' . PHP_VERSION . '.' );
@@ -51,8 +53,8 @@ function __autoload($class_name) {
 
 		// For each directory, save the available files in the $files array.
 		foreach ($dirs as $dir) {
-			$glob = Utils::glob( $dir . '/classes/*.php' );
-			if ( empty( $glob ) ) continue;
+			$glob = glob( $dir . '/classes/*.php' );
+			if ( $glob !== false && empty( $glob ) ) continue;
 			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
 			$files = array_merge($files, array_combine($fnames, $glob));
 		}
@@ -66,9 +68,9 @@ function __autoload($class_name) {
 		if ( ($site_user_dir = Site::get_dir('user')) != HABARI_PATH . '/user' ) {
 			// We are dealing with a site defined in /user/sites/x.y.z
 			// Add the available files in that directory in the $files array.
-			$glob = Utils::glob( $site_user_dir . '/classes/*.php' );
+			$glob = glob( $site_user_dir . '/classes/*.php' );
 			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
-			if ( ! empty( $glob ) && ! empty( $fnames ) ) {
+			if ( $glob !== false && ! empty( $glob ) && ! empty( $fnames ) ) {
 				$files = array_merge($files, array_combine($fnames, $glob));
 			}
 		}
