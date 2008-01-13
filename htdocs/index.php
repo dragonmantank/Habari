@@ -52,7 +52,7 @@ function __autoload($class_name) {
 		// For each directory, save the available files in the $files array.
 		foreach ($dirs as $dir) {
 			$glob = glob( $dir . '/classes/*.php' );
-			if ( $glob !== false && empty( $glob ) ) continue;
+			if ( $glob === false || empty( $glob ) ) continue;
 			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
 			$files = array_merge($files, array_combine($fnames, $glob));
 		}
