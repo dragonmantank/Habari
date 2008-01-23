@@ -179,11 +179,6 @@ Plugins::act('init');
 // Parse and handle the request.
 Controller::parse_request();
 
-// Auto-truncate the log table
-if ( ! CronTab::get_cronjob( 'truncate_log' ) ) {
-	CronTab::add_daily_cron( 'truncate_log', array( 'Utils', 'truncate_log' ), 'Truncate the log table' );
-}
-
 // Run the cron jobs.
 CronTab::run_cron();
 
