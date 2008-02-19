@@ -22,7 +22,9 @@ if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
  * Define the constant HABARI_PATH.
  * The path to the root of this Habari installation.
  */
-define( 'HABARI_PATH', dirname( __FILE__ ) );
+if( ! defined( 'HABARI_PATH' ) ) {
+	define( 'HABARI_PATH', dirname( __FILE__ ) );
+}
 
 // We start up output buffering in order to take advantage of output compression,
 // as well as the ability to dynamically change HTTP headers after output has started.
@@ -150,6 +152,11 @@ else
 if ( Version::requires_upgrade() ) {
 	$installer= new InstallHandler();
 	$installer->upgrade_db();
+}
+
+// If we're doing unit testing, stop here
+if( defined( 'UNIT_TEST' ) ) {
+	return;
 }
 
 // Send the Content-Type HTTP header.
