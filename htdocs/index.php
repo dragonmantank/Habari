@@ -26,6 +26,14 @@ if( ! defined( 'HABARI_PATH' ) ) {
 	define( 'HABARI_PATH', dirname( __FILE__ ) );
 }
 
+/**
+ * Make GLOB_BRACE available on platforms that don't have it. Use Utils::glob().
+ */
+if (!defined('GLOB_BRACE')) {
+	define('GLOB_NOBRACE', true);
+	define('GLOB_BRACE', 128);
+}
+
 // We start up output buffering in order to take advantage of output compression,
 // as well as the ability to dynamically change HTTP headers after output has started.
 ob_start();
