@@ -19,6 +19,11 @@ if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 }
 
 /**
+ * Start the profile time
+ */
+$profile_start= microtime(true); 
+
+/**
  * Define the constant HABARI_PATH.
  * The path to the root of this Habari installation.
  */
@@ -201,6 +206,7 @@ CronTab::run_cron();
 Controller::dispatch_request();
 
 // Flush (send) the output buffer.
-ob_flush();
-
+$buffer = ob_get_clean();
+$buffer = Plugins::filter('final_output', $buffer);
+echo $buffer;
 ?>
