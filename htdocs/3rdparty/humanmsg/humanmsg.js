@@ -5,6 +5,7 @@
 */
 
 var humanMsg = {
+	msgcount: 0,
 	setup: function(appendTo, logName, msgOpacity) {
 		humanMsg.msgID = 'humanMsg';
 		humanMsg.logID = 'humanMsgLog';
@@ -20,14 +21,14 @@ var humanMsg = {
 		// Opacity of the message
 		humanMsg.msgOpacity = .8;
 
-		if (msgOpacity != undefined) 
+		if (msgOpacity != undefined)
 			humanMsg.msgOpacity = parseFloat(msgOpacity);
 
 		// Inject the message structure
-		jQuery(appendTo).append('<div id="'+humanMsg.msgID+'" class="humanMsg"><div class="round"></div><p></p><div class="round"></div></div> <div id="'+humanMsg.logID+'"><p>'+logName+'</p><ul></ul></div>')
-		
-		jQuery('#'+humanMsg.logID+' p').click(
-			function() { jQuery(this).siblings('ul').slideToggle() }
+		jQuery(appendTo).append('<div id="'+humanMsg.msgID+'" class="humanMsg"><div class="imsgs"></div></div><div id="'+humanMsg.logID+'"><p>'+logName+'</p><ul></ul></div>')
+
+		jQuery('#'+humanMsg.logID).click(
+			function() { jQuery('ul', this).slideToggle() }
 		)
 	},
 
@@ -36,22 +37,23 @@ var humanMsg = {
 			return;
 
 		clearTimeout(humanMsg.t2);
+		humanMsg.msgcount++;
 
 		// Inject message
-		jQuery('#'+humanMsg.msgID+' p').html(msg)
-	
-		// Show message
-		jQuery('#'+humanMsg.msgID+'').show().animate({ opacity: humanMsg.msgOpacity}, 200, function() {
+		$('#'+humanMsg.msgID).show();
+		$('<div class="msg"><div class="round" id="msgid_"' + humanMsg.msgcount + '></div><p>' + msg + '</p><div class="round"></div></div>')
+		.appendTo('#'+humanMsg.msgID+' .imsgs')
+		.show().animate({ opacity: humanMsg.msgOpacity}, 200, function() {
 			jQuery('#'+humanMsg.logID)
 				.show().children('ul').prepend('<li>'+msg+'</li>')	// Prepend message to log
 				.children('li:first').slideDown(200)				// Slide it down
-		
+
 			if ( jQuery('#'+humanMsg.logID+' ul').css('display') == 'none') {
-				jQuery('#'+humanMsg.logID+' p').animate({ bottom: 40 }, 200, 'linear', function() {
-					jQuery(this).animate({ bottom: 0 }, 300, 'easeOutBounce', function() { jQuery(this).css({ bottom: 0 }) })
+				jQuery('#'+humanMsg.logID+' p').animate({ bottom: 40 }, 200, function() {
+					jQuery(this).animate({ bottom: 0 }, 300, function() { jQuery(this).css({ bottom: 0 }) })
 				})
 			}
-			
+
 		})
 
 		// Watch for mouse & keyboard in .5s
@@ -76,8 +78,10 @@ var humanMsg = {
 			.unbind('keypress', humanMsg.removeMsg)
 
 		// If message is fully transparent, fade it out
-		if (jQuery('#'+humanMsg.msgID).css('opacity') == humanMsg.msgOpacity)
-			jQuery('#'+humanMsg.msgID).animate({ opacity: 0 }, 500, function() { jQuery(this).hide() })
+		jQuery('#'+humanMsg.msgID+ ' .imsgs .msg').each(function(){
+			if (jQuery(this).css('opacity') == humanMsg.msgOpacity)
+				jQuery(this).animate({ opacity: 0 }, 500, function() { jQuery(this).remove() })
+		});
 	}
 };
 
