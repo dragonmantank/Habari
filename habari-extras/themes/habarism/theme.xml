@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<theme>
-	<name>Habarism</name>
-	<author>Thomas Silkjær</author>
-	<url>http://blog.theundersigned.net/</url>
-	<version>1.3</version>
-	<template_engine>rawphpengine</template_engine>
-</theme>
