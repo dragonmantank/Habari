@@ -1,0 +1,22 @@
+.amazon-result-nav {
+    margin: 20px 0px;
+    padding: 10px 0px;
+    background-color: #1e1e1e;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -khtml-border-radius: 6px;
+    text-align: center;
+}
+
+.amazon-result-nav img {
+    margin: 0px;
+    padding: 0px;
+    vertical-align: middle;
+}
+
+.amazon-result-nav span {
+    margin: 0px 15px;
+    padding: 0px;
+}
+

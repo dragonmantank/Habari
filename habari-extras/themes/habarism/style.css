@@ -1,0 +1,528 @@
+body {
+	margin:0;
+	padding:0;
+	background-color:#F9F9F9;
+	font-family: Georgia, serif;
+	font-size:12px;
+	line-height:18px;
+	color:#222;
+	text-align:center;
+}
+
+a:link,
+a:visited {
+	color:#046380;
+	text-decoration:none;
+	font-family:"Lucida Grande", "Trebuchet MS", Helvetica, Arial, sans-serif;
+	font-size:10px;
+	letter-spacing:1px;
+	font-style:normal;
+	text-transform:uppercase;
+	border:0;
+}
+
+	a:hover {
+		text-decoration:underline;
+	}
+	
+	a img {
+		border:0;
+	}
+
+#grid {
+	position:absolute;
+	top:0;
+	left:50%;
+	margin-left:-475px;
+	z-index:10;
+	background-image:url(img/grid.png);
+	height:3000px;
+	width:950px;
+}
+
+#wrapper {
+	width:950px;
+	margin:0 auto;
+	padding:115px 0 36px 0;
+	background-image:url(img/bg.jpg);
+	background-position:top right;
+	background-repeat:repeat-y;
+	text-align:left;
+}
+
+	#sidebar {
+		width:350px;
+		float:left;
+	}
+	
+		#sidebar .block {
+			border-bottom:1px dotted #A7A37E;
+			margin:0 0 36px 0;
+			padding:0 0 18px 0;
+		}
+		
+			#sidebar #main {
+				margin:0 0 36px 0;
+				padding:0;
+			}
+			
+				#main h1 {
+					font-size:18px;
+					line-height:18px;
+					margin:0 0 9px 60px;
+				}
+				
+					#main h1 a:link,
+					#main h1 a:visited {
+						color:#222;
+						font-family: Georgia, serif;
+						font-size:18px;
+						letter-spacing:1px;
+						text-transform:none;
+					}
+
+				#main h2 {
+					font-size:14px;
+					line-height:18px;
+					font-weight:normal;
+					font-style:italic;
+					margin:0 0 36px 60px;
+					color:#046380;
+				}
+				
+				#main p {
+					margin:0 0 18px 0;
+				}
+				
+			#sidebar #menu {
+				margin:0 0 18px 0;
+				padding:0;
+			}
+			
+				#menu ul {
+					margin:0 0 36px 0;
+					padding:0 0 0 60px;
+					list-style:none;
+				}
+				
+					#menu ul li {
+						margin:0 0 9px 0;
+					}
+					
+				#menu ul a:link,
+				#menu ul a:visited {
+					color:#046380;
+					text-decoration:none;
+					font-style:italic;
+					font-family: Georgia, serif;
+					line-height:18px;
+					text-transform:none;
+					font-size:14px;
+				}
+				
+				#menu ul a:hover {
+					color:#222;
+				}
+			
+			#sidebar #login {
+				padding:0 0 27px 0;
+			}
+			
+				#login form {
+					margin:0 0 0 60px;
+				}
+			
+				#login p {
+					margin:0 0 9px 0;
+				}
+				
+				#login label {
+					display:none;
+				}
+			
+				#login input {
+					width:170px;
+				}
+				
+				#login input#signinsubmit {
+					width:50px;
+					margin-left:10px;
+				}
+			
+			#sidebar #search {
+				padding:0;
+				margin:0 0 18px 0;
+			}
+			
+				#search form {
+					margin:0 0 0 60px;
+				}
+				
+				#search #s {
+					width:170px;
+				}
+				
+				#search #searchsubmit {
+					width:50px;
+					margin-left:10px;
+				}
+			
+			#sidebar #themeswitcher p {
+				margin:0 0 18px 60px;
+			}
+			
+			#sidebar #flickr {
+				padding:0;
+			}
+			
+				#flickr .images {
+					margin:0 0 8px 50px;
+				}
+			
+					#flickr .images img {
+						width:50px;
+						height:50px;
+						margin:0 0 10px 10px;
+						float:left;
+						background-color:#222;
+					}
+	
+			#sidebar #footer {
+				border:0;
+			}
+
+				#footer p {
+					margin:0 0 0 60px;
+					font-size:10px;
+				}
+				
+					#footer a:link,
+					#footer a:visited {
+						font-size:9px;
+					}
+								
+			#recent_comments .user a:link,
+			#recent_comments .user a:visited {
+				color:#222;
+			}
+		
+			.block h3 {
+				margin:0 0 9px 60px;
+				font-size:14px;
+				font-style:italic;
+				font-weight:normal;
+			}
+			
+			.block p {
+				margin:0 0 18px 0;
+			}
+				
+			.block ul {
+				margin:0 0 18px 0;
+				padding:0 0 0 60px;
+				list-style:none;
+			}
+		
+				.block ul li {
+					margin:0 0 3px 0;
+					font-style:italic;
+				}
+	
+	#content {
+		width:430px;
+		float:left;
+		margin:83px 0 0 60px;
+	}
+	
+		#content.with_title {
+			margin-top:27px;
+		}
+		
+		#content h3.page_title {
+			font-size:14px;
+			line-height:18px;
+			font-weight:normal;
+			font-style:italic;
+			margin:0 0 36px 10px;
+			color:#A7A37E;
+		}
+	
+		#content .post {
+			margin:0 0 72px 0;
+		}
+		
+			#content .post.draft {
+				filter:alpha(opacity=50);
+				-moz-opacity:.50;
+				opacity:.50;
+			}
+		
+			#content .post .post_head {
+				margin:0 0 18px 0;
+				padding:0 10px;
+			}
+			
+				#content .post .post_head h2 {
+					font-size:24px;
+					font-weight:normal;
+					margin:0 0 3px 0;
+					color:#000;
+				}
+				
+					#content .post .post_head h2 a:link,
+					#content .post .post_head h2 a:visited {
+						color:#000;
+						font-family: Georgia, serif;
+						font-size:24px;
+						letter-spacing:0;
+						text-transform:none;
+					}
+				
+				#content .post p.post_head_meta {
+					color:#A7A37E;
+					font-family:"Lucida Grande", "Trebuchet MS", Helvetica, Arial, sans-serif;
+					font-size:10px;
+					letter-spacing:1px;
+					font-style:normal;
+					text-transform:uppercase;
+				}
+			
+			#content .post .post_content {
+				padding:0 10px;
+			}
+			
+				#content .post .post_content p,
+				#content .comments .comment_content p {
+					color:#000;
+					margin:0 0 18px 0;
+				}
+				
+				#content .post .post_content h2,
+				#content .comments .comment_content h2 {
+					color:#000;
+					margin:18px 0 9px 0;
+					font-size:14px;
+					line-height:18px;
+					font-weight:normal;
+					font-style:italic;
+				}
+				
+				#content .post .post_content h3,
+				#content .comments .comment_content h3 {
+					color:#000;
+					margin:18px 0 9px 0;
+					font-size:11px;
+					line-height:18px;
+					letter-spacing:1px;
+					font-weight:normal;
+					text-transform:uppercase;
+				}
+				
+				#content .post .post_content ul,
+				#content .comments .comment_content ul {
+					margin:0 0 18px 50px;
+					padding:0 0 0 10px;
+					list-style-type:square;
+				}
+				
+				#content .post .post_content ol,
+				#content .comments .comment_content ol {
+					margin:0 0 18px 50px;
+					padding:0 0 0 10px;
+					list-style-type:lower-roman;
+				}
+				
+				#content .post .post_content li ol,
+				#content .post .post_content li ul,
+				#content .comments .comment_content li ol,
+				#content .comments .comment_content li ul {
+					margin-left:5px;
+				}
+				
+				#content .post .post_content img,
+				#content .comments .comment_content img {
+					padding:4px;
+					border:1px dotted #A7A37E;
+					display:block;
+					text-align:center;
+					margin:0 auto 18px auto;
+					width:auto;
+					max-width:300px;
+					_width:300px;
+				}
+				
+				#content .post .post_content blockquote,
+				#content .comments .comment_content blockquote {
+					border-top:1px dotted #A7A37E;
+					border-bottom:1px dotted #A7A37E;
+					padding:9px 0;
+					margin:0 0 18px 60px;
+					font-style:italic;
+				}
+				
+					#content .post .post_content blockquote blockquote,
+					#content .comments .comment_content blockquote blockquote {
+						margin-top:18px;
+					}
+					
+				#content .post .post_content pre {
+					overflow: auto;
+					margin:0 0 18px 0;
+					width: 95%;
+					display: block;
+					border-top:1px dotted #A7A37E;
+					border-bottom:1px dotted #A7A37E;
+					padding:9px 0;
+				}
+				
+			#content .post .post_meta {
+				background-color:#4D90A4;
+				padding:10px;
+			}
+			
+				#content .post .post_meta p {
+					color:#F9F9F9;
+					font-family:"Lucida Grande", "Trebuchet MS", Helvetica, Arial, sans-serif;
+					font-size:10px;
+					letter-spacing:1px;
+					font-style:normal;
+					margin:0;
+				}
+				
+					#content .post .post_meta p span.date {
+						text-transform:uppercase;
+					}
+					
+					#content .post .post_meta p a:link,
+					#content .post .post_meta p a:visited {
+						color:#002F2F;
+					}
+		
+		#content .comments {
+			padding:0 10px;
+		}
+		
+			#content .comments h3.comment_title {
+				font-size:14px;
+				line-height:18px;
+				font-weight:normal;
+				font-style:italic;
+				margin:0 0 18px 0;
+			}
+			
+			#content .comments ol#commentlist {
+				margin:0;
+				padding:0;
+				list-style:none;
+			}
+			
+				#commentlist li {
+					margin:0 0 36px 0;
+				}
+				
+					#commentlist .comment_content li {
+						margin:0;
+					}
+			
+				#commentlist h2.comment_author {
+					font-size:14px;
+					line-height:18px;
+					font-weight:normal;
+					letter-spacing:1px;
+					margin:0 0 3px 0;
+					color:#000;
+				}
+				
+					#commentlist h2.comment_author a:link,
+					#commentlist h2.comment_author a:visited {
+						color:#000;
+						font-family: Georgia, serif;
+						font-size:14px;
+						letter-spacing:1px;
+						text-transform:none;
+					}
+					
+				#commentlist h3.comment_meta {
+					color:#A7A37E;
+					font-family:"Lucida Grande", "Trebuchet MS", Helvetica, Arial, sans-serif;
+					font-size:10px;
+					line-height:18px;
+					letter-spacing:1px;
+					font-style:normal;
+					text-transform:uppercase;
+					margin:0 0 9px 0;
+				}
+				
+					#commentlist h3.comment_meta a:link,
+					#commentlist h3.comment_meta a:visited {
+						color:#A7A37E;
+						font-size:10px;
+						font-weight:normal;
+					}
+					
+			#content .comments form.#commentform {}
+					
+				#commentform p {
+					margin:0 0 9px 0;
+				}
+				
+				#commentform label {
+					color:#A7A37E;
+					font-family:"Lucida Grande", "Trebuchet MS", Helvetica, Arial, sans-serif;
+					font-size:10px;
+					line-height:18px;
+					letter-spacing:1px;
+					font-style:normal;
+					text-transform:uppercase;
+					margin:0 0 0 10px;
+				}
+				
+				#commentform input {
+					width:170px;
+				}
+				
+				#commentform textarea {
+					width:410px;
+					height:150px;
+					margin:0 0 9px 0;
+					display:block;
+				}
+				
+				#commentform #submit {
+					width:60px;
+				}
+					
+		#content .page_navigation {
+			margin:-36px 0 0 0;
+			padding:0 10px;
+		}
+		
+			#content .page_navigation p {
+				margin:0;
+				font-family:"Lucida Grande", "Trebuchet MS", Helvetica, Arial, sans-serif;
+				font-size:10px;
+				text-transform:uppercase;
+				letter-spacing:1px;
+				font-style:normal;
+				margin:0;
+			}
+			
+			#content .page_navigation a.current-page {
+				font-weight:bold;
+				text-decoration:underline;
+			}
+
+.clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+.clearfix {display: inline-block;}
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */

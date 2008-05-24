@@ -1,0 +1,518 @@
+a:link,
+a:visited {
+	color:#c4161c;
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+a img {
+	border:0;
+}
+
+body {
+	background-color:#FFF;
+	margin:0;
+	padding:0;
+	font-family:Georgia, serif;
+	font-size:12px;
+	line-height:18px;
+	color:#000;
+	background-image:url(img/bg.jpg);
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+}
+
+	#wrapper {
+		width:920px;
+		margin:0 0 0 30px;
+		padding:0 0 0 10px;
+	}
+	
+		#sidebar {
+			width:300px;
+			float:right;
+		}
+		
+			#sidebar a:link,
+			#sidebar a:visited {
+				color:#000;
+			}
+			
+			#sidebar a:hover {
+				color:#c4161c;
+			}
+		
+			#sidebar .block {
+				margin:0 10px 20px 0;
+			}
+			
+				#sidebar #search.block {
+					margin:90px 10px 30px 0;
+				}
+				
+					#sidebar #search #s {
+						width:160px;
+						float:left;
+					}
+					
+					#sidebar #search #searchsubmit {
+						width:50px;
+						float:right;
+					}
+				
+				#sidebar #login.block {
+					margin:0 10px 20px 0;
+				}
+
+					#sidebar #login.block p {
+						margin:0 0 6px 60px;
+					}
+
+					#sidebar #login.block label {
+						display:none;
+					}
+
+					#sidebar #login.block input {
+						width:160px;
+						float:left;
+					}
+
+					#sidebar #login.block input#signinsubmit {
+						width:50px;
+						float:right;
+					}
+				
+				#sidebar #desc.block {
+					padding:10px;
+					background-color:#333;
+					color:#EEE;
+				}
+				
+					#sidebar #desc.block p {
+						margin:0;
+						text-align:justify;
+					}
+					
+				#sidebar #twitter.block {
+					padding:10px;
+					background-color:#333;
+					color:#EEE;
+				}
+
+					#sidebar #twitter.block p.tweet {
+						margin:0;
+						font-style:italic;
+					}
+					
+					#sidebar #twitter.block p.via {
+						margin:5px 0 0 0;
+						border-top:1px solid #EEE;
+						text-align:left;
+						font-size:10px;
+						font-family:"Trebuchet MS", sans-serif;
+						text-transform:uppercase;
+					}
+					
+					#sidebar #twitter.block p a {
+						color:#EEE;
+					}
+				
+				#sidebar #flickr.block {
+					margin:0 0 10px 0;
+				}	
+					
+					#sidebar #flickr .images img {
+						width:50px;
+						height:50px;
+						margin:0 10px 10px 0;
+						float:left;
+					}
+			
+				#sidebar .block h3 {
+					color:#c4161c;
+					margin:0 0 4px 60px;
+					font-size:18px;
+					line-height:18px;
+					font-style:italic;
+					font-weight:normal;
+				}
+				
+				#sidebar .block p {
+					margin:0 0 0 60px;
+					line-height:18px;
+				}
+				
+				#sidebar .block ul,
+				#sidebar .block ol {
+					margin:0;
+					line-height:20px;
+					padding:0 0 0 50px;
+					list-style:none;
+				}
+				
+					#sidebar .block ul li,
+					#sidebar .block ol li {
+						margin:0;
+						padding:0 0 0 10px;
+						background-image:url(img/bullit.jpg);
+						background-repeat:no-repeat;
+						background-position:0px 7px;
+					}
+		
+		#content {
+			width:590px;
+			float:left;
+		}
+		
+			h1#blog_title {
+				font-size:48px;
+				font-style:italic;
+				color:#c4161c;
+				font-weight:normal;
+				margin:70px 0 30px 0;
+				line-height:48px;
+			}
+			
+				h1#blog_title a:hover {
+					text-decoration:none;
+					color:#000;
+				}
+			
+			h3.page_title {
+				margin:0 0 18px 0;
+				color:#000;
+				font-size:18px;
+				line-height:18px;
+				font-weight:normal;
+			}
+			
+			.post {
+				margin-bottom:36px;
+			}
+			
+				.post.draft {
+					filter:alpha(opacity=50);
+					-moz-opacity:.50;
+					opacity:.50;
+				}
+			
+				.post .post_date {
+					margin:0 0 4px 0;
+					color:#999;
+					font-size:18px;
+					line-height:18px;
+					font-style:italic;
+				}
+				
+				.post h2.post_title {
+					margin:0 0 9px 0;
+					font-weight:normal;
+					font-size:36px;
+					line-height:36px;
+				}
+				
+					.post h2.post_title a {
+						color:#000;
+					}
+			
+				.post .post_content {}
+
+					.post .post_content p.first_paragraph {
+						font-size:18px;
+						font-style:italic;
+						line-height:24px;
+						margin:0 0 18px 0;
+						text-align:left;
+					}
+					
+					.post .post_content p,
+					.comment .comment_content p {
+						margin:0 60px 18px 0;
+						text-align:justify;
+					}
+					
+					.post .post_content h2,
+					.comment .comment_content h2 {
+						font-weight:normal;
+						margin:18px 0 9px 0;
+						font-size:18px;
+					}
+					
+					.post .post_content h3,
+					.comment .comment_content h3 {
+						font-weight:normal;
+						margin:18px 0 9px 0;
+						font-size:16px;
+						font-style:italic;
+					}
+					
+					.post .post_content img,
+					.comment .comment_content img {
+						padding:4px;
+						border:1px solid #CCC;
+						margin:0 0 0 50px;
+						width:auto;
+						max-width:300px;
+						_width:300px;
+					}
+					
+					.post .post_content blockquote,
+					.comment .comment_content blockquote {
+						margin:0 230px 18px 55px;
+						border-left:1px solid #CCC;
+						padding-left:4px;
+						font-style:italic;
+					}
+					
+						.post .post_content blockquote p,
+						.comment .comment_content blockquote p {
+							margin:0;
+						}
+						
+						.post .post_content ol blockquote,
+						.post .post_content ul blockquote,
+						.comment .comment_content ol blockquote,
+						.comment .comment_content ul blockquote {
+							margin:0 0 0 20px;
+						}
+					
+					.post .post_content ul,
+					.comment .comment_content ul {
+						margin:0 0 18px 0;
+						padding:0 60px 0 50px;
+						list-style:none;
+					}
+
+						.post .post_content ul li,
+						.post .post_content ol ul li,
+						.comment .comment_content ul li,
+						.comment .comment_content ol ul li {
+							margin:0;
+							padding:0 0 0 10px;
+							background-image:url(img/bullit.jpg);
+							background-repeat:no-repeat;
+							background-position:0px 7px;
+						}
+						
+							.post .post_content ul li ul,
+							.post .post_content ol li ul,
+							.comment .comment_content ul li ul,
+							.comment .comment_content ol li ul {
+								padding-left:20px;
+								margin-bottom:0;
+							}
+							
+							.post .post_content ul li ol,
+							.post .post_content ol li ol,
+							.comment .comment_content ul li ol,
+							.comment .comment_content ol li ol {
+								padding-left:30px;
+								margin-bottom:0;
+							}
+						
+					.post .post_content ol,
+					.comment .comment_content ol {
+						margin:0 0 18px 0;
+						padding:0 60px 0 60px;
+					}
+					
+						.post .post_content ol li,
+						.comment .comment_content ol li {
+							margin:0;
+							padding:0;
+							background-image:none;
+						}
+					
+					.post .post_content pre,
+					.comment .comment_content pre {
+						overflow: auto;
+						margin:0 60px 18px 55px;
+						display: block;
+						border-left:1px solid #CCC;
+						padding-left:4px;
+					}
+					
+						.post .post_content ol pre,
+						.post .post_content ul pre,
+						.comment .comment_content ol pre,
+						.comment .comment_content ul pre {
+							margin:0 0 0 20px;
+						}
+					
+				.post .post_meta {
+					border-top:1px solid #CCC;
+					margin:0 60px 0 0;
+					text-align:right;
+					font-size:10px;
+					font-family:"Trebuchet MS", sans-serif;
+					text-transform:uppercase;
+					color:#999;
+				}
+				
+					.post .post_meta a {
+						color:#999;
+					}
+					
+					.post .post_meta a:hover {
+						text-decoration:none;
+						color:#c4161c;
+					}
+			
+			.comments {
+				margin-bottom:36px;
+			}
+			
+				.comments h3 {
+					margin:0 0 18px 0;
+					font-size:18px;
+					font-weight:normal;
+				}
+				
+				ol#commentlist {
+					margin:0;
+					padding:0;
+					list-style:none;
+				}
+				
+					ol#commentlist li {
+						margin:0 0 36px 0;
+					}
+				
+					.comment.unapproved {
+						filter:alpha(opacity=50);
+						-moz-opacity:.50;
+						opacity:.50;
+					}
+
+					.comment h2.comment_author {
+						margin:0 0 9px 0;
+						font-weight:normal;
+						font-size:16px;
+						line-height:16px;
+					}
+
+						.comment h2.comment_author a {
+							color:#000;
+						}
+				
+				.comments h3#respond {
+					border-top:1px solid #CCC;
+					margin-top:-18px;
+					padding-top:36px;
+					width:530px;
+				}
+						
+				.comments form {
+					width:530px;
+				}
+				
+					.comments form #comment-personaldetails {
+						font-size:10px;
+						font-family:"Trebuchet MS", sans-serif;
+						text-transform:uppercase;
+						line-height:30px;
+					}
+					
+						.comments form #comment-personaldetails span {
+							color:#999;
+							display:block;
+							float:left;
+							margin-left:10px;
+						}
+					
+						.comments form #comment-personaldetails label {
+							display:block;
+							float:left;
+							width:60px;
+						}
+					
+						.comments form #comment-personaldetails input {
+							border:0;
+							width:250px;
+							height:20px;
+							font-size:10px;
+							vertical-align: middle;
+							font-family:"Trebuchet MS", sans-serif;
+							text-transform:uppercase;
+							padding:5px;
+							border-bottom:1px dotted #EEE;
+							border-left:1px solid #CCC;
+							display:block;
+							float:left;
+							background-image:url(img/form_bg.jpg);
+						}
+		
+					.comments form textarea {
+						border:0;
+						padding:5px;
+						margin-left:60px;
+						border-left:1px solid #CCC;
+						border-bottom:1px dotted #EEE;
+						width:469px;
+						background-image:url(img/form_bg.jpg);
+						font-family:Georgia, serif;
+						font-size:12px;
+						line-height:18px;
+					}
+					
+					.comments form #submit {
+						margin-left:60px;
+					}
+			
+			.page_navigation {
+				text-align:center;
+				width:530px;
+				margin:-12px 0 36px 0;
+			}
+				
+				.page_navigation p {
+					margin:0;
+					font-size:18px;
+					font-style:italic;
+				}
+				
+				.page_navigation a {
+					color:#000;
+				}
+				
+					.page_navigation a.current-page {
+						color:#c4161c;
+					}
+					
+					.page_navigation a:hover {
+						color:#c4161c;
+						text-decoration:none;
+					}
+					
+					.page_navigation a.next-page {
+						margin-left:8px;
+					}
+
+		#footer {
+			clear:both;
+			border-top:1px solid #CCC;
+			width:530px;
+			margin:0 0 30px 0;
+			font-size:10px;
+			font-family:"Trebuchet MS", sans-serif;
+			text-transform:uppercase;
+			color:#999;
+		}
+		
+.clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+.clearfix {display: inline-block;}
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */

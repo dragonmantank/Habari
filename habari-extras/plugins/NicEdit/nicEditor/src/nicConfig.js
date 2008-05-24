@@ -1,0 +1,35 @@
+var nicEditorConfig = {
+	buttons : {
+		'save' : {name : 'Click to Save', type : 'nicEditorSaveButton', tile : 1},
+		'undo' : {name : 'Undo', command : 'undo', noActive : true, tile : 23},
+		'redo' : {name : 'Redo', command : 'redo', noActive : true, tile : 24},
+		'bold' : {name : 'Click to Bold', command : 'Bold', tags : ['B','STRONG'], css : {'font-weight' : 'bold'}, tile : 2},
+		'italic' : {name : 'Click to Italic', command : 'Italic', tags : ['EM','I'], css : {'font-style' : 'italic'}, tile : 3},
+		'underline' : {name : 'Click to Underline', command : 'Underline', tags : ['U'], css : {'text-decoration' : 'underline'}, tile : 4},
+		'left' : {name : 'Left Align', command : 'justifyleft', noActive : true, tile : 8},
+		'center' : {name : 'Center Align', command : 'justifycenter', noActive : true, tile : 9},
+		'right' : {name : 'Right Align', command : 'justifyright', noActive : true, tile : 10},
+		'ol' : {name : 'Insert Ordered List', command : 'insertorderedlist', tags : ['OL'], tile : 12},
+		'ul' : 	{name : 'Insert Unordered List', command : 'insertunorderedlist', tags : ['UL'], tile : 13},
+		'fontSize' : {name : 'Select Font Size', type : 'nicEditorFontSizeSelect', command : 'fontsize'},
+		'fontFamily' : {name : 'Select Font Family', type : 'nicEditorFontFamilySelect', command : 'fontname'},
+		'fontFormat' : {name : 'Select Font Format', type : 'nicEditorFontFormatSelect', command : 'formatBlock'},
+		'subscript' : {name : 'Click to Subscript', command : 'subscript', tags : ['SUB'], tile : 6, disabled : true},
+		'superscript' : {name : 'Click to Superscript', command : 'superscript', tags : ['SUP'], tile : 5, disabled : true},
+		'strikeThrough' : {name : 'Click to Strike Through', command : 'strikeThrough', css : {'text-decoration' : 'line-through'}, tile : 7, disabled : true},
+		'indent' : {name : 'Indent Text', command : 'indent', noActive : true, tile : 20},
+		'unindent' : {name : 'Remove Indent', command : 'outdent', noActive : true, tile : 21},
+		'hr' : {name : 'Horizontal Rule', command : 'insertHorizontalRule', noActive : true, tile : 22},
+		'color' : {name : 'Change Color', type : 'nicEditorColorButton', tile : 25},
+		'image' : {name : 'Add Image', type : 'nicEditorImageButton', tile : 14},
+		'html' : {name : 'Edit HTML', type : 'nicEditorHTMLButton', tile : 16},
+		'link' : {name : 'Add Link', type : 'nicEditorLinkButton', tile : 17}
+	},
+	iconsPath : 'nicEditorIcons.gif',
+	fullPanel : false,
+	onSubmit : null,
+	buttonList : ['bold','italic','underline','left','center','right','ol','ul','indent','unindent','fontSize','fontFamily','image','link'],
+	toolTipOn : false,
+	toolTipText : 'Click to Edit'
+};
+

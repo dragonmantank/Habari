@@ -1,0 +1,199 @@
+/* box overlay */
+.boxOverlay {
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 100%;
+	height:100%;
+	background-color: #000;
+	cursor: pointer;
+	z-index:500;
+}
+.boxBox {
+	position: absolute;
+	left: 50%;
+	top:50%;
+	display:block;
+	background:#FFFFFF;
+	color:#222222;
+	border:3px solid #5AB359;
+	z-index:600;
+	width:220px;
+	height:20px;
+	margin:-50px -110px;
+}
+.boxBox.loading {
+	text-indent:-10000px;
+	background:#FFFFFF url('images/content/loader.gif') no-repeat center center;	
+}
+.boxBox h3 {
+	text-align:center;
+}
+.box.closeLink {
+	background:transparent url('images/silk/cancel.png') no-repeat scroll center;
+	display:block;
+	height:14px;
+	position:absolute;
+	right:-9px;
+	top:-9px;
+	width:14px;
+	text-indent:-1000000px;
+}
+
+/* contact form */
+#contactFormContainer {
+	float:left;
+	position:relative;
+	width:380px;
+}
+#contactForm div.field.container {
+	clear:both;
+	display:block;
+	padding:2px 0pt;
+	position:relative;
+}
+#contactForm div.field.container label {
+	display:block;
+	float:left;
+	padding:0pt 5px 0pt 0pt;
+	text-align:right;
+	width:20%;
+	font-size:125%;
+	line-height:25px;
+}
+#contactForm div label span.info {
+	left:-10000em;
+	position:absolute;
+}
+#contactForm div.active label span.info, #contactForm div label span.error {
+	color:#000000;
+	display:block;
+	left:100%;
+	margin-top:-0.05em;
+	padding:0.1em 0.1em 0.1em 20px;
+	position:absolute;
+	text-align:left;
+	top:50%;
+	z-index:100;
+}
+#contactForm div.active label span.info {
+	background:#C8C8FF url(images/silk/arrow_left.png) no-repeat scroll left center;
+	border:2px solid #8080FF;
+	width:10em;
+}
+#contactForm div label span.error {
+	background:#FFD9D9 url(images/silk/arrow_left.png) no-repeat scroll left center;
+	border:2px solid #B34747;
+	width:20em;
+}
+#contactForm div.field.container.required label {
+	font-weight:bold;
+}
+#contactForm div.field.container input.text {
+	background:transparent url(images/silk/information.png) no-repeat scroll 2px center;
+	float:left;
+	padding:2px 5px 2px 20px;
+	width:70%;
+}
+#contactForm div.field.container input.text, #contactForm div.field.container textarea {
+	background-color:#E6E6E6;
+}
+#contactForm div.field.container.active input.text, #contactForm div.field.container input.text:focus, #contactForm div.field.container textarea:focus {
+	background-color:#FFFFFF;
+}
+#contactForm div.field.container.name input.text {
+	background-image:url('images/silk/user.png');
+}
+#contactForm div.field.container.email input.text {
+	background-image:url('images/silk/email.png');
+}
+#contactForm div.field.container.url input.text {
+	background-image:url('images/silk/link.png');
+}
+#contactForm div.field.container.bad input.text {
+	background:#FFB3B3 url('images/silk/error.png') no-repeat scroll 2px center !important;
+}
+#contactForm div.field.container.bad label {
+	color:#E20026;
+}
+#contactForm div.field.container.good input.text {
+	background:#C0FFBF url('images/silk/accept.png') no-repeat scroll 2px center !important;
+}
+#contactForm div.field.container.good label {
+	color:#5AB359;
+}
+#contactForm div.field.container.message label {
+	position:absolute;
+	left:-20000px;
+}
+#contactForm div.field.container.textarea textarea {
+	height:8em;
+	width:95%;
+	margin:5px 2.5% 0.5px 2.5%;
+}
+#contactForm div.field.container.textarea div.grippie {
+	background:#DDDDDD url('images/content/grippie.png') no-repeat scroll center 2px;
+	border-color:#CCCCCC;
+	border-style:solid;
+	width:95%;;
+	margin:0 2.5% 0.5px 2.5%;
+	border-width:0pt 2px 1px;
+	cursor:s-resize;
+	height:9px;
+	overflow:hidden;
+}
+#contactForm div.field.container.bad textarea {
+	background:#FFB7CD none repeat scroll 0%;
+}
+#contactForm div.field.container.good textarea {
+	background:#C7E8B9 none repeat scroll 0%;
+}
+#contactForm div.submit {
+	background:transparent url('images/content/contact/send_hover.png') no-repeat scroll center;
+	width:100%;
+}
+#contactForm.bad div.submit {
+	background:transparent url('images/content/contact/send_enabled.png') no-repeat scroll center;
+}
+#contactForm div.submit input {
+	border:0pt none;
+	display:block;
+	height:31px;
+	margin:0pt auto;
+	width:92px;
+}
+#contactForm div.submit input, #contactForm.good div.submit input {
+	background:transparent url('images/content/contact/send_enabled.png') no-repeat scroll center;
+	color:#FFFFFF;
+}
+#contactForm div.submit input input:hover {
+	background:transparent none repeat scroll 0%;
+	color:#000000;
+	cursor:pointer;
+	font-weight:bold;
+}
+#contactForm div.submit input {
+	background:transparent url('images/content/contact/send_disabled.png') no-repeat scroll center;
+	color:#333333;
+	cursor:default;
+	font-weight:normal;
+}
+#contactFormResults.finished div.error h3 {
+	background:transparent url('images/silk/error.png') no-repeat scroll left center;
+	color:#B34747;
+}
+#contactFormResults.finished div.error ol {
+	list-style-image:none;
+	list-style-position:inside;
+	list-style-type:disc;
+}
+#contactFormResults.finished div.success h3 {
+	background:transparent url('images/silk/accept.png') no-repeat scroll 5% 50%;
+	color:#5AB359;
+	font-size:200%;
+}
+#contactFormResults.finished div.success p {
+	font-size:150%;
+	text-align:left;
+	padding:10px 5px;
+}
