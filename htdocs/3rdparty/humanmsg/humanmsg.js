@@ -41,7 +41,7 @@ var humanMsg = {
 
 		// Inject message
 		$('#'+humanMsg.msgID).show();
-		$('<div class="msg"><div class="round" id="msgid_"' + humanMsg.msgcount + '></div><p>' + msg + '</p><div class="round"></div></div>')
+		$('<div class="msg" id="msgid_' + humanMsg.msgcount + '"><p>' + msg + '</p></div>')
 		.appendTo('#'+humanMsg.msgID+' .imsgs')
 		.show().animate({ opacity: humanMsg.msgOpacity}, 200, function() {
 			jQuery('#'+humanMsg.logID)

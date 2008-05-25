@@ -1,5 +1,5 @@
 /*
-	HUMANIZED MESSAGES 1.0
+	HUMANIZED MESSAGES 1.0 - Habari Edition
 	idea - http://www.humanized.com/weblog/2006/09/11/monolog_boxes_and_transparent_messages
 	home - http://humanmsg.googlecode.com
 */
@@ -9,36 +9,39 @@ html, body {
 }
 
 .humanMsg {
-	font: normal 20px/50px Helvetica, Arial, Sans-Serif;
-	letter-spacing: -1px;
+	font: normal 12px Helvetica, Arial, Sans-Serif;
 	position: fixed;
-	top: 130px;
-	left: 25%;
-	width: 50%;
+	top: 40px;
+	left: 10px;
+	width: 30%;
 	color: white;
-	text-align: center;
-	z-index: 100000;
+	text-align: left;
+	z-index: 900;
 	display: none;
+	padding: 0px;
 }
 
-.humanMsg .round {
-    border-left: solid 2px white;
-	border-right: solid 2px white;
-    font-size: 1px; height: 2px;
+.humanMsg .imsgs .msg {
+	padding: 10px;
+	background-color: black;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-box-shadow: 0px 1px 5px #333;
+	margin-bottom: 5px;
 	}
 
 .humanMsg p {
-	padding: .3em;
 	display: inline;
 	}
 
+.humanMsg p a {
+	color: #19a5d1;
+	}
+
 .humanMsg .imsgs .msg {
-	margin-bottom: 5px;
-	background-color: black;
 	display: none;
 	opacity: 0;
 	}
-
 
 #humanMsgLog {
 	font: normal 10px Helvetica, Arial, Sans-Serif;
