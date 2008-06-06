@@ -28,7 +28,7 @@ var humanMsg = {
 		jQuery(appendTo).append('<div id="'+humanMsg.msgID+'" class="humanMsg"><div class="imsgs"></div></div><div id="'+humanMsg.logID+'"><p>'+logName+'</p><ul></ul></div>')
 
 		jQuery('#'+humanMsg.logID).click(
-			function() { jQuery('ul', this).slideToggle() }
+			function() { jQuery('ul', this).slideToggle(); jQuery('#humanMsgLog').toggleClass('logisopen') }
 		)
 	},
 
