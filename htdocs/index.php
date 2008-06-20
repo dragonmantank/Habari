@@ -177,6 +177,11 @@ if( defined( 'UNIT_TEST' ) ) {
 	return;
 }
 
+// if this is an asyncronous call, ignore abort.
+if ( isset( $_GET['asyncronous'] ) && Utils::crypt( Options::get( 'guid' ), $_GET['asyncronous'] ) ) {
+	ignore_user_abort( true );
+}
+
 // Send the Content-Type HTTP header.
 // @todo Find a better place to put this.
 header( 'Content-Type: text/html;charset=utf-8' );
@@ -208,8 +213,8 @@ Plugins::act('init');
 // Parse and handle the request.
 Controller::parse_request();
 
-// Run the cron jobs.
-CronTab::run_cron();
+// Run the cron jobs asyncronously.
+CronTab::run_cron(true);
 
 // Dispatch the request (action) to the matched handler.
 Controller::dispatch_request();
