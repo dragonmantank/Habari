@@ -115,9 +115,6 @@ Error::handle_errors();
 // Retrieve the configuration file's path.
 $config = Site::get_dir( 'config_file' );
 
-// Set the default locale.
-Locale::set( isset($locale) ? $locale : 'en-ca' );
-
 /**
  * We make sure the configuration file exist.
  * If it does, we load it and check it's validity.
@@ -126,6 +123,10 @@ Locale::set( isset($locale) ? $locale : 'en-ca' );
  */
 if ( file_exists( $config ) ) {
 	require_once $config;
+	
+	// Set the default locale.
+	Locale::set( isset($locale) ? $locale : 'en-us' );
+	
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 
 	// Make sure we have a DSN string and database credentials.
