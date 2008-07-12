@@ -116,7 +116,7 @@ Error::handle_errors();
 $config = Site::get_dir( 'config_file' );
 
 // Set the default locale.
-Locale::set( 'en-us' );
+Locale::set( isset($locale) ? $locale : 'en-ca' );
 
 /**
  * We make sure the configuration file exist.
