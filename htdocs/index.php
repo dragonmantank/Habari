@@ -147,12 +147,14 @@ if ( file_exists( $config ) ) {
 		}
 	}
 	else {
+		Locale::set( 'en-us' );
 		$installer= new InstallHandler();
 		$installer->begin_install();
 	}
 }
 else
 {
+	Locale::set( 'en-us' );
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 	// The configuration file does not exist.
 	// Therefore we load the installer to create the configuration file and install a base database.
