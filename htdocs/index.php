@@ -98,11 +98,9 @@ function __autoload($class_name) {
 		}
 		$success= true;
 	}
-
-	if ( ! $success ) {
-		die( 'Could not include class file ' . $class_file );
-	}
 }
+
+spl_autoload_register('__autoload');
 
 // Increase the error reporting level, E_NOTICE will not be displayed.
 error_reporting( E_ALL );
