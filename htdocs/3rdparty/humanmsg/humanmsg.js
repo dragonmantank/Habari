@@ -27,8 +27,12 @@ var humanMsg = {
 		// Inject the message structure
 		jQuery(appendTo).append('<div id="'+humanMsg.msgID+'" class="humanMsg"><div class="imsgs"></div></div><div id="'+humanMsg.logID+'"><p>'+logName+'</p><ul></ul></div>')
 
-		jQuery('#'+humanMsg.logID).click(
-			function() { jQuery('ul', this).slideToggle(); jQuery('#humanMsgLog').toggleClass('logisopen') }
+		jQuery('#'+humanMsg.logID+' p').click(
+			function() { jQuery('ul', '#'+humanMsg.logID).slideToggle(); jQuery('#humanMsgLog').addClass('logisopen') }	
+		)
+
+		jQuery('#'+humanMsg.logID+' ul').click(
+			function() { jQuery(this).slideToggle(); jQuery('#humanMsgLog').removeClass('logisopen') }
 		)
 	},
 
