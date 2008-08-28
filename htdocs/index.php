@@ -18,10 +18,13 @@ if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 	die ( 'Habari needs PHP 5.2.x or higher to run. You are currently running PHP ' . PHP_VERSION . '.' );
 }
 
+// Increase the error reporting level, E_NOTICE will not be displayed.
+error_reporting( E_ALL );
+
 /**
  * Start the profile time
  */
-$profile_start= microtime(true); 
+$profile_start= microtime(true);
 
 /**
  * Define the constant HABARI_PATH.
@@ -102,9 +105,6 @@ function __autoload($class_name) {
 
 spl_autoload_register('__autoload');
 
-// Increase the error reporting level, E_NOTICE will not be displayed.
-error_reporting( E_ALL );
-
 // Use our own error reporting class.
 Error::handle_errors();
 
@@ -121,10 +121,12 @@ $config = Site::get_dir( 'config_file' );
  */
 if ( file_exists( $config ) ) {
 	require_once $config;
-	
+
 	// Set the default locale.
 	Locale::set( isset($locale) ? $locale : 'en-us' );
-	
+
+	date_default_timezone_set( isset($timezone) ? $timezone : 'UTC' );
+
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 
 	// Make sure we have a DSN string and database credentials.
@@ -190,7 +192,7 @@ header( 'Content-Type: text/html;charset=utf-8' );
 /**
  * Include all the active plugins.
  * By loading them here they'll have global scope.
- * 
+ *
  * We loop through them twice so we can cache all plugin classes on the first load() call.
  * This gives about 60% improvement.
  */
