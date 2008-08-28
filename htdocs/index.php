@@ -18,7 +18,7 @@ if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 	die ( 'Habari needs PHP 5.2.x or higher to run. You are currently running PHP ' . PHP_VERSION . '.' );
 }
 
-// Increase the error reporting level, E_NOTICE will not be displayed.
+// Increase the error reporting level, includes E_NOTICE
 error_reporting( E_ALL );
 
 /**
