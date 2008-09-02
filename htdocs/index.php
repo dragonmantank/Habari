@@ -169,6 +169,10 @@ if ( @ Options::get('locale') ) {
 	Locale::set( Options::get('locale') );
 }
 
+if ( @ Options::get( 'system_locale' ) ) {
+	Locale::set_system_locale( Options::get( 'system_locale' ) );
+}
+
 // Verify if the database has to be upgraded.
 if ( Version::requires_upgrade() ) {
 	$installer= new InstallHandler();
