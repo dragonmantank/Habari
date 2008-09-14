@@ -13,13 +13,16 @@
  * @package Habari
  */
 
+// Increase the error reporting level: E_ALL, E_NOTICE, and E_STRICT
+error_reporting( E_ALL | E_NOTICE | E_STRICT );
+
+// set a default timezone for PHP. Habari will base off of this later on
+date_default_timezone_set( 'UTC' );
+
 // Compares PHP version against our requirement.
 if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 	die ( 'Habari needs PHP 5.2.x or higher to run. You are currently running PHP ' . PHP_VERSION . '.' );
 }
-
-// Increase the error reporting level, includes E_NOTICE
-error_reporting( E_ALL );
 
 /**
  * Start the profile time
@@ -125,8 +128,6 @@ if ( file_exists( $config ) ) {
 	// Set the default locale.
 	Locale::set( isset($locale) ? $locale : 'en-us' );
 
-	date_default_timezone_set( isset($timezone) ? $timezone : 'UTC' );
-
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 
 	// Make sure we have a DSN string and database credentials.
@@ -155,6 +156,7 @@ if ( file_exists( $config ) ) {
 else
 {
 	Locale::set( 'en-us' );
+
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 	// The configuration file does not exist.
 	// Therefore we load the installer to create the configuration file and install a base database.
@@ -165,12 +167,18 @@ else
 /* Habari is installed and we established a connection with the database */
 
 // Set the locale from database
-if ( @ Options::get('locale') ) {
+if ( Options::get('locale') ) {
 	Locale::set( Options::get('locale') );
 }
-
-if ( @ Options::get( 'system_locale' ) ) {
+if ( Options::get( 'system_locale' ) ) {
 	Locale::set_system_locale( Options::get( 'system_locale' ) );
+}
+if ( Options::get('default_datetime_format') ) {
+	HabariDateTime::set_default_datetime_format( Options::get('default_datetime_format') );
+}
+if ( Options::get('timezone') ) {
+	// defaults to UTC if no timezone
+	HabariDateTime::set_default_timezone( Options::get('timezone') );
 }
 
 // Verify if the database has to be upgraded.
