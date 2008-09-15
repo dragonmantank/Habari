@@ -125,9 +125,6 @@ $config = Site::get_dir( 'config_file' );
 if ( file_exists( $config ) ) {
 	require_once $config;
 
-	// Set the default locale.
-	Locale::set( isset($locale) ? $locale : 'en-us' );
-
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 
 	// Make sure we have a DSN string and database credentials.
@@ -148,15 +145,12 @@ if ( file_exists( $config ) ) {
 		}
 	}
 	else {
-		Locale::set( 'en-us' );
 		$installer= new InstallHandler();
 		$installer->begin_install();
 	}
 }
 else
 {
-	Locale::set( 'en-us' );
-
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 	// The configuration file does not exist.
 	// Therefore we load the installer to create the configuration file and install a base database.
@@ -166,9 +160,12 @@ else
 
 /* Habari is installed and we established a connection with the database */
 
-// Set the locale from database
+// Set the locale from database or default locale
 if ( Options::get('locale') ) {
 	Locale::set( Options::get('locale') );
+}
+else {
+	Locale::set( 'en-us' );
 }
 if ( Options::get( 'system_locale' ) ) {
 	Locale::set_system_locale( Options::get( 'system_locale' ) );
