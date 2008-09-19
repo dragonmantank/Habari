@@ -27,7 +27,7 @@ if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 /**
  * Start the profile time
  */
-$profile_start= microtime(true);
+$profile_start = microtime(true);
 
 /**
  * Define the constant HABARI_PATH.
@@ -61,14 +61,14 @@ ob_start();
  * @param string $class_name Class called by the user
  */
 function __autoload($class_name) {
-	static $files= null;
+	static $files = null;
 
-	$success= false;
+	$success = false;
 	$class_file = strtolower($class_name) . '.php';
 
 	if( empty($files) ) {
 		$files = array();
-		$dirs= array( HABARI_PATH . '/system', HABARI_PATH . '/user' );
+		$dirs = array( HABARI_PATH . '/system', HABARI_PATH . '/user' );
 
 		// For each directory, save the available files in the $files array.
 		foreach ($dirs as $dir) {
@@ -102,7 +102,7 @@ function __autoload($class_name) {
 		if(class_exists($class_name, false) && method_exists($class_name, '__static') ) {
 			call_user_func(array($class_name, '__static'));
 		}
-		$success= true;
+		$success = true;
 	}
 }
 
@@ -130,7 +130,7 @@ if ( file_exists( $config ) ) {
 	// Make sure we have a DSN string and database credentials.
 	// $db_connection is an array with necessary informations to connect to the database.
 	if ( ! isset($db_connection) ) {
-		$installer= new InstallHandler();
+		$installer = new InstallHandler();
 		$installer->begin_install();
 	}
 
@@ -140,12 +140,12 @@ if ( file_exists( $config ) ) {
 		// If the 'installed' option is missing, we assume the database tables are missing or corrupted.
 		// @todo Find a decent solution, we have to compare tables and restore or upgrade them.
 		if (! @ Options::get('installed')) {
-			$installer= new InstallHandler();
+			$installer = new InstallHandler();
 			$installer->begin_install();
 		}
 	}
 	else {
-		$installer= new InstallHandler();
+		$installer = new InstallHandler();
 		$installer->begin_install();
 	}
 }
@@ -154,7 +154,7 @@ else
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 	// The configuration file does not exist.
 	// Therefore we load the installer to create the configuration file and install a base database.
-	$installer= new InstallHandler();
+	$installer = new InstallHandler();
 	$installer->begin_install();
 }
 
@@ -180,7 +180,7 @@ if ( Options::get('timezone') ) {
 
 // Verify if the database has to be upgraded.
 if ( Version::requires_upgrade() ) {
-	$installer= new InstallHandler();
+	$installer = new InstallHandler();
 	$installer->upgrade_db();
 }
 
