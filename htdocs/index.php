@@ -13,16 +13,16 @@
  * @package Habari
  */
 
+// Compares PHP version against our requirement.
+if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
+	die ( 'Habari needs PHP 5.2.x or higher to run. You are currently running PHP ' . PHP_VERSION . '.' );
+}
+
 // Increase the error reporting level: E_ALL, E_NOTICE, and E_STRICT
 error_reporting( E_ALL | E_NOTICE | E_STRICT );
 
 // set a default timezone for PHP. Habari will base off of this later on
 date_default_timezone_set( 'UTC' );
-
-// Compares PHP version against our requirement.
-if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
-	die ( 'Habari needs PHP 5.2.x or higher to run. You are currently running PHP ' . PHP_VERSION . '.' );
-}
 
 /**
  * Start the profile time
