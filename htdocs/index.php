@@ -170,13 +170,6 @@ else {
 if ( Options::get( 'system_locale' ) ) {
 	Locale::set_system_locale( Options::get( 'system_locale' ) );
 }
-if ( Options::get('default_datetime_format') ) {
-	HabariDateTime::set_default_datetime_format( Options::get('default_datetime_format') );
-}
-if ( Options::get('timezone') ) {
-	// defaults to UTC if no timezone
-	HabariDateTime::set_default_timezone( Options::get('timezone') );
-}
 
 // Verify if the database has to be upgraded.
 if ( Version::requires_upgrade() ) {
