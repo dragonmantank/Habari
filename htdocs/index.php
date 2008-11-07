@@ -191,6 +191,9 @@ if ( isset( $_GET['asyncronous'] ) && Utils::crypt( Options::get( 'guid' ), $_GE
 // @todo Find a better place to put this.
 header( 'Content-Type: text/html;charset=utf-8' );
 
+// setup some initial stacks
+AdminHandler::setup_stacks();
+
 /**
  * Include all the active plugins.
  * By loading them here they'll have global scope.
