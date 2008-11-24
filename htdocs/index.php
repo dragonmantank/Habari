@@ -27,7 +27,7 @@ date_default_timezone_set( 'UTC' );
 /**
  * Start the profile time
  */
-$profile_start = microtime(true);
+$profile_start= microtime(true);
 
 /**
  * Define the constant HABARI_PATH.
@@ -49,6 +49,11 @@ if (!defined('GLOB_BRACE')) {
 // as well as the ability to dynamically change HTTP headers after output has started.
 ob_start();
 
+// Replace all of the $_GET, $_POST and $_SERVER superglobals with object
+// representations of each.  Unset $_REQUEST, which is evil.
+// $_COOKIE must be set after sessions start
+SuperGlobal::process_gps();
+
 /**
  * Attempt to load the class before PHP fails with an error.
  * This method is called automatically in case you are trying to use a class which hasn't been defined yet.
@@ -61,14 +66,14 @@ ob_start();
  * @param string $class_name Class called by the user
  */
 function __autoload($class_name) {
-	static $files = null;
+	static $files= null;
 
-	$success = false;
+	$success= false;
 	$class_file = strtolower($class_name) . '.php';
 
 	if( empty($files) ) {
 		$files = array();
-		$dirs = array( HABARI_PATH . '/system', HABARI_PATH . '/user' );
+		$dirs= array( HABARI_PATH . '/system', HABARI_PATH . '/user' );
 
 		// For each directory, save the available files in the $files array.
 		foreach ($dirs as $dir) {
@@ -102,7 +107,7 @@ function __autoload($class_name) {
 		if(class_exists($class_name, false) && method_exists($class_name, '__static') ) {
 			call_user_func(array($class_name, '__static'));
 		}
-		$success = true;
+		$success= true;
 	}
 }
 
@@ -125,12 +130,15 @@ $config = Site::get_dir( 'config_file' );
 if ( file_exists( $config ) ) {
 	require_once $config;
 
+	// Set the default locale.
+	Locale::set( isset($locale) ? $locale : 'en-us' );
+
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 
 	// Make sure we have a DSN string and database credentials.
 	// $db_connection is an array with necessary informations to connect to the database.
 	if ( ! isset($db_connection) ) {
-		$installer = new InstallHandler();
+		$installer= new InstallHandler();
 		$installer->begin_install();
 	}
 
@@ -140,12 +148,12 @@ if ( file_exists( $config ) ) {
 		// If the 'installed' option is missing, we assume the database tables are missing or corrupted.
 		// @todo Find a decent solution, we have to compare tables and restore or upgrade them.
 		if (! @ Options::get('installed')) {
-			$installer = new InstallHandler();
+			$installer= new InstallHandler();
 			$installer->begin_install();
 		}
 	}
 	else {
-		$installer = new InstallHandler();
+		$installer= new InstallHandler();
 		$installer->begin_install();
 	}
 }
@@ -154,7 +162,7 @@ else
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 	// The configuration file does not exist.
 	// Therefore we load the installer to create the configuration file and install a base database.
-	$installer = new InstallHandler();
+	$installer= new InstallHandler();
 	$installer->begin_install();
 }
 
@@ -173,7 +181,7 @@ if ( Options::get( 'system_locale' ) ) {
 
 // Verify if the database has to be upgraded.
 if ( Version::requires_upgrade() ) {
-	$installer = new InstallHandler();
+	$installer= new InstallHandler();
 	$installer->upgrade_db();
 }
 
@@ -211,6 +219,9 @@ Plugins::act('plugins_loaded');
 
 // Start the session.
 Session::init();
+
+// Replace the $_COOKIE superglobal with an object representation
+SuperGlobal::process_c();
 
 // Initiating request handling, tell the plugins.
 Plugins::act('init');
