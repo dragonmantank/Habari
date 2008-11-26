@@ -19,7 +19,7 @@ if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 }
 
 // Increase the error reporting level: E_ALL, E_NOTICE, and E_STRICT
-error_reporting( E_ALL | E_NOTICE | E_STRICT );
+error_reporting( E_ALL | E_NOTICE );
 
 // set a default timezone for PHP. Habari will base off of this later on
 date_default_timezone_set( 'UTC' );
@@ -160,6 +160,7 @@ if ( file_exists( $config ) ) {
 else
 {
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
+
 	// The configuration file does not exist.
 	// Therefore we load the installer to create the configuration file and install a base database.
 	$installer= new InstallHandler();
@@ -167,6 +168,11 @@ else
 }
 
 /* Habari is installed and we established a connection with the database */
+
+// Enable strict error checking?
+if( Options::get( 'enable_strict' ) ) {
+	error_reporting( error_reporting() | E_STRICT );
+}
 
 // Set the locale from database or default locale
 if ( Options::get('locale') ) {
