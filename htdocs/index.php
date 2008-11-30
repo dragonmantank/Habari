@@ -85,7 +85,7 @@ function __autoload($class_name) {
 
 		// Load the Site class, a requirement to get files from a multisite directory.
 		if(isset($files['site.php'])) {
-			require_once $files['site.php'];
+			require $files['site.php'];
 		}
 
 		// Verify if this Habari instance is a multisite.
@@ -102,7 +102,7 @@ function __autoload($class_name) {
 
 	// Search in the available files for the undefined class file.
 	if(isset($files[$class_file])) {
-		require_once $files[$class_file];
+		require $files[$class_file];
 		// If the class has a static method named __static(), execute it now, on initial load.
 		if(class_exists($class_name, false) && method_exists($class_name, '__static') ) {
 			call_user_func(array($class_name, '__static'));
