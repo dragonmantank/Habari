@@ -77,8 +77,8 @@ function __autoload($class_name) {
 
 		// For each directory, save the available files in the $files array.
 		foreach ($dirs as $dir) {
-			$glob = Utils::glob( $dir . '/classes/*.php' );
-			if ( empty( $glob ) ) continue;
+			$glob = glob( $dir . '/classes/*.php' );
+			if ( $glob === false || empty( $glob ) ) continue;
 			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
 			$files = array_merge($files, array_combine($fnames, $glob));
 		}
@@ -92,9 +92,9 @@ function __autoload($class_name) {
 		if ( ($site_user_dir = Site::get_dir('user')) != HABARI_PATH . '/user' ) {
 			// We are dealing with a site defined in /user/sites/x.y.z
 			// Add the available files in that directory in the $files array.
-			$glob = Utils::glob( $site_user_dir . '/classes/*.php' );
-			$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
-			if ( ! empty( $glob ) && ! empty( $fnames ) ) {
+			$glob = glob( $site_user_dir . '/classes/*.php' );
+			if ( $glob !== false && !empty( $glob ) ) {
+			        $fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
 				$files = array_merge($files, array_combine($fnames, $glob));
 			}
 		}
