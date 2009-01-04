@@ -131,7 +131,7 @@ if ( file_exists( $config ) ) {
 	require_once $config;
 
 	// Set the default locale.
-	Locale::set( isset($locale) ? $locale : 'en-us' );
+	HabariLocale::set( isset($locale) ? $locale : 'en-us' );
 
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 
@@ -171,13 +171,13 @@ else
 
 // Set the locale from database or default locale
 if ( Options::get('locale') ) {
-	Locale::set( Options::get('locale') );
+	HabariLocale::set( Options::get('locale') );
 }
 else {
-	Locale::set( 'en-us' );
+	HabariLocale::set( 'en-us' );
 }
 if ( Options::get( 'system_locale' ) ) {
-	Locale::set_system_locale( Options::get( 'system_locale' ) );
+	HabariLocale::set_system_locale( Options::get( 'system_locale' ) );
 }
 
 // Verify if the database has to be upgraded.
