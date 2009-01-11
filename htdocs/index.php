@@ -14,7 +14,7 @@
  */
 
 // Compares PHP version against our requirement.
-if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
+if ( !version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 	die ( 'Habari needs PHP 5.2.x or higher to run. You are currently running PHP ' . PHP_VERSION . '.' );
 }
 
@@ -27,22 +27,22 @@ date_default_timezone_set( 'UTC' );
 /**
  * Start the profile time
  */
-$profile_start= microtime(true);
+$profile_start = microtime(true);
 
 /**
  * Define the constant HABARI_PATH.
  * The path to the root of this Habari installation.
  */
-if( ! defined( 'HABARI_PATH' ) ) {
+if ( !defined( 'HABARI_PATH' ) ) {
 	define( 'HABARI_PATH', dirname( __FILE__ ) );
 }
 
 /**
  * Make GLOB_BRACE available on platforms that don't have it. Use Utils::glob().
  */
-if (!defined('GLOB_BRACE')) {
-	define('GLOB_NOBRACE', true);
-	define('GLOB_BRACE', 128);
+if ( !defined( 'GLOB_BRACE' ) ) {
+	define( 'GLOB_NOBRACE', true );
+	define( 'GLOB_BRACE', 128 );
 }
 
 // We start up output buffering in order to take advantage of output compression,
@@ -66,14 +66,14 @@ SuperGlobal::process_gps();
  * @param string $class_name Class called by the user
  */
 function __autoload($class_name) {
-	static $files= null;
+	static $files = null;
 
-	$success= false;
+	$success = false;
 	$class_file = strtolower($class_name) . '.php';
 
-	if( empty($files) ) {
+	if ( empty($files) ) {
 		$files = array();
-		$dirs= array( HABARI_PATH . '/system', HABARI_PATH . '/user' );
+		$dirs = array( HABARI_PATH . '/system', HABARI_PATH . '/user' );
 
 		// For each directory, save the available files in the $files array.
 		foreach ($dirs as $dir) {
@@ -84,7 +84,7 @@ function __autoload($class_name) {
 		}
 
 		// Load the Site class, a requirement to get files from a multisite directory.
-		if(isset($files['site.php'])) {
+		if ( isset($files['site.php']) ) {
 			require $files['site.php'];
 		}
 
@@ -101,13 +101,13 @@ function __autoload($class_name) {
 	}
 
 	// Search in the available files for the undefined class file.
-	if(isset($files[$class_file])) {
+	if ( isset($files[$class_file]) ) {
 		require $files[$class_file];
 		// If the class has a static method named __static(), execute it now, on initial load.
-		if(class_exists($class_name, false) && method_exists($class_name, '__static') ) {
+		if ( class_exists($class_name, false) && method_exists($class_name, '__static') ) {
 			call_user_func(array($class_name, '__static'));
 		}
-		$success= true;
+		$success = true;
 	}
 }
 
@@ -137,33 +137,32 @@ if ( file_exists( $config ) ) {
 
 	// Make sure we have a DSN string and database credentials.
 	// $db_connection is an array with necessary informations to connect to the database.
-	if ( ! isset($db_connection) ) {
-		$installer= new InstallHandler();
+	if ( !isset($db_connection) ) {
+		$installer = new InstallHandler();
 		$installer->begin_install();
 	}
 
 	// Try to connect to the database.
-	if (DB::connect()) {
+	if ( DB::connect() ) {
 		// Make sure Habari is installed properly.
 		// If the 'installed' option is missing, we assume the database tables are missing or corrupted.
 		// @todo Find a decent solution, we have to compare tables and restore or upgrade them.
-		if (! @ Options::get('installed')) {
-			$installer= new InstallHandler();
+		if ( !@ Options::get('installed') ) {
+			$installer = new InstallHandler();
 			$installer->begin_install();
 		}
 	}
 	else {
-		$installer= new InstallHandler();
+		$installer = new InstallHandler();
 		$installer->begin_install();
 	}
 }
-else
-{
+else {
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 
 	// The configuration file does not exist.
 	// Therefore we load the installer to create the configuration file and install a base database.
-	$installer= new InstallHandler();
+	$installer = new InstallHandler();
 	$installer->begin_install();
 }
 
@@ -182,12 +181,12 @@ if ( Options::get( 'system_locale' ) ) {
 
 // Verify if the database has to be upgraded.
 if ( Version::requires_upgrade() ) {
-	$installer= new InstallHandler();
+	$installer = new InstallHandler();
 	$installer->upgrade_db();
 }
 
 // If we're doing unit testing, stop here
-if( defined( 'UNIT_TEST' ) ) {
+if ( defined( 'UNIT_TEST' ) ) {
 	return;
 }
 
@@ -207,7 +206,7 @@ header( 'Content-Type: text/html;charset=utf-8' );
  * We loop through them twice so we can cache all plugin classes on the first load() call.
  * This gives about 60% improvement.
  */
-foreach ( Plugins::list_active() as $file ){
+foreach ( Plugins::list_active() as $file ) {
 	include_once( $file );
 }
 // Call the plugin's load procedure.
