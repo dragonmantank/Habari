@@ -136,8 +136,8 @@ if ( file_exists( $config ) ) {
 	if ( !defined( 'DEBUG' ) ) define( 'DEBUG', false );
 
 	// Make sure we have a DSN string and database credentials.
-	// $db_connection is an array with necessary informations to connect to the database.
-	if ( !isset($db_connection) ) {
+	// db_connection is an array with necessary informations to connect to the database.
+	if ( !Config::exists( 'db_connection' ) ) {
 		$installer = new InstallHandler();
 		$installer->begin_install();
 	}
