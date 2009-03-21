@@ -61,9 +61,10 @@ var humanMsg = {
 		})
 
 		// Watch for mouse & keyboard in .5s
-	//	humanMsg.t1 = setTimeout("humanMsg.bindEvents()", 700)
+		//humanMsg.t1 = setTimeout(humanMsg.bindEvents, 500)
+		$('#msgid_'+humanMsg.msgcount).click(humanMsg.removeMsg);
 		// Remove message after 5s
-		humanMsg.t2 = setTimeout("humanMsg.removeMsg()", 5000)
+		humanMsg.t2 = setTimeout(humanMsg.removeMsg, 5000)
 	},
 
 	bindEvents: function() {
