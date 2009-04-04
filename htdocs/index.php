@@ -118,7 +118,9 @@ if ( !defined( 'SUPPRESS_ERROR_HANDLER' ) ) {
 	Error::handle_errors();
 }
 
-/* Initiate install verifications */
+/*
+ * Initiate install verifications
+ */
 
 // Retrieve the configuration file's path.
 $config = Site::get_dir( 'config_file' );
