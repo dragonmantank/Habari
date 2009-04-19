@@ -203,20 +203,10 @@ if ( isset( $_GET['asyncronous'] ) && Utils::crypt( Options::get( 'guid' ), $_GE
 // @todo Find a better place to put this.
 header( 'Content-Type: text/html;charset=utf-8' );
 
-/**
- * Include all the active plugins.
- * By loading them here they'll have global scope.
- *
- * We loop through them twice so we can cache all plugin classes on the first load() call.
- * This gives about 60% improvement.
- */
-foreach ( Plugins::list_active() as $file ) {
-	include_once( $file );
-}
-// Call the plugin's load procedure.
-foreach ( Plugins::list_active() as $file ) {
-	Plugins::load( $file );
-}
+
+// Load all the active plugins.
+spl_autoload_register( array('Plugins', '_autoload') );
+Plugins::load_active();
 
 // All plugins loaded, tell the plugins.
 Plugins::act('plugins_loaded');
