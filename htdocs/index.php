@@ -94,7 +94,7 @@ function __autoload($class_name) {
 			// Add the available files in that directory in the $files array.
 			$glob = glob( $site_user_dir . '/classes/*.php' );
 			if ( $glob !== false && !empty( $glob ) ) {
-			        $fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
+				$fnames = array_map(create_function('$a', 'return strtolower(basename($a));'), $glob);
 				$files = array_merge($files, array_combine($fnames, $glob));
 			}
 		}
@@ -147,18 +147,37 @@ if ( file_exists( $config ) ) {
 	}
 
 	// Try to connect to the database.
-	if ( DB::connect() ) {
-		// Make sure Habari is installed properly.
-		// If the 'installed' option is missing, we assume the database tables are missing or corrupted.
-		// @todo Find a decent solution, we have to compare tables and restore or upgrade them.
-		if ( !@ Options::get('installed') ) {
+	try {
+		if ( DB::connect() ) {
+			// Make sure Habari is installed properly.
+			// If the 'installed' option is missing, we assume the database tables are missing or corrupted.
+			// @todo Find a decent solution, we have to compare tables and restore or upgrade them.
+			if ( !@ Options::get('installed') ) {
+				$installer = new InstallHandler();
+				$installer->begin_install();
+			}
+		}
+		else {
 			$installer = new InstallHandler();
 			$installer->begin_install();
 		}
 	}
-	else {
-		$installer = new InstallHandler();
-		$installer->begin_install();
+	catch( PDOException $e ) {
+		// Error template. 
+		$error_template = "<html><head><title>%s</title></head><body><h1>%s</h1><p>%s</p></body></html>"; 
+
+		// Format page with localized messages. 
+		$error_page = sprintf($error_template, 
+			_t("Habari General Error"), # page title 
+			_t("An error occurred"), # H1 tag 
+			_t("Unable to connect to database.") # Error message. 
+		);
+		
+		return false; 
+
+		// Set correct HTTP header and die. 
+		header('HTTP/1.1 500 Internal Server Error'); 
+		die($error_page);
 	}
 }
 else {
