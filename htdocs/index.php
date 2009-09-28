@@ -16,7 +16,7 @@ if ( !defined( 'HABARI_PATH' ) ) {
 }
 
 /**
- * Require system/system.php, where the magic happens
+ * Require system/index.php, where the magic happens
  */
 require( HABARI_PATH . '/system/index.php' );
 
