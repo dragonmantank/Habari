@@ -29,5 +29,3 @@ http://www.opensource.org/licenses/mit-license.php
         return crc ^ (-1);
     };
 })();
-
-sadfasfd
