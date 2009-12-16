@@ -10,10 +10,5 @@ JQuery is available under either a GPL or MIT license; Habari has elected to use
 Copyright (c) 2007 Olav Bjorkoy (http://bjorkoy.com)
 Blueprint CSS Framework was made available under MIT license. See doc/MIT.txt for a copy of the MIT license.
 
-== TIDDLYWIKI ==
-Copyright (c) 2004-2007 UnaMesa Association
-Tiddlywiki is available under the BSD Open Source License. See doc/Tiddlywiki_License.txt for a copy of Tiddlywiki's license.
-
-
 = CREDITS = 
 The Habari Project is a community driven effort and is the product of the efforts of the writers of code, documentation, plugins and themes as well as the users. The Project Management Committee is responsible for helping guide and coordinate all of these contributions. A current list of Project Management Committee members can be found at http://wiki.habariproject.org/en/Cabal#Current_Cabal_Members.
