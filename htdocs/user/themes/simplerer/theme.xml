@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pluggable type="theme">
+	<name>Simplerer</name>
+	<license url="#">Do what you want with this theme. Linking to the original author would be appreciated but you don't have to.</license>
+	
+	<author url="http://habariproject.org/">Habari Community</author>
+	<author url="http://randywalker.net/">Randy Walker</author>
+	
+	<version>15</version>
+	<url>http://habariproject.org/</url>
+	<description><![CDATA[A really simple theme. Original author Randy Walker.]]></description>
+
+	<copyright>2010</copyright>
+	
+	<template_engine>rawphpengine</template_engine>
+	
+</pluggable>
