@@ -16,7 +16,7 @@ html, body {
 	width: 30%;
 	color: white;
 	text-align: left;
-	z-index: 900;
+	z-index: 90;
 	display: none;
 	padding: 0px;
 }
