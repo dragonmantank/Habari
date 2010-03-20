@@ -1,7 +1,7 @@
 /*
  * jQuery Color Animations
  * Copyright 2007 John Resig
- * Released under the MIT and GPL licenses.
+ * Released under the MIT license.
  */
 
 (function(jQuery){
@@ -124,7 +124,7 @@
 /*
  * jQuery Color Animations
  * Copyright 2007 John Resig
- * Released under the MIT and GPL licenses.
+ * Released under the MIT license.
  */
 
 (function(jQuery){
@@ -247,7 +247,7 @@
 /*
  * jQuery Color Animations
  * Copyright 2007 John Resig
- * Released under the MIT and GPL licenses.
+ * Released under the MIT license.
  */
 
 (function(jQuery){
